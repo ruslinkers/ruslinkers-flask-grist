@@ -1,0 +1,3 @@
+[submodule "ruslinkers/static/bootstrap"]
+	path = ruslinkers/static/bootstrap
+	url = https://github.com/twbs/bootstrap.git

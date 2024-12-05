@@ -1,0 +1,16 @@
+@import "../bootstrap-src/scss/functions";
+@import "../bootstrap-src/scss/variables";
+
+
+$primary: $green-700;
+$light: #f8f3e8;
+$border-color: $primary;
+
+// merge with existing $theme-colors map
+$theme-colors: map-merge($theme-colors, (
+  "primary": $primary,
+  "light": $light
+));
+
+
+@import "../bootstrap-src/scss/bootstrap";
