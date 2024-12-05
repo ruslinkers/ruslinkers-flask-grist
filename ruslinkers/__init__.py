@@ -60,7 +60,13 @@ def create_app(test_config=None):
             db_session.commit()
             return redirect(url_for('units',linker=linker))
 
-        units = db_session.scalars(db.select(Unit)).all()
+        # Filter the units according to search request
+        stmt = db.select(Unit)
+        if request.args.get("search-pos") is not None:
+            stmt = stmt.where(Meaning.pos == request.args.get("search-pos")).where(Meaning.unit_id == Unit.id)
+
+        units = db_session.scalars(stmt.distinct()).all()
+
         units_gr = defaultdict(list)
         for u in units:
             units_gr[u.linker].append(u)

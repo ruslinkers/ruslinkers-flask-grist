@@ -57,4 +57,14 @@ $(document).ready(function () {
             target.attr('disabled','true');
         }
     });
+
+    $("#searchButton").on("click", function() {
+        let params="";
+        $(".searchData").each(function(i, obj) {
+            if(!obj.hasAttribute('disabled')) {
+                params += '?' + obj.id + '=' + $(this).val();
+            }
+        })
+        window.location.href = window.location.href.split(/[?#]/)[0] + params;
+    })
 });
