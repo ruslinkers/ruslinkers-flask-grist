@@ -1,539 +1,387 @@
-<!DOCTYPE html>
-<html>
-{% macro setattr_macro(target, target_type, attr) %}
-<input class="form-control setattr" data-target_id="{{target.id}}" data-target_type="{{target_type}}" {% if edit is
-    false %}readonly disabled{% endif %} data-attr="{{attr}}" value="{{target|attr(attr)}}" />
-{% if edit is true %}<button class="btn btn-primary d-none setattr" type="button" data-target_id="{{target.id}}"
-    data-target_type="{{target_type}}" data-attr="{{attr}}"><i class="bi bi-check"></i></button>{% endif %}
-{% endmacro %}
+{% extends "base.html" %}
 
-{% macro delobject_macro(target_id, target_type) %}
-<button class="btn btn-danger delobject" type="button" data-target_id="{{target_id}}"
-    data-target_type="{{target_type}}"><i class="bi bi-x-lg"></i></button>
-{% endmacro %}
+{% block title %}Коннекторы{% endblock %}
 
-{% macro addform_macro(unit_id, formtype) %}
-<input class="form-control addform" data-unit_id="{{unit_id}}" data-formtype="{{formtype}}" value="" />
-<button class="btn btn-primary addform" data-unit_id="{{unit_id}}" data-formtype="{{formtype}}" type="button"><i
-        class="bi bi-plus-lg"></i></button>
-{% endmacro %}
-
-{% macro examples_macro(exlist,target_id,parameter_id = 0, is_text_param = 0, class = 'unit') %}
-<ul class="list-group">
-    {% for example in exlist|sort(attribute='id') %}
-    <li class="list-group-item">
-        <div class="input-group">
-            <textarea class="form-control" data-example_id="{{example.id}}" data-{{class}}_id="{{target_id}}"
-                data-parameter_id="{{parameter_id}}" data-is_text_param="{{is_text_param}}" readonly
-                disabled>{{example.text}}</textarea>{% if edit is true %}<button class="btn btn-warning delExample"
-                type="button"><i class="bi bi-x-lg"></i></button>{% endif %}
-        </div>
-    </li>
-    {% endfor %}
-    {% if edit is true %}<li class="list-group-item">
-        <button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#addExample"><i
-                class="bi bi-plus-lg"></i>Добавить пример</button>
-    </li>{% endif %}
-</ul>
-{% endmacro %}
-
-<!-- {% macro parameters_macro(unit,params) %}
-{% for param in params|sort(attribute='id') %}
-<div class="row mb-3">
-    <div class="input-group">
-        <label class="col-sm-6 col-form-label">{{param.name|capitalize()}}:</label>
-        <select class="form-select selectParam" data-unit_id="{{unit.id}}" data-parameter_id="{{param.id}}" disabled>
-            {% for val in param.values %}
-            <option value="{{val.id}}" {{"selected" if val in unit.parametervalues}}>{{val.name}}</option>
-            {% endfor %}
-        </select>
+{% block content %}
+<!-- <div class="row h-100"> -->
+<div class="d-flex flex-row">
+    <div class="d-flex col-12 flex-column">
+        <h4 class="display-4">Рускон — база коннекторов русского языка</h4>
+        <h5><a href="#">Подробнее о базе Рускон</a></h5>
     </div>
-    {% set parvalmap =
-    unit.parametervalue_mappings|selectattr('parameter','eq',param)|sort(attribute='parametervalue_id')|first() %}
-    {% if parvalmap.examples %}
-    <p class="d-inline-flex gap-1">
-        <button class="btn btn-link" type="button" data-bs-toggle="collapse"
-            data-bs-target="#examples{{unit.id}}_{{parvalmap.parametervalue_id}}"
-            aria-expanded="false"
-            aria-controls="examples{{unit.id}}_{{parvalmap.parametervalue_id}}">
-            Примеры
-        </button>
-    </p>
-    <div class="collapse" id="examples{{unit.id}}_{{parvalmap.parametervalue_id}}">
-        {{ examples_macro(parvalmap.examples,unit.id,param.id) }}
-    </div>
-    {% endif %}
 </div>
-{% endfor %}
-{% endmacro %} -->
-
-{% macro parameters_macro(target,params,class='unit',is_text=false) %}
-{% for param in params|sort(attribute='id') %}
-<div class="row mb-3">
-    <div class="row align-items-center">
-        <label class="col-sm-6 col-form-label">{{param.name|capitalize()}}:</label>
-        {% if is_text is false %}
-        <div class="col-sm-6">
-            <select class="form-select selectParam" data-{{class}}_id="{{target.id}}" data-parameter_id="{{param.id}}"
-                disabled>
-                {% for val in param.values %}
-                <option value="{{val.id}}" {{"selected" if val in target.parametervalues}}>{{val.name}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        {% else %}
-        {% set txparval = target.textparametervalues|list()|selectattr('parameter_id','eq',param.id)|first() %}
-        <div class="col-sm-6">
-            <input class="form-control textParam" data-{{class}}_id="{{target.id}}" data-textparameter_id="{{param.id}}"
-                value="{{txparval.value}}" {% if edit is false %}readonly disabled{% endif %} />
-        </div>
-        {% endif %}
-    </div>
-    {% if is_text is false %}
-    {% set parvalmap =
-    target.parametervalue_mappings|selectattr('parameter','eq',param)|sort(attribute='parametervalue_id')|first() %}
-    {% set exs = parvalmap.examples %}
-    {% set collapse_id = 'examples_' ~ class ~ '_' ~ target.id ~ '_' ~ parvalmap.parametervalue_id %}
-    {% if parvalmap.examples %}
-    <p class="d-inline-flex gap-1">
-        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#{{collapse_id}}"
-            aria-expanded="false" aria-controls="{{collapse_id}}">
-            Примеры
-        </button>
-    </p>
-    <div class="collapse" id="{{collapse_id}}">
-        {{ examples_macro(parvalmap.examples,target.id,param.id,class = class) }}
-    </div>
-    {% endif %}
-    {% endif %}
-</div>
-{% endfor %}
-{% endmacro %}
-
-<head>
-    <title>Коннекторы</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
-
-    <link rel="stylesheet" href="{{url_for('static', filename='custom.css')}}">
-    <!-- <script src="{{url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js')}}"></script> -->
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="{{url_for('static', filename='units.js')}}"></script>
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-
-    <style>
-        html,
-        body {
-            height: 100%;
-        }
-
-        /*.accordion-preview {
-            --bs-accordion-btn-padding-x: 5px;
-            --bs-accordion-btn-padding-y: 5px;
-            --bs-accordion-body-padding-x: 5px;
-            --bs-accordion-body-padding-y: 5px;
-        }*/
-
-        .accordion-preview .accordion-header .accordion-button.collapsed div {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /*.accordion-preview .collapse:not(.show) {
-            display: block;
-            width: 90%;
-        }
-
-        .accordion-preview .collapse:not(.show) .accordion-body {
-            position: relative;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }*/
-    </style>
-</head>
-
-<body>
-    <!-- <div class="container-fluid d-flex"> -->
-    <div class="container-fluid d-flex flex-nowrap h-100">
-        <!-- <div class="row h-100"> -->
-        <div class="d-flex col-2 flex-column flex-shrink-0">
-            <!-- <"/"
+<div class="d-flex flex-row flex-nowrap h-75">
+    <div class="d-flex col-2 flex-column">
+        <!-- <"/"
                     class= px-1 align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
                     <svg class="bi me-2" width="30" height="24">
                         <use xlink:href="#bootstrap"></use>
                     </svg>
                     <span class="fs-5 fw-semibold">Коннекторы</span>
                 </a> -->
-            <!-- <aside class="border-bottom"> -->
-            <!-- <form class="d-flex" role="search"> -->
-            <div class="d-flex input-group">
-                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#advancedSearch"><i
-                        class="bi bi-search"></i></button>
-                <input class="form-control" type="search" placeholder="Фильтр…" aria-label="Фильтр" id="filter-linkers">
-            </div>
-            <!-- </form> -->
-            <div id="sidebar" class="list-group list-group-flush overflow-scroll">
-                {% for unit in units %}
-                <a href="/units/{{unit}}"
-                    class="btn list-group-item list-group-item-action py-3 lh-tight border border-0 {{'active' if unit == linker else 'bg-light'}}"
-                    aria-current="true">
-                    <div class="d-flex w-100 align-items-center justify-content-between linker-name">
-                        <strong class="mb-1">{{unit}}</strong>
-                        <!-- <small>Wed</small> -->
-                    </div>
-                    <div class="col-10 mb-1 small">
-                        {% for conn in units[unit] %}
-                        <span class="badge rounded-pill text-bg-primary">{{conn.semfield.keyword}}</span>
-                        {% endfor %}
-                    </div>
-                </a>
-                {% endfor %}
-            </div>
-            <!-- </aside> -->
+        <!-- <aside class="border-bottom"> -->
+        <!-- <form class="d-flex" role="search"> -->
+        <div class="d-flex input-group">
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#advancedSearch"><i
+                    class="bi bi-search"></i></button>
+            <input class="form-control" type="search" placeholder="Фильтр…" aria-label="Фильтр" id="filter-linkers">
         </div>
-        <main class="d-flex flex-column overflow-scroll flex-grow-0">
-            <!-- <p>Currently selected linker: {{linker}}</p> -->
-            {% for unit in units[linker] %}
-            <!-- <div class="row justify-content-center m-3"> -->
-            <div class="card m-3">
-                <!-- <div class="card-header"> -->
-                <h5 class="card-header">
-                    <span class="badge rounded-pill text-bg-primary">{{unit.semfield.keyword}}
-                        {% if unit.subfields|length > 0 and
-                        unit.subfields|selectattr('semfield.name',"eq",unit.semfield.name)|list|length > 0%}
-                        : {% for sf in unit.subfields %}
-                        {{sf.name if sf.semfield == unit.semfield}}
-                        {% endfor %}
-                        {% endif %}
-                    </span>
-                    {% if unit.extra_semfields|length > 0 %}
-                    {% for sf in unit.extra_semfields %}
-                    <span class="badge rounded-pill text-bg-secondary">
-                        {{sf.name}}
-                        {% if unit.subfields|length > 0 and
-                        unit.subfields|selectattr('semfield.name',"eq",sf.name)|list|length > 0%}
-                        : {% for subf in unit.subfields %}
-                        {{subf.name if subf.semfield == sf}}
-                        {% endfor %}
-                        {% endif %}
-                    </span>
+        <!-- </form> -->
+        <div id="sidebar" class="list-group list-group-flush overflow-scroll">
+            {% for unit in units %}
+            <a href="/units/{{unit}}"
+                class="lnkr btn list-group-item list-group-item-action py-3 lh-tight border border-0 {{'active' if unit == linker else 'bg-light'}}"
+                aria-current="true">
+                <div class="d-flex w-100 align-items-center justify-content-between linker-name">
+                    <strong class="mb-1">{{unit}}</strong>
+                    <!-- <small>Wed</small> -->
+                </div>
+                <div class="col-10 mb-1 small">
+                    {% for conn in units[unit] %}
+                    <span class="badge rounded-pill text-bg-primary">{{conn.semfield.keyword}}</span>
+                    {% endfor %}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <!-- </aside> -->
+    </div>
+    <main class="d-flex col-10 flex-column overflow-scroll">
+        <!-- <p>Currently selected linker: {{linker}}</p> -->
+        {% for unit in units[linker] %}
+        <!-- <div class="row justify-content-center m-3"> -->
+        <div class="card m-3">
+            <!-- <div class="card-header"> -->
+            <h5 class="card-header">
+                <span class="badge rounded-pill text-bg-primary">{{unit.semfield.keyword}}
+                    {% if unit.subfields|length > 0 and
+                    unit.subfields|selectattr('semfield.name',"eq",unit.semfield.name)|list|length > 0%}
+                    : {% for sf in unit.subfields %}
+                    {{sf.name if sf.semfield == unit.semfield}}
                     {% endfor %}
                     {% endif %}
-                </h5>
-                <!-- </div> -->
-                <div class="card-body">
-                    {% if unit.links|length > 0 and 'hyperlink' in
-                    unit.links|map(attribute='unitlinktype')|map(attribute='keyword')%}
-                    <div class="row mb-3">
-                        <strong><i class="bi bi-plus-circle"></i> См. также:</strong>
-                        {% for link in unit.links if link.unitlinktype.keyword == 'hyperlink'%}
-                        <a href="/hello/{{link.target.linker}}">{{link.target.linker}}</a>
-                        {% if not loop.last %}, {% endif %}
-                        {% endfor %}
-                    </div>
+                </span>
+                {% if unit.extra_semfields|length > 0 %}
+                {% for sf in unit.extra_semfields %}
+                <span class="badge rounded-pill text-bg-secondary">
+                    {{sf.name}}
+                    {% if unit.subfields|length > 0 and
+                    unit.subfields|selectattr('semfield.name',"eq",sf.name)|list|length > 0%}
+                    : {% for subf in unit.subfields %}
+                    {{subf.name if subf.semfield == sf}}
+                    {% endfor %}
                     {% endif %}
-                    <div class="row mb-3 g-0">
-                        <!-- <div class="row"> -->
-                        <div class="col-6">
-                            <label class="col-form-label">Стилистические
-                                ограничения:</label>
-                        </div>
-                        <div class="col">
-                            <div class="input-group">
-                                {{ setattr_macro(unit, 'unit', 'style') }}
-                            </div>
-                        </div>
-                        <!-- </div> -->
+                </span>
+                {% endfor %}
+                {% endif %}
+            </h5>
+            <!-- </div> -->
+            <div class="card-body">
+                {% if unit.links|length > 0 and 'hyperlink' in
+                unit.links|map(attribute='unitlinktype')|map(attribute='keyword')%}
+                <div class="row mb-3">
+                    <strong><i class="bi bi-plus-circle"></i> См. также:</strong>
+                    {% for link in unit.links if link.unitlinktype.keyword == 'hyperlink'%}
+                    <a href="/hello/{{link.target.linker}}">{{link.target.linker}}</a>
+                    {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="row mb-3 g-0">
+                    <!-- <div class="row"> -->
+                    <div class="col-6">
+                        <label class="col-form-label">Стилистические
+                            ограничения:</label>
                     </div>
-                    <div class="row mb-3 g-0">
-                        <!-- <div class="input-group"> -->
-                        <div class="col-6">
-                            <label class="col-form-label">Фонетические варианты:</label>
+                    <div class="col">
+                        <div class="input-group">
+                            {{ setattr_macro(unit, 'unit', 'style') }}
                         </div>
-                        {#{% if unit.forms|length > 0 and 'phonvar' in
-                        unit.forms|map(attribute='formtype')|map(attribute='keyword')%}#}
-                        {% for form in unit.forms if form.formtype.keyword == 'phonvar'%}
-                        <div class="col">
-                            <div class="input-group">
-                                <!-- <input class="form-control setattr" data-unit_id="{{unit.id}}"
+                    </div>
+                    <!-- </div> -->
+                </div>
+                <div class="row mb-3 g-0 align-items-center">
+                    <!-- <div class="input-group"> -->
+                    <div class="col-6">
+                        <label class="col-form-label">Фонетические варианты:</label>
+                    </div>
+                    {#{% if unit.forms|length > 0 and 'phonvar' in
+                    unit.forms|map(attribute='formtype')|map(attribute='keyword')%}#}
+                    {% for form in unit.forms if form.formtype.keyword == 'phonvar'%}
+                    <div class="col">
+                        <div class="input-group">
+                            <!-- <input class="form-control setattr" data-unit_id="{{unit.id}}"
                                         data-target_type="form" data-target_id="{{form.id}}" data-attr="text"
                                         value="{{form.text}}" /><button class="btn btn-primary invisible setattr"
                                         type="button" data-target_id="{{unit.id}}" data-target_type="form"
                                         data-attr="text"><i class="bi bi-check-lg"></i></button> -->
-                                {{ setattr_macro(form,'form','text') }}
-                                {% if edit is true %}{{ delobject_macro(form.id, 'form') }}{% endif %}
+                            {{ setattr_macro(form,'form','text') }}
+                            {% if edit is true %}{{ delobject_macro(form.id, 'form') }}{% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% if edit is true %}
+                    <div class="col">
+                        <div class="input-group">
+                            {{ addform_macro(unit.id, 'phonvar') }}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {#{% else %}
+                    нет
+                    {% endif %}#}
+                    <!-- </div> -->
+                </div>
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-6 col-form-label">Части речи:</label>
+                    <div class="col-sm-6">
+                        {% for pos, items in unit.meanings|groupby("pos") %}
+                        {{pos}} ({{items|map(attribute='source')|map(attribute='keyword')|unique|join(',
+                        ')}}){% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-6 col-form-label">Словарные значения:</label>
+                    <div class="accordion accordion-preview accordion-flush" id="meanings{{unit.id}}">
+                        {% for meaning in unit.meanings %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#meaning{{meaning.id}}" aria-expanded="false"
+                                    aria-controls="meaning{{meaning.id}}">
+                                    <div><strong>{{meaning.source.keyword}}: </strong>
+                                        {{meaning.meaning}}
+                                    </div>
+                                </button>
+                            </h2>
+                            <div id="meaning{{meaning.id}}" class="accordion-collapse collapse"
+                                data-bs-parent="#meanings{{unit.id}}">
+                                <div class="accordion-body">
+                                    <div class="input-group">
+                                        <span class="input-group-text w-25">Часть речи</span>
+                                        <input class="form-control" aria-label="Часть речи" readonly disabled
+                                            value="{{meaning.pos}}" />
+                                        <span class="input-group-text">Тип</span>
+                                        <input class="form-control" aria-label="Тип" readonly disabled
+                                            value="{{meaning.pos_type}}" />
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-text w-25">Другие части речи</span>
+                                        <input class="form-control" aria-label="Другие части речи" readonly disabled
+                                            value="{{meaning.other_pos}}" />
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-text w-25">Другие значения</span>
+                                        <textarea class="form-control" aria-label="Другие значения" readonly
+                                            disabled>{{meaning.other_senses}}</textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         {% endfor %}
-                        {% if edit is true %}
-                        <div class="col">
-                            <div class="input-group">
-                                {{ addform_macro(unit.id, 'phonvar') }}
-                            </div>
-                        </div>
-                        {% endif %}
-                        {#{% else %}
-                        нет
-                        {% endif %}#}
-                        <!-- </div> -->
                     </div>
-                    <div class="row mb-3">
-                        <label class="col-sm-6 col-form-label">Части речи:</label>
+                </div>
+                <div class="row mb-3">
+                    <div class="input-group">
+                        <label for="style{{unit.id}}" class="col-sm-6 col-form-label">Семантический
+                            комментарий</label>
                         <div class="col-sm-6">
-                            {% for pos, items in unit.meanings|groupby("pos") %}
-                            {{pos}} ({{items|map(attribute='source')|map(attribute='keyword')|unique|join(',
-                            ')}}){% if not loop.last %}, {% endif %}
-                            {% endfor %}
+                            <input class="form-control" id="sem_comment{{unit.id}}" readonly disabled
+                                value="{{unit.sem_comment}}" />
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <label class="col-sm-6 col-form-label">Словарные значения:</label>
-                        <div class="accordion accordion-preview accordion-flush" id="meanings{{unit.id}}">
-                            {% for meaning in unit.meanings %}
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#meaning{{meaning.id}}" aria-expanded="false"
-                                        aria-controls="meaning{{meaning.id}}">
-                                        <div><strong>{{meaning.source.keyword}}: </strong>
-                                            {{meaning.meaning}}
-                                        </div>
-                                    </button>
-                                </h2>
-                                <div id="meaning{{meaning.id}}" class="accordion-collapse collapse"
-                                    data-bs-parent="#meanings{{unit.id}}">
-                                    <div class="accordion-body">
-                                        <div class="input-group">
-                                            <span class="input-group-text w-25">Часть речи</span>
-                                            <input class="form-control" aria-label="Часть речи" readonly disabled
-                                                value="{{meaning.pos}}" />
-                                            <span class="input-group-text">Тип</span>
-                                            <input class="form-control" aria-label="Тип" readonly disabled
-                                                value="{{meaning.pos_type}}" />
-                                        </div>
-                                        <div class="input-group">
-                                            <span class="input-group-text w-25">Другие части речи</span>
-                                            <input class="form-control" aria-label="Другие части речи" readonly disabled
-                                                value="{{meaning.other_pos}}" />
-                                        </div>
-                                        <div class="input-group">
-                                            <span class="input-group-text w-25">Другие значения</span>
-                                            <textarea class="form-control" aria-label="Другие значения" readonly
-                                                disabled>{{meaning.other_senses}}</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="input-group">
-                            <label for="style{{unit.id}}" class="col-sm-6 col-form-label">Семантический
-                                комментарий</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" id="sem_comment{{unit.id}}" readonly disabled
-                                    value="{{unit.sem_comment}}" />
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="border border-black" />
-                    <div class="row mb-3">
-                        <label class="col-sm-6 col-form-label">Примеры употребления:</label>
-                        {{ examples_macro(unit.examples,unit.id) }}
-                    </div>
-                    <hr />
-                    {{ parameters_macro(unit,unit.parameters|selectattr('semantic')) }}
-                    <hr class="border border-black" />
-                    <hr class="border border-black" />
-                    <h4>Синтаксические свойства</h3>
-                        <div class="row">
-                            <div class="col">
-                                {{ parameters_macro(unit,unit.parameters|rejectattr('semantic')) }}
-                            </div>
-                            <div class="col">
-                                {{ parameters_macro(unit,unit.textparameters, is_text=true) }}
-                                <h6>Компоненты</h6>
-                                {% for form in unit.forms|sort(attribute="formtype.keyword") if
-                                form.formtype.keyword != 'phonvar' %}
-                                <!-- <div class="row"> -->
-                                <div class="card">
-                                    <div class="card-header">
-                                        {{form.formtype.name|capitalize()}}
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <label class="col-sm-4 col-form-label">Форма:</label>
-                                            <div class="col-sm-8">
-                                                <input class="form-control textForm" data-form_id="{{form.id}}" {% if
-                                                    edit is false %}readonly disabled{% endif %}
-                                                    value="{{form.text}}" />
-                                            </div>
-                                        </div>
-                                        {{ parameters_macro(form, form.parameters, class="form") if
-                                        form.parameters|length() > 0}}
-                                        {{ parameters_macro(form, form.textparameters, class="form",
-                                        is_text=true) if form.textparameters|length() > 0}}
-                                    </div>
-                                </div>
-                                <!-- </div> -->
-                                {% endfor %}
-                            </div>
-                        </div>
                 </div>
+                <hr class="border border-black" />
+                <div class="row mb-3">
+                    <label class="col-sm-6 col-form-label">Примеры употребления:</label>
+                    {{ examples_macro(unit.examples,unit.id) }}
+                </div>
+                <hr />
+                {{ parameters_macro(unit,unit.parameters|selectattr('semantic')) }}
+                <hr class="border border-black" />
+                <hr class="border border-black" />
+                <h4>Синтаксические свойства</h3>
+                    <div class="row">
+                        <div class="col">
+                            {{ parameters_macro(unit,unit.parameters|rejectattr('semantic')) }}
+                        </div>
+                        <div class="col">
+                            {{ parameters_macro(unit,unit.textparameters, is_text=true) }}
+                            <h6>Компоненты</h6>
+                            {% for form in unit.forms|sort(attribute="formtype.keyword") if
+                            form.formtype.keyword != 'phonvar' %}
+                            <!-- <div class="row"> -->
+                            <div class="card">
+                                <div class="card-header">
+                                    {{form.formtype.name|capitalize()}}
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <label class="col-sm-4 col-form-label">Форма:</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control textForm" data-form_id="{{form.id}}" {% if edit
+                                                is false %}readonly disabled{% endif %} value="{{form.text}}" />
+                                        </div>
+                                    </div>
+                                    {{ parameters_macro(form, form.parameters, class="form") if
+                                    form.parameters|length() > 0}}
+                                    {{ parameters_macro(form, form.textparameters, class="form",
+                                    is_text=true) if form.textparameters|length() > 0}}
+                                </div>
+                            </div>
+                            <!-- </div> -->
+                            {% endfor %}
+                        </div>
+                    </div>
             </div>
-            <!-- </div> -->
-            {% endfor %}
-        </main>
+        </div>
         <!-- </div> -->
-    </div>
-    <!-- </div> -->
+        {% endfor %}
+    </main>
+</div>
 
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="updateToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    Данные обновлены.
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="updateToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                Данные обновлены.
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+{% if edit is true %}
+<div class="modal fade" id="addExample" tabindex="-1" aria-labelledby="addExampleLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addExampleLabel">Добавить пример</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <!-- <div class="table-responsive"> -->
+                <table class="table" id="exampleTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">Текст</th>
+                            <th scope="col">Коннекторы</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for example in examples %}
+                        <tr>
+                            <td>{{example.text}}</td>
+                            <td>
+                                {% for u in example.get_related_units() %}
+                                {{u.linker}}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- </div> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
             </div>
         </div>
     </div>
+</div>
+{% endif %}
 
-    {% if edit is true %}
-    <div class="modal fade" id="addExample" tabindex="-1" aria-labelledby="addExampleLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="addExampleLabel">Добавить пример</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- <div class="table-responsive"> -->
-                    <table class="table" id="exampleTable">
-                        <thead>
-                            <tr>
-                                <th scope="col">Текст</th>
-                                <th scope="col">Коннекторы</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for example in examples %}
-                            <tr>
-                                <td>{{example.text}}</td>
-                                <td>
-                                    {% for u in example.get_related_units() %}
-                                    {{u.linker}}{% if not loop.last %}, {% endif %}
-                                    {% endfor %}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <!-- </div> -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                </div>
+<div class="modal fade" id="advancedSearch" tabindex="-1" aria-labelledby="advancedSearchLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="advancedSearchLabel">Расширенный поиск</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
-        </div>
-    </div>
-    {% endif %}
-
-    <div class="modal fade" id="advancedSearch" tabindex="-1" aria-labelledby="advancedSearchLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="advancedSearchLabel">Расширенный поиск</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-center">
-                        <div class="col-10">
-                            <div class="card bg-light">
-                                <div class="row justify-content-center">
-                                    <div class="col-4 gap-1">
-                                        <div class="row g-3 p-1 align-items-center">
-                                            <div class="col-4">
-                                                <input class="form-check-input toggleSearch" data-toggle="search-pos" type="checkbox">
-                                                <label class="form-check-label"><strong>Часть речи:</strong></label>
-                                            </div>
-                                            <div class="col-8">
-                                                <select id="search-pos" class="form-select form-select-sm" disabled multiple size="3">
-                                                    {% for pos in pos_list %}
-                                                    <option val="{{pos}}">{{pos}}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-10">
+                        <div class="card bg-light">
+                            <div class="row justify-content-center">
+                                <div class="col-4 gap-1">
+                                    <div class="row g-3 p-1 align-items-center">
+                                        <div class="col-4">
+                                            <input class="form-check-input toggleSearch" data-toggle="search-pos"
+                                                type="checkbox">
+                                            <label class="form-check-label"><strong>Часть речи:</strong></label>
                                         </div>
-                                        <div class="row g-3 p-1 align-items-center">
-                                            <div class="col-4">
-                                                <input class="form-check-input toggleSearch" data-toggle="search-dict" type="checkbox">
-                                                <label class="form-check-label"><strong>Словарь:</strong></label>
-                                            </div>
-                                            <div class="col-8">
-                                                <select id="search-dict" class="form-select form-select-sm" disabled multiple size="3">
-                                                    {% for source in sources %}
-                                                    <option val="{{source.id}}">{{source.biblio}}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row g-3 p-1 align-items-center">
-                                            <div class="col-4">
-                                                <input class="form-check-input toggleSearch" data-toggle="search-meaning" type="checkbox">
-                                                <label class="form-check-label"><strong>Значение:</strong></label>
-                                            </div>
-                                            <div class="col-8">
-                                                <input id="search-meaning" type="text" class="form-control" disabled>
-                                            </div>
+                                        <div class="col-8">
+                                            <select id="search-pos" class="form-select form-select-sm searchData"
+                                                disabled multiple size="3">
+                                                {% for pos in pos_list %}
+                                                <option val="{{pos}}">{{pos}}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="col-3 gap-1 align-self-center">
-                                        <div class="row g-3 p-1 align-items-center">
-                                            <div class="col-1"><input class="form-check-input toggleSearch" data-toggle="search-conn" type="checkbox"></div>
-                                            <div class="col-11"><input id="search-conn" type="text" class="form-control"
-                                                    placeholder="Коннектор или часть коннектора" disabled></div>
+                                    <div class="row g-3 p-1 align-items-center">
+                                        <div class="col-4">
+                                            <input class="form-check-input toggleSearch" data-toggle="search-dict"
+                                                type="checkbox">
+                                            <label class="form-check-label"><strong>Словарь:</strong></label>
+                                        </div>
+                                        <div class="col-8">
+                                            <select id="search-dict" class="form-select form-select-sm searchData"
+                                                disabled multiple size="3">
+                                                {% for source in sources %}
+                                                <option val="{{source.id}}">{{source.biblio}}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="col-3 gap-1 align-self-center">
-                                        <div class="row g-3 p-1 align-items-center">
-                                            <div class="col-1"><input class="form-check-input toggleSearch" data-toggle="search-correl" type="checkbox"></div>
-                                            <div class="col-11"><input id="search-correl" type="text" class="form-control"
-                                                    placeholder="Квази-коррелят" disabled></div>
+                                    <div class="row g-3 p-1 align-items-center">
+                                        <div class="col-4">
+                                            <input class="form-check-input toggleSearch" data-toggle="search-meaning"
+                                                type="checkbox">
+                                            <label class="form-check-label"><strong>Значение:</strong></label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input id="search-meaning" type="text" class="form-control searchData"
+                                                disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3 gap-1 align-self-center">
+                                    <div class="row g-3 p-1 align-items-center">
+                                        <div class="col-1"><input class="form-check-input toggleSearch"
+                                                data-toggle="search-conn" type="checkbox"></div>
+                                        <div class="col-11"><input id="search-conn" type="text"
+                                                class="form-control searchData"
+                                                placeholder="Коннектор или часть коннектора" disabled></div>
+                                    </div>
+                                </div>
+                                <div class="col-3 gap-1 align-self-center">
+                                    <div class="row g-3 p-1 align-items-center">
+                                        <div class="col-1"><input class="form-check-input toggleSearch"
+                                                data-toggle="search-correl" type="checkbox"></div>
+                                        <div class="col-11"><input id="search-correl" type="text"
+                                                class="form-control searchData" placeholder="Квази-коррелят" disabled>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row justify-content-center">
-                        <div class="col-10">
-                            <div class="card bg-light mt-3">
-                                SANCTIFICATUR NOMEN TUUM, ADVENIAT REGNUM TUUM
-                            </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-10">
+                        <div class="card bg-light mt-3">
+                            SANCTIFICATUR NOMEN TUUM, ADVENIAT REGNUM TUUM
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button id="searchButton" type="button" class="btn btn-primary">Искать</button>
             </div>
         </div>
     </div>
-</body>
-
-</html>
+</div>
+{% endblock %}

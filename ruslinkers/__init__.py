@@ -29,6 +29,14 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    @app.route('/', methods=['GET'])
+    def home():
+        return render_template('home.html')
+
+    @app.route('/participants', methods=['GET'])
+    def participants():
+        return render_template('participants.html')
+
     # show unit
     @app.route('/units/<linker>', methods=['GET','POST'])
     def units(linker: str):

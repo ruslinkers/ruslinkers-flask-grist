@@ -1,6 +1,7 @@
 $(document).ready(function () {
     var $container = $('#sidebar'),
-        $scrollTo = $('a.active');
+        $scrollTo = $('a.lnkr.active');
+    // $container.scrollTop($scrollTo.position().top + $container.scrollTop());
     $container.scrollTop(
         $scrollTo.offset().top - $container.offset().top + $container.scrollTop()
     );
@@ -50,18 +51,18 @@ $(document).ready(function () {
     $(".toggleSearch").on("change", function () {
         target = $('#' + $(this).attr('data-toggle'));
         console.log(target);
-        if(this.checked) {
+        if (this.checked) {
             target.removeAttr('disabled');
         }
         else {
-            target.attr('disabled','true');
+            target.attr('disabled', 'true');
         }
     });
 
-    $("#searchButton").on("click", function() {
-        let params="";
-        $(".searchData").each(function(i, obj) {
-            if(!obj.hasAttribute('disabled')) {
+    $("#searchButton").on("click", function () {
+        let params = "";
+        $(".searchData").each(function (i, obj) {
+            if (!obj.hasAttribute('disabled')) {
                 params += '?' + obj.id + '=' + $(this).val();
             }
         })
