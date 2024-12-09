@@ -2,7 +2,7 @@ import os
 
 from collections import defaultdict
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_file
 
 from ruslinkers.database import db_session
 from ruslinkers.models import *
@@ -28,6 +28,11 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    @app.route('/oss-connectors/<path:path>', methods=['GET'])
+    def oss_connectors(path):
+        # return send_file(url_for('static', filename='oss-connectors-r/_site/' + path))
+        return app.send_static_file('oss-connectors-r/_site/' + path)
 
     @app.route('/', methods=['GET'])
     def home():

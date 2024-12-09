@@ -1,3 +1,6 @@
 [submodule "ruslinkers/static/bootstrap"]
 	path = ruslinkers/static/bootstrap
 	url = https://github.com/twbs/bootstrap.git
+[submodule "ruslinkers/static/oss-connectors-r"]
+	path = ruslinkers/static/oss-connectors-r
+	url = https://github.com/ruslinkers/oss-connectors-r.git
