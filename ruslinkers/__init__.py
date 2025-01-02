@@ -33,6 +33,11 @@ def create_app(test_config=None):
     def oss_connectors(path):
         # return send_file(url_for('static', filename='oss-connectors-r/_site/' + path))
         return app.send_static_file('oss-connectors-r/_site/' + path)
+    
+    @app.route('/bezhta-connectors/<path:path>', methods=['GET'])
+    def bezhta_connectors(path):
+        # return send_file(url_for('static', filename='oss-connectors-r/_site/' + path))
+        return app.send_static_file('bezhta-connectors-r/_site/' + path)    
 
     @app.route('/', methods=['GET'])
     def home():
