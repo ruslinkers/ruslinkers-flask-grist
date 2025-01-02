@@ -4,3 +4,6 @@
 [submodule "ruslinkers/static/oss-connectors-r"]
 	path = ruslinkers/static/oss-connectors-r
 	url = https://github.com/ruslinkers/oss-connectors-r.git
+[submodule "ruslinkers/static/bezhta-connectors-r"]
+	path = ruslinkers/static/bezhta-connectors-r
+	url = https://github.com/ruslinkers/bezhta-connectors-r.git
