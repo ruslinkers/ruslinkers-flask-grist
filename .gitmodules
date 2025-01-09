@@ -7,3 +7,6 @@
 [submodule "ruslinkers/static/bezhta-connectors-r"]
 	path = ruslinkers/static/bezhta-connectors-r
 	url = https://github.com/ruslinkers/bezhta-connectors-r.git
+[submodule "ruslinkers/static/fu-connectors-r"]
+	path = ruslinkers/static/fu-connectors-r
+	url = https://github.com/ruslinkers/fu-connectors-r.git
