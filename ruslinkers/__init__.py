@@ -38,6 +38,11 @@ def create_app(test_config=None):
     def bezhta_connectors(path):
         # return send_file(url_for('static', filename='oss-connectors-r/_site/' + path))
         return app.send_static_file('bezhta-connectors-r/_site/' + path)    
+    
+    @app.route('/uralic-connectors/<path:path>', methods=['GET'])
+    def uralic_connectors(path):
+        # return send_file(url_for('static', filename='oss-connectors-r/_site/' + path))
+        return app.send_static_file('fu-connectors-r/_site/' + path)    
 
     @app.route('/', methods=['GET'])
     def home():
