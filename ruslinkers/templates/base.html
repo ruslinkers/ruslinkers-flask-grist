@@ -88,21 +88,23 @@
         {% endif %}
     </div>
     {% if is_text is false %}
-    {% set parvalmap =
-    target.parametervalue_mappings|selectattr('parameter','eq',param)|sort(attribute='parametervalue_id')|first() %}
-    {% set exs = parvalmap.examples %}
-    {% set collapse_id = 'examples_' ~ class ~ '_' ~ target.id ~ '_' ~ parvalmap.parametervalue_id %}
-    {% if parvalmap.examples %}
-    <p class="d-inline-flex gap-1">
-        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#{{collapse_id}}"
-            aria-expanded="false" aria-controls="{{collapse_id}}">
-            Примеры
-        </button>
-    </p>
-    <div class="collapse" id="{{collapse_id}}">
-        {{ examples_macro(parvalmap.examples,target.id,param.id,class = class) }}
-    </div>
-    {% endif %}
+        {% set parvalmap =
+        target.parametervalue_mappings|selectattr('parameter','eq',param)|sort(attribute='parametervalue_id') %}
+        {% if parvalmap %}
+            {% set exs = parvalmap.examples %}
+            {% set collapse_id = 'examples_' ~ class ~ '_' ~ target.id ~ '_' ~ parvalmap.parametervalue_id %}
+            {% if parvalmap.examples %}
+                <p class="d-inline-flex gap-1">
+                    <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#{{collapse_id}}"
+                        aria-expanded="false" aria-controls="{{collapse_id}}">
+                        Примеры
+                    </button>
+                </p>
+                <div class="collapse" id="{{collapse_id}}">
+                    {{ examples_macro(parvalmap.examples,target.id,param.id,class = class) }}
+                </div>
+            {% endif %}
+        {% endif %}
     {% endif %}
 </div>
 {% endfor %}

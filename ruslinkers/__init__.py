@@ -82,6 +82,13 @@ def create_app(test_config=None):
         stmt = db.select(Unit)
         if request.args.get("search-pos") is not None:
             stmt = stmt.where(Meaning.pos == request.args.get("search-pos")).where(Meaning.unit_id == Unit.id)
+        if request.args.get("search-dict") is not None:
+            # stmt = stmt.where(Source.id == request.args.get("search-dict"))
+            stmt = stmt.where(sources_to_units.c.source_id == request.args.get("search-dict")).where(sources_to_units.c.unit_id == Unit.id)
+        if request.args.get("search-conn") is not None:
+            stmt = stmt.where(Unit.linker == request.args.get("search-conn"))
+        if request.args.get("search-correl") is not None:
+            stmt = stmt.where(FormType.keyword == 'correl').where(Form.formtype_id == FormType.id and Form.unit_id == Unit.id)
 
         units = db_session.scalars(stmt.distinct()).all()
 

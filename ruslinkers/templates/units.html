@@ -315,7 +315,7 @@
                                             <select id="search-pos" class="form-select form-select-sm searchData"
                                                 disabled multiple size="3">
                                                 {% for pos in pos_list %}
-                                                <option val="{{pos}}">{{pos}}</option>
+                                                <option value="{{pos}}">{{pos}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -330,7 +330,7 @@
                                             <select id="search-dict" class="form-select form-select-sm searchData"
                                                 disabled multiple size="3">
                                                 {% for source in sources %}
-                                                <option val="{{source.id}}">{{source.biblio}}</option>
+                                                <option value="{{source.id}}">{{source.biblio}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -369,13 +369,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
+                <!-- <div class="row justify-content-center">
                     <div class="col-10">
                         <div class="card bg-light mt-3">
                             SANCTIFICATUR NOMEN TUUM, ADVENIAT REGNUM TUUM
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>

@@ -60,10 +60,13 @@ $(document).ready(function () {
     });
 
     $("#searchButton").on("click", function () {
-        let params = "";
+        let params = "?";
         $(".searchData").each(function (i, obj) {
+            j = 0;
             if (!obj.hasAttribute('disabled')) {
-                params += '?' + obj.id + '=' + $(this).val();
+                if (j > 0) params += '&';
+                params += obj.id + '=' + $(this).val();
+                j++;
             }
         })
         window.location.href = window.location.href.split(/[?#]/)[0] + params;

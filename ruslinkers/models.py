@@ -279,6 +279,8 @@ class FormToParameterValue(Base):
     parametervalue_id: Mapped[int] = mapped_column(ForeignKey('parametervalues.id'), primary_key=True) # Maybe add constraints that ensure that correct parameters are chosen
     parametervalue: Mapped["ParameterValue"] = relationship()
 
+    parameter: AssociationProxy["Parameter"] = association_proxy("parametervalue", "parameter")
+
     examples: Mapped[Set["Example"]] = relationship(secondary=examples_to_form_parametervalues, back_populates="form_parametervalues")
     comments: Mapped[Set["Comment"]] = relationship(secondary=comments_to_form_parametervalues)
 
