@@ -1,4 +1,16 @@
 $(document).ready(function () {
+    // Add scrollspy
+    const scrollSpy = new bootstrap.ScrollSpy("#text-moreDB", {
+        target: '#navbar-moreDB'
+    });
+
+    $('#moreDB').on("shown.bs.modal", function () {
+        scrollSpy.refresh();
+    });
+    $('#semfield-list').on("shown.bs.collapse", function () {
+        scrollSpy.refresh();
+    })
+
     var $container = $('#sidebar'),
         $scrollTo = $('a.lnkr.active');
     // $container.scrollTop($scrollTo.position().top + $container.scrollTop());
@@ -70,5 +82,5 @@ $(document).ready(function () {
             }
         })
         window.location.href = window.location.href.split(/[?#]/)[0] + params;
-    })
+    });
 });
