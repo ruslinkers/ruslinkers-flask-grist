@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
+{% block script %}
+<script src="{{url_for('static', filename='units.js')}}"></script>{% endblock %}
+
 {% block title %}Коннекторы{% endblock %}
 
 {% block content %}
@@ -7,7 +10,8 @@
 <div class="d-flex flex-row">
     <div class="d-flex col-12 flex-column">
         <h4 class="display-4">Рускон — база коннекторов русского языка</h4>
-        <h5><a href="#">Подробнее о базе Рускон</a></h5>
+        <h5><button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#moreDB">Подробнее о базе
+                Рускон</button></h5>
     </div>
 </div>
 <div class="d-flex flex-row flex-nowrap h-75">
@@ -380,6 +384,1028 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                 <button id="searchButton" type="button" class="btn btn-primary">Искать</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="moreDB" tabindex="-1" aria-labelledby="moreDBLabel" aria-labelledby="moreDBLabel"
+    aria-hidden="false">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="moreDBLabel">Подробнее о базе Рускон</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-row h-100">
+                    <div class="d-flex flex-column col-3">
+                        <nav id="navbar-moreDB" class="h-100 flex-column align-items-stretch pe-4 border-end overflow-auto">
+                            <ul class="nav nav-pills flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#conj-conn">Союзы и коннекторы</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#db-struct">Структура базы</a>
+                                        <ul class="nav nav-pills flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link ms-2 my-1" href="#ref-module">Справочный модуль</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link ms-2 my-1" href="#sem-module">Семантический модуль<button 
+                                                    class="btn dropdown-toggle" type="button" 
+                                                    data-bs-toggle="collapse" data-bs-target="#semmod-list" aria-expanded="false" 
+                                                    aria-controls="semmod-list"></button></a>
+                                                <ul class="nav nav-pills collapse" id="semmod-list">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link ms-4 my-1" href="#semfields">Семантические поля
+                                                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="collapse" 
+                                                            data-bs-target="#semfield-list" aria-expanded="false" aria-controls="semfield-list"></button></a>
+                                                                <ul class="nav nav-pills flex-column collapse" id="semfield-list">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#conjunction">1. Конъюнкция</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#disjunction">2. Дизъюнкция</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#adversative">3. Адверсативность</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#taxis">4. Таксис</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#purpose">5. Цель</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#cause">6. Причина</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#condition">7. Условие</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#consequence">8. Следствие</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#substitution">9. Заместительные отношения</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#comparison">10. Сравнение</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#degree">11. Степень</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#means">12. Средство</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#prop">13. ПУ (пропозициональная установка)</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#mereology">14. Мереология</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#reformulation">15. Переформулирование</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#source">16. Источник информации</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#composition">17. Композиция текста</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#verification">18. Верификация</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link ms-4 my-1" href="#description-model">Модель описания значения</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link ms-4 my-1" href="#pragmatic">Прагматические употребления</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link ms-4 my-1" href="#examples">Примеры</a>
+                                                            </li>                                                            
+                                                            <li class="nav-item">
+                                                                <a class="nav-link ms-4 my-1" href="#clausal">Способность употребляться с клаузами</a>
+                                                            </li>                                                            
+                                                        </ul>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link ms-2 my-1" href="#syntax-module">Синтаксический модуль<button 
+                                                            class="btn dropdown-toggle" type="button" 
+                                                            data-bs-toggle="collapse" data-bs-target="#syntmod-list" aria-expanded="false" 
+                                                            aria-controls="syntmod-list"></button></a>
+                                                        <ul class="nav nav-pills flex-column collapse" id="syntmod-list">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link ms-4 my-1" href="#syntax-parameters">Синтаксические параметры<button class="btn dropdown-toggle" type="button" 
+                                                                    data-bs-toggle="collapse" data-bs-target="#syntparam-list" aria-expanded="false" 
+                                                                    aria-controls="syntparam-list"></button></a>
+                                                                <ul class="nav nav-pills flex-column collapse" id="syntparam-list">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#components">А. Состав и синтаксические 
+                                                                            свойства коннектора</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#quasi-correlate">Б. Характеристики 
+                                                                            квази-коррелята</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#clause-properties">В. Свойства 
+                                                                            клаузы с коннектором</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link ms-4 my-1" href="#complex-cases">Сложные случаи</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link ms-2 my-1" href="#diachrony-module">Диахронический модуль<button 
+                                                            class="btn dropdown-toggle" type="button" 
+                                                            data-bs-toggle="collapse" data-bs-target="#diamod-list" aria-expanded="false" 
+                                                            aria-controls="diamod-list"></button></a>
+                                                        <ul class="nav nav-pills flex-column collapse" id="diamod-list">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link ms-4 my-1" href="#diachrony-parameters">Диахронические 
+                                                                    параметры<button class="btn dropdown-toggle" type="button" 
+                                                                    data-bs-toggle="collapse" data-bs-target="#diaparam-list" aria-expanded="false" 
+                                                                    aria-controls="diaparam-list"></button></a>                                                                
+                                                                <ul class="nav nav-pills flex-column collapse" id="diaparam-list">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link ms-5 my-1" href="#diachrony-general">Общие</a>
+                                                                        <a class="nav-link ms-5 my-1" href="#diachrony-sem">Историческая семантика</a>
+                                                                        <a class="nav-link ms-5 my-1" href="#diachrony-synt">Исторический синтаксис</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#links">Литература, источники данных<button 
+                                                class="btn dropdown-toggle" type="button" 
+                                                data-bs-toggle="collapse" data-bs-target="#links-list" aria-expanded="false" 
+                                                aria-controls="links-list"></button></a>
+                                            <ul class="nav nav-pills flex-column collapse" id="links-list">
+                                                <li class="nav-item">
+                                                    <a class="nav-link ms-2 my-1" href="#references">Литература</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link ms-2 my-1" href="#sources">Источники данных</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#cite">Как ссылаться</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                    </div>
+                    <div class="d-flex flex-column col-9">
+                        <div id="text-moreDB" data-bs-spy="scroll" class="overflow-auto" data-bs-target="#navbar-moreDB"
+                            data-bs-smooth-scroll="true" tabindex="0" style="word-wrap: break-word;">
+                            <div class="container-fluid">
+                                <div id="conj-conn">
+                                    <h4>Союзы и коннекторы</h4>
+                                    <p>Союзы обычно характеризуются как слова, связывающие предложения или члены
+                                        предложения [АГ-80]. Однако предложения могут связываться не только союзами, но и частицами
+                                        (ведь, же), наречиями (теперь, потом), вводными словами и конструкциями (в
+                                        общем, вместе с тем) и различными сочетаниями, необязательно включающими союзы, напр.,
+                                        «в том числе», «а не то», «разве что» и т.п. Некоторые единицы такого рода попадают
+                                        в словари с пометой «союз», некоторые характеризуются как «союзное соединение»,
+                                        «союз + союз» или просто «в значении союза», «аналог союза». В настоящей базе
+                                        используется понятие «коннекторы» – это лексемы, словосочетания и конструкции, которые служат
+                                        для связи клауз в составе одного предложения и выражают тот или иной тип смыслового
+                                        (логико-семантического, риторического и т.п.) отношения между ними. В силу того,
+                                        что определение коннектора – прежде всего, функциональное, в этот класс попадают
+                                        слова самых разных частей речи, а также конструкции с предлогами (в силу того что) и
+                                        глаголами (короче говоря). С другой стороны, важно уточнить, что коннекторы
+                                        (connectives, или clause linkers) определяются как единицы, соединяющие именно
+                                        клаузы, поэтому союзы и союзные средства, связывающие члены предложения (напр.
+                                        «даже», «именно»), не входят в число коннекторов и не включаются в базу Рускон.
+                                        Базовый инвентарь коннекторов составлен на основе АГ-80, словарей БТС, МАС,
+                                        [Ушаков 1935-1940, Морковкин 2003, Ефремова 2004, Шимчук, Щур 1999] и базы
+                                        Конструктикон. В настоящий момент, база данных включает в себя 718 единиц, из них 315 союзов, 52
+                                        частицы, 99 вводных слов и сочетаний (включая сочетания с пометой «аналог
+                                        вводного слова/сочетания»), 23 наречия, 4 союзных слова, 132 коннектора без частеречной
+                                        пометы (включая «аналоги союзов» из АГ-80), а также 93 сочетания (соединения)
+                                        различного типа, включая фразеологические обороты.</p>
+                                </div>
+                                <div id="db-struct">
+                                    <h4>Структура базы</h4>
+                                    <p>База состоит из нескольких модулей: справочный модуль, семантический,
+                                        синтаксический и диахронический модуль.</p>
+                                    <div id="ref-module">
+                                        <p><strong>Справочный модуль</strong> отображается сразу после лексического входа и
+                                            включает информацию из словарей или из грамматики:
+                                        </p>
+                                        <ul>
+                                            <li>фонетический вариант;</li>
+                                            <li>часть речи или лексико-грамматический статус;</li>
+                                            <li>тип (для частиц);</li>
+                                            <li>словари, в которых зафиксирована данная единица (если коннектор введён
+                                                впервые в базе Рускон, то стоит помета «Рускон»);</li>
+                                            <li>значение/значения согласно источникам;</li>
+                                            <li>стилистические ограничения.</li>
+                                        </ul>
+                                    </div>
+                                    <div id="sem-module">
+                                        <p><strong>Семантический модуль</strong> включает значения, которые выделены
+                                            авторами Рускон. В наши задачи не входит подробное описание каждой единицы, которое можно найти в
+                                            специальных статьях и исследованиях. Приводится базовая информация о значении
+                                            коннектора в рамках семантических полей (причина, цель, адверсатив и т.п.) и их
+                                            подзначений; в некоторых случаях даются семантические комментарии и ссылки на
+                                            литературу, посвященную данной единице. Далее, фиксируются прагматические
+                                            употребления коннектора – инферентивное, иллокутивное, метатекстовое.
+                                            Список семантических полей базируется на классификациях семантических отношений
+                                            в составе сложного предложения [АГ-80; Thompson, Longacre 1985; Kortmann 2012;
+                                            Tsunoda 2018; Инькова, Манзотти 2019: 72-85] и списке риторических отношений [Mann,
+                                            Thompson 1988; Кибрик, Подлесская 2009]. Семантические поля ниже вводятся арабскими
+                                            цифрами; далее дается список подзначений семантических полей.</p>
+                                        <div id="semfields">
+                                            <div id="conjunction">
+                                                <h5>1. Конъюнкция</h5>
+                                                <dl class="row">
+                                                    <dt class="col-3">Соединение ситуаций</dt>
+                                                    <dd class="col-9">(<i>Ветер воет, и море шумит</i>)</dd>
+                                                    <dt class="col-3">Сопоставительность (= контраст)</dt>
+                                                    <dd class="col-9">Данное подзначение есть у союза «а», у
+                                                        коннекторов «тогда как», «в то время как», «если… то» (<i>Кем работают
+                                                            ваши родители? Мама врач, а отец адвокат</i>; <i>Если в Москве в
+                                                            настоящий момент идет дождь, то в Твери сейчас жарко</i>).</dd>
+                                                    <dt class="col-3">Присоединение</dt>
+                                                    <dd class="col-9">фон, комментарий, оценка и т.п. (<i>Ель растет перед
+                                                            дворцом, а под ней хрустальный дом</i>; <i>Он нечист на руку, а я этого не
+                                                            люблю</i>; <i>Один раз у меня отлетел каблук, а было холодно, шел дождь</i>)</dd>
+                                                    <dt class="col-3">Сопутствование</dt>
+                                                    <dd class="col-9">P, причем Q / при этом Q (<i>Такие условия определяют
+                                                            сознание людей, и при этом / причем они могут этого не знать</i>)</dd>
+                                                    <dt class="col-3">Анти-сопутствование</dt>
+                                                    <dd class="col-9">‘А & не В’ при условии, что В по смыслу связано с А
+                                                        (<i>Как писал К. Маркс, люди «поставлены в такие условия, которые
+                                                            определяют их сознание без того, чтобы они обязательно это знали»</i> [НКРЯ])
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                            <div id="disjunction" class="row">
+                                                <h5 class="col-3">2. Дизъюнкция</h5>
+                                                <p class="col-9">(<i>Васи нет в университете или мы его не заметили</i>)</p>
+                                            </div>
+                                            <div id="adversative">
+                                                <h5>3. Адверсативность</h5>
+                                                <dl class="row">
+                                                    <dt class="col-3">Противительность</dt>
+                                                    <dd class="col-9">«но», «зато» (<i>Я собрался за хлебом, но булочная
+                                                        оказалась закрыта</i>; <i>Я бы пошел туда, (да) только времени совсем нет</i>;
+                                                        <i>Статья интересная, только она сильно превышает разрешенный объем</i>)</dd>
+                                                    <dt class="col-3">Уступка</dt>
+                                                    <dd class="col-9">«хотя» (<i>Хотя хозяин был неприветлив, гостя это не смутило</i>). 
+                                                        В уступку также включается допущение, выражаемое коннекторами 
+                                                        «пусть, пускай», с реальным условием (<i>Пусть мы и ошиблись, еще можно все исправить</i>: 
+                                                        ср. «согласен, что мы ошиблись»); или с ирреальным условием (<i>Пускай в Молчалине ум бойкий, 
+                                                        гений смелый, но есть ли в нем та страсть? то чувство? пылкость та?</i>: ср. «если даже в Молчалине 
+                                                        ум бойкий» и т.п.). Данным коннекторам приписывается два семантических поля: уступка и условие 
+                                                        (см. ниже о совмещении семантических полей).</dd>
+                                                </dl>
+                                            </div>
+                                            <div id="taxis">
+                                                <div class="row">
+                                                    <h5 class="col-3">4. Таксис</h5>
+                                                    <p class="col-9">временные отношения в нарративной цепочке и в рамках предложения; напр., 
+                                                        «когда», «пока», «как только»</p>
+                                                </div>
+                                                <dl class="row">
+                                                    <dt class="col-3">Одновременность</dt>
+                                                    <dd class="col-9"></dd>
+                                                    <dt class="col-3">Предшествование</dt>
+                                                    <dd class="col-9"></dd>
+                                                    <dt class="col-3">Следование</dt>
+                                                    <dd class="col-9"></dd>
+                                                    <dt class="col-3">Антиследование</dt>
+                                                    <dd class="col-9">(<i>Она поймала чашку прежде, чем та упала на пол</i>)<br>Включает превентив (<i>Прежде, чем 
+                                                        ругать ребенка, вспомни, как трудно ему привыкать к новой обстановке</i>).</dd>
+                                                </dl>
+                                                <div class="row">
+                                                    <p>Кроме данных подзначений, для коннекторов, выражающих таксис, мы фиксируем в семантических комментариях 
+                                                        значения параметров анкеты Н.А. Муравьева [Муравьев 2017], если они релевантны для рассматриваемого 
+                                                        коннектора:</p>
+                                                </div>
+                                                <dl class="row">
+                                                    <dt class="col-3">(i) Контактность событий</dt>
+                                                    <dd class="col-9">
+                                                        <ul>
+                                                            <li>контактное расположение: «как/чуть/лишь только P, Q», «едва P, Q»</li>
+                                                            <li>дистантное расположение: «спустя T после того как P, Q», «через T после того как P, Q», 
+                                                                «за T до того как P, Q», «задолго до того как P, Q»</li>
+                                                        </ul>
+                                                    </dd>
+                                                    <dt class="col-3">(ii) Временные рамки фонового события</dt>
+                                                    <dd class="col-9">
+                                                        <ul>
+                                                            <li>интервал от начальной точки: «с/до тех пор как P, Q», «с/до того момента как P, Q»</li>
+                                                            <li>интервал до конечной точки: «пока/покамест (не) P, Q», «за то время как P, Q».</li>
+                                                        </ul>
+                                                    </dd>
+                                                    <dt class="col-3">(iii) Длительность (и актуальность) фонового события</dt>
+                                                    <dd class="col-9">
+                                                        <ul>
+                                                            <li>длительное (преимущественно общефактическое): «в ту пору когда P, Q», «в те времена когда P, Q», 
+                                                                «в те годы, когда P, Q»</li>
+                                                            <li>кратковременное (преимущественно актуально-длительное): «в тот момент как P, Q», 
+                                                                «в ту (самую) минуту/секунду как P, Q», «в процессе того, как P, Q»</li>
+                                                        </ul>
+                                                    </dd>
+                                                    <dt class="col-3">(iv) Другие аспектуальные характеристики событий</dt>
+                                                    <dd class="col-9">
+                                                        <ul>
+                                                            <li>многократность: «всякий/каждый раз как/когда P, Q»</li>
+                                                            <li>градуальность: «по мере того как P, Q»</li>
+                                                        </ul>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                            <div id="purpose" class="row">
+                                                <h5 class="col-3">5. Цель</h5>
+                                                <p class="col-9">напр. «чтобы»</p>
+                                            </div>
+                                            <div id="cause">
+                                                <div class="row">
+                                                    <h5 class="col-3">6. Причина</h5>
+                                                    <p class="col-9">напр. «потому что»</p>
+                                                </div>
+                                                <dl class="row">
+                                                    <dt class="col-3">Собственно причина</dt>
+                                                    <dd class="col-9">(<i>Он не может заснуть, потому что голоден</i>)</dd>
+                                                    <dt class="col-3">Благоприятное обстоятельство</dt>
+                                                    <dd class="col-9">(<i>Артист продолжает удивлять публику, благо он это умеет</i>; 
+                                                        <i>В обсервационной операционной лампа на стол грохнулась — хорошо, никого на столе не было</i>)</dd>
+                                                </dl>
+                                                <div class="row"><p>NB. Обоснование классифицируется как причина в инферентивном употреблении 
+                                                    (<i>Они дома, потому что / ведь в окнах (же) горит свет</i>).</p></div>
+                                            </div>
+                                            <div id="condition">
+                                                <h5>7. Условие</h5>
+                                                <dl class="row">
+                                                    <dt class="col-3">Реальное</dt>
+                                                    <dd class="col-9">напр. «если»</dd>
+                                                    <dt class="col-3">Ирреальное</dt>
+                                                    <dd class="col-9">напр. «если бы»</dd>
+                                                    <dt class="col-3">Посылка</dt>
+                                                    <dd class="col-9">«реализованное условие», напр. «раз»; в некоторых употреблениях тж. «если (уж)», 
+                                                        «коли (уж)» (<i>Раз пришёл, заходи</i>)</dd>
+                                                    <dt class="col-3">Антиусловие</dt>
+                                                    <dd class="col-9">напр. «иначе»; «а не то»; «в противном случае»</dd>
+                                                    <dt class="col-3">Альтернативное условие</dt>
+                                                    <dd class="col-9">«если же»; «а если»: маркирует второе условие в цепочке придаточных после первой клаузы с «если»</dd>
+                                                </dl>
+                                            </div>
+                                            <div id="consequence">
+                                                <div class="row">
+                                                    <h5 class="col-3">8. Следствие</h5>
+                                                    <div class="col-9">напр. «так что», «так» (<i>Книга эта очень ценная, так ты ее береги</i>), «в результате», 
+                                                        «в итоге», «в результате того, что»</div>
+                                                </div>
+                                                <dl class="row">
+                                                    <dt class="col-3">Результат</dt>
+                                                    <dd class="col-9">одна ситуация вызывает другую (<i>Иван все объяснил директору, и (в результате / поэтому) 
+                                                        его не уволили</i>)</dd>
+                                                    <dt class="col-3">Умозаключение</dt>
+                                                    <dd class="col-9">ситуация вызывает предположение об истинности утверждения (<i>У них в окне горит свет, 
+                                                        значит / так что они дома</i>)</dd>
+                                                    <dt class="col-3">Антицель</dt>
+                                                    <dd class="col-9">(<i>В 2014 г. она переехала в Санкт-Петербург, чтобы через год умереть от воспаления легких</i>)</dd>
+                                                    <dt class="col-3">Антиследствие</dt>
+                                                    <dd class="col-9">(<i>Я не так глупа, чтобы поддаться на эту провокацию</i>)</dd>
+                                            </div>
+                                            <div id="substitution" class="row">
+                                                <h5 class="col-3">9. Заместительные отношения</h5>
+                                                <div class="col-9">напр. «вместо того чтобы», конструкция со сравнительной степенью наречия + «чем» 
+                                                    (<i>Я лучше умру, чем выйду за него замуж</i>; <i>Мы же что-то там такое наспех вызубриваем, нет того, 
+                                                    чтобы радоваться каждому новому английскому слову…</i> [НКРЯ])</div>
+                                            </div>
+                                            <div id="comparison">
+                                                <div class="row">
+                                                    <h5 class="col-3">10. Сравнение</h5>
+                                                    <div class="col-9">напр. «как», «словно» и др.</div>
+                                                </div>
+                                                <dl class="row">
+                                                    <dt class="col-3">Экватив</dt>
+                                                    <dd class="col-9">напр. «так же как» (В Стране тюльпанов сады практически не знают ограждений, так же, 
+                                                        как окна домов не знают штор. [НКРЯ])</dd>
+                                                    <dt class="col-3">Симилятив</dt>
+                                                    <dd class="col-9">напр. «как» (<i>Он говорит, как поёт</i>)</dd>
+                                                    <dt class="col-3">Компаратив</dt>
+                                                    <dd class="col-9">напр. «чем» (<i>Он рассказывает об этих событиях интереснее, 
+                                                        чем пишет его брат в своих очерках</i>)</dd>
+                                                </dl>
+                                                <div class="row"><p>NB. Сравнительные и сопоставительные предложения, предложения с квалифицирующим
+                                                    значением (АГ-80) объединены в одну зону.</p></div>
+                                            </div>
+                                            <div id="degree">
+                                                <div class="row">
+                                                    <h5 class="col-3">11. Степень</h5>
+                                                    <div class="col-9">напр., Х «настолько P, что Q»</div>
+                                                </div>
+                                                <dl class="row">
+                                                    <dt class="col-3">Собственно степень</dt>
+                                                    <dd class="col-9">напр. «настолько», «столь» и т.д.</dd>
+                                                    <dt class="col-3">Пропорция</dt>
+                                                    <dd class="col-9">напр. «чем + прилагательное в сравнительной степени, тем + прилагательное в сравнительной 
+                                                        степени» (<i>Чем дальше в лес, тем больше дров</i>)</dd>
+                                                </dl>
+                                            </div>
+                                            <div id="means" class="row">
+                                                <h5 class="col-3">12. Средство</h5>
+                                                <div class="col-9">напр. «тем самым», «за счет того что» (<i>Нам это удалось за счет того, что кирпич 
+                                                    производим из сырья, доступного практически в любом месте</i> [НКРЯ])</div>
+                                            </div>
+                                            <div id="prop">
+                                                <h5>13.	ПУ (пропозициональная установка), или сентенциальные актанты</h5>
+                                                <dl class="row">
+                                                    <dt class="col-3">Желание</dt>
+                                                    <dd class="col-9">напр. «чтобы», «да чтобы»</dd>
+                                                    <dt class="col-3">Ментальная</dt>
+                                                    <dd class="col-9">включая знание, мнение и логический вывод; «что», недостоверное, ложное мнение: «будто»</dd>
+                                                    <dt class="col-3">Цитирование</dt>
+                                                    <dd class="col-9">напр. «типа», «мол», «что», «якобы»</dd>
+                                                    <dt class="col-3">Эмоции</dt>
+                                                    <dd class="col-9">включая апрехенсив «как бы не» (<i>Я боюсь, как бы дождь не намочил белье</i>) и субъективную 
+                                                        оценку («хорошо», «плохо», «жаль»)</dd>
+                                                    <dt class="col-3">Восприятие</dt>
+                                                    <dd class="col-9">включая событие при «видеть», «помнить», «забывать», как и ложное восприятие 
+                                                        «чудиться/мерещиться, будто/словно»</dd>
+                                                </dl>
+                                            </div>
+                                            <div id="mereology" class="row">
+                                                <h5 class="col-3">15. Мереология</h5>
+                                                <div class="col-9">связывает элемент и множество, часть и целое, частное и общее и т.п.</div>
+                                                <dl class="row">
+                                                    <dt class="col-3">Конкретизация</dt>
+                                                    <dd class="col-9">риторическое отношение Elaboration, напр. «к примеру», «например», «скажем», 
+                                                        «то есть» (<i>Но при всем этом считаю фильм удачным, особенно Крючкова — молодец</i> [НКРЯ])</dd>
+                                                    <dt class="col-3">Аддитивность</dt>
+                                                    <dd class="col-9">добавление аналогичной ситуации, напр., «кроме того», «вдобавок», «а ещё» 
+                                                        (<i>Кроме того, что нам продали просроченное лекарство, нас обсчитали</i>)</dd>
+                                                    <dt class="col-3">Исключение</dt>
+                                                    <dd class="col-9">напр., «кроме» (<i>Сюда редко заходят, разве иногда забредет охотник</i> [Морковкин 2003])</dd>
+                                                    <dt class="col-3">Обобщение</dt>
+                                                    <dd class="col-9">напр., «в общем», «вообще (говоря)», «одним словом» (<i>Окна поменяли, поставили новые двери - 
+                                                        вообще говоря, школа стала выглядеть намного лучше</i>)</dd>
+                                                    <dt class="col-3">Иерархизация</dt>
+                                                    <dd class="col-9">напр., «главное», «в особенности», «особенно», «главным образом», «более того» 
+                                                        (<i>Южная Каталония не так богата достопримечательностями, как север страны; в том числе это касается и 
+                                                        побережья</i> [НКРЯ])</dd>
+                                                </dl>
+                                            </div>
+                                            <div id="reformulation" class="row">
+                                                <h5 class="col-3">16. Переформулирование</h5>
+                                                <div class="col-9"><p>напр. пояснительное «то есть», перифрастическое «иными словами», 
+                                                    резюмирующее «одним словом», «короче»</p></div>
+                                            </div>
+                                            <div id="source" class="row">
+                                                <h5 class="col-3">17. Источник информации</h5>
+                                                <div class="col-9"><p>отношение выражаемого мнения к источнику, из которого оно взято 
+                                                    (<i>Как я говорил выше…&nbsp;/&nbsp;Согласно источникам…</i>)</p></div>
+                                            </div>
+                                            <div id="composition">
+                                                <h5 class="col-3">18. Композиция текста</h5>
+                                                <dl class="row">
+                                                    <dt class="col-3">Начало текста</dt>
+                                                    <dd class="col-9">устаревшие употребления «как», «уж», «что»</dd>
+                                                    <dt class="col-3">Смена топика в дискурсе</dt>
+                                                    <dd class="col-9">(<i>Я к вам привык. У вас такой красивый голос. – Ирина усмехнулась.
+                                                    — А давайте увидимся, в кино сходим, — предложил Кямал.</i> [НКРЯ]; <i>…кварцевые 
+                                                    часы Rocket от Corum — ремешок из розовой крокодиловой кожи под цвет циферблата; а чего стоит
+                                                    сам циферблат: выпуклый, треугольный, по краям выложены 69 бриллиантов.</i> [НКРЯ])</dd>
+                                                    <dt class="col-3">Возврат к прежнему топику</dt>
+                                                    <dd class="col-9">напр. в начале реплики, возобновляющей прерванный разговор или возвращающей его к какой-л. 
+                                                        теме (<i>Так как же сударыня? Скажите одно только слово: да или нет?</i> [Гоголь, Женитьба]; 
+                                                        <i>Так о чем, бишь, я говорил? — продолжал он припоминая</i> [Л. Толстой, Казаки., цит. по МАС]); 
+                                                        тж. коннекторы «насчет того что», «относительно того что», «что касается того что», «что до того что»</dd>
+                                                </dl>
+                                            </div>
+                                            <div id="verification" class="row">
+                                                <h5 class="col-3">19. Верификация</h5>
+                                                <div class="col-9"><p>подтверждение истинности информации, содержащейся в другой клаузе, напр. «(и) правда», 
+                                                    «действительно», «в самом деле», «бесспорно»</p></div>
+                                            </div>
+                                        </div>
+                                        <div id="description-model">
+                                            <p>Итак, наша <b>модель описания значения</b> коннекторов выглядит следующим образом:</p>
+                                            <p class="text-center">
+                                                <strong>основное семантическое поле, подзначения<br>
+                                                + (при совмещении значений) второе семантическое поле, подзначения</strong>
+                                            </p>
+                                            <p>Второе семантическое поле фиксируется лишь у небольшого числа коннекторов. Мы постулируем два семантических поля 
+                                                только в тех случаях, когда анализируемый коннектор последовательно совмещает оба значения в рамках одного и того же 
+                                                контекста, например:</p>
+                                            <div class="row">
+                                                <div class="col-1">(1)</div>
+                                                <div class="col-11"><p><i>Хлопчатобумажная промышленность, введя в Англии рабство детей, в то же время дала толчок к 
+                                                    превращению рабского хозяйства Соединенных Штатов <…> в коммерческую систему эксплуатации.</i> [НКРЯ]</p></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-1">(2)</div>
+                                                <div class="col-11"><p><i>Если погода и испортится, (то) это ненадолго.</i></p></div>
+                                            </div>
+                                            <p>В обоих примерах зависимая клауза обозначает уступку, которая в первом примере вводится с помощью временного коннектора 
+                                                («несмотря на это дала толчок к…»), а во втором – с помощью условного союза и частицы <i>и</i>.  При этом временное значение 
+                                                коннектора в (1) и условное значение в (2) остается актуальным, налагая свои семантические ограничения на контекст. Что 
+                                                касается временного «в то время как», довольно часто оно используется для того, чтобы придать особую «пикантность» 
+                                                ситуации, как в следующем примере, где важен именно тот факт, что начальство щадит героя, но несмотря на это и 
+                                                одновременно с этим ищет на его место другого работника:</p>
+                                            </p>
+                                            <div class="row">
+                                                <div class="col-1">(3)</div>
+                                                <div class="col-11"><p><i>В Доме Счастья уже давно поставили вопрос о его увольнении, но начальство щадило его по 
+                                                    старой памяти, в то же время подыскивая подходящую кандидатуру на его место.</i> [НКРЯ]</p></div>
+                                            </div>
+                                            <p>
+                                                Такое употребление обоих коннекторов довольно типично [Апресян 2015: 74–77]; о регулярном употреблении «в то же время» 
+                                                в контексте уступительных союзов см. [Инькова в печ.]; сочетание «если» с «и» и «даже» во многих языках дает 
+                                                условно-уступительное значение – concessive conditional в [König 1986]. В силу этого, данное совмещение значений может
+                                                трактоваться в терминах денотативного пересечения семантических полей [Рахилина в печ.]. Пересечения наблюдаются также 
+                                                у полей сопоставления и одновременности («между тем», «между тем как» [Апресян 2015]), исключения и уступки 
+                                                («разве», «разве только», «разве лишь», «разве что»), адверсатива и сопоставления («а»), одновременности и сопоставления 
+                                                (наряду с тем что, наряду с этим).
+                                            </p>
+                                            <p>
+                                                Уточним, что совмещение семантических полей (наблюдаемое в одном и том же контексте) представляет собой особое явление, 
+                                                отличное от полисемии, когда один и тот же коннектор в<span style="letter-spacing: 3px"> разных </span>контекстах 
+                                                употребляется в разных значениях, ср., например, «так» конкретизации (<i>Вирусы очень живучи. Так, вирус гриппа сохраняет 
+                                                активность до пяти дней на поверхностях предметов</i> [116.ру. 2014]) и «так» исключения (<i>Не читал; так, 
+                                                перелистывал</i>). Полисемия в базе Рускон отражается иначе, нежели совмещение полей, а именно, арабскими цифрами внутри 
+                                                каждой словарной статьи. В основном, это соответствует разбиению значений под римскими цифрами в МАС, под 
+                                                арабскими цифрами в [БТС, Ушаков 1935-1940, Морковкин 2003, Ефремова 2004]; разрядам частиц и арабским 
+                                                цифрам в [Шимчук, Щур 1999].
+                                            </p>
+                                            <p>
+                                                После информации о семантических полях в базе следует семантический комментарий, где фиксируются особые значения 
+                                                рассматриваемой единицы и ссылки на литературу, где она обсуждается. Далее следуют основные примеры, 
+                                                иллюстрирующие значения, и примеры на прагматические употребления.
+                                            </p>
+                                        </div>
+                                        <div id="pragmatic">
+                                            <p><strong>Прагматические употребления</strong> – общий термин, который мы используем для ряда полипредикативных конструкций, 
+                                                где коннектор соединяет единицы разного уровня, т.е. не ситуации или пропозиции, а ситуации и речевые акты, 
+                                                ситуации и пропозиции, ситуации и метатекстовые фрагменты. Ср. понятие иллокутивного употребления союзов в 
+                                                [Падучева 1985; Иорданская 1988; Кобозева 2000; Санников 2005, 2008: 53–70; Пекелис 2013, 2018]; 
+                                                метатекстовый уровень в [Wierzbicka 1971; Инькова 2019].</p>
+                                            <p>Например, союз «если» может соединять отношением условия две ситуации (4), ситуацию и суждение (5), 
+                                                ситуацию и речевой акт (6), ситуацию и характеристику формулировки, ее описывающей (7).</p>
+                                            <div class="row">
+                                                <div class="col-1"></div>
+                                                <div class="col-11">Уровень ситуаций</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-1">(4)</div>
+                                                <div class="col-11"><p><i>Если в столовой нет котлет, поем макароны.</i></p></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-1"></div>
+                                                <div class="col-11">Инферентивный уровень (уровень логического вывода)</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-1">(5)</div>
+                                                <div class="col-11"><p><i>Если в столовой нет котлет, значит, мясо опять не завезли.</i></p></div>
+                                            </div>
+                                            <p>В отличие от (4), здесь выполнение условия ведет не к реализации ситуации в главной клаузе, 
+                                                а совершению логического умозаключения «мясо не завезли». Схожим образом, в (6) выполнение 
+                                                условия делает успешным речевой акт в главной предикации (а не истинность утверждения 
+                                                «борщ в холодильнике», которая никак не зависит от истинности зависимой клаузы).</p>
+                                            <div class="row">
+                                                <div class="col-1"></div>
+                                                <div class="col-11">Иллокутивный уровень (уровень речевого акта)</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-1">(6)</div>
+                                                <div class="col-11"><p><i>Если ты хочешь есть, борщ в холодильнике.</i></p></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-1"></div>
+                                                <div class="col-11">Метатекстовый уровень (комментирование говорящим плана выражения, самой ситуации, в которой 
+                                                произносится высказывание, соотношения высказывания с действительностью, 
+                                                взаимоотношений говорящего и слушающего и проч.)</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-1">(7)</div>
+                                                <div class="col-11"><p><i>Этот человек – мерзавец, если называть вещи своими именами.</i></p></div>
+                                            </div>
+                                            <p>NB. Уточним, что мы используем узкое понимание метатекста, предложенное в [Крюкова 2025], 
+                                                в отличие от [Инькова 2019] и др. работ, которые рассматривают в этом классе также средства 
+                                                когезии, обеспечивающие макродискурсивные связи (в приведенной выше семантической 
+                                                классификации показатели композиции текста).</p>
+                                        </div>
+                                        <div id="examples">
+                                            <p>В базе Рускон для каждого значения коннектора введены три строки с <strong>примерами</strong>, 
+                                                иллюстрирующими инферентивное, иллокутивное и метатекстовое употребления. 
+                                                Если примеры не были найдены, в базе проставлено «примеры не обнаружены». Источником 
+                                                примеров в большинстве случаев является Национальный корпус русского языка (НКРЯ). 
+                                                Некоторая часть примеров прагматических употреблений найдена при помощи поиска 
+                                                в Google. Наконец, небольшая часть примеров была взята из работ, посвященных 
+                                                исследованию свойств отдельных союзов, а также, в случае отсутствия 
+                                                в других источниках, сконструирована разметчиками базы данных.</p>
+                                            <p>Для целого ряда коннекторов прагматические употребления являются основными, например, 
+                                                метатекстовыми по определению являются коннекторы переформулирования («короче говоря», «проще сказать»). 
+                                                Исключительно инферентивными являются коннекторы со значением умозаключения («выходит», 
+                                                «значит», «следовательно», «очевидно» и др.) и коннектор «судя по тому что». В таких случаях 
+                                                ставится помета «Инферентивное / метатекстовое употребление для данного коннектора является базовым».</p>
+                                            <p><strong>Общие принципы отбора примеров в базе.</strong> В качестве примеров в базу Рускон включались 
+                                                предложения из текстов, созданных не ранее 1930-х гг. Если в базу попадали более ранние 
+                                                примеры (например, цитирование произведений художественной литературы из словарей), то они 
+                                                сопровождались поздним примером. Искомые контексты включали в себя две полные финитные клаузы: 
+                                                примеры, нарушающие данное условие, или исключались, или редактировались.</p>
+                                        </div>
+                                        <div id="clausal">
+                                            <p>Важным условием отбора коннекторов для синтаксического анализа является <strong>способность вводить полные финитные 
+                                                клаузы</strong>. Многие коннекторы практически не допускают таких конструкций, например, союзы «как-то», 
+                                                ограничительный «только», пояснительный «или», частицы «именно», «даже», «же» в контексте 
+                                                дейктиков («здесь же», «такой же») и «и» в значении добавления элемента к множеству 
+                                                (<i>Я сказал тост, и он сказал тост</i>; <i>Я был там вчера, и сегодня поеду</i>), некоторые 
+                                                специальные значения многозначных единиц «и», «да», «как»; составные коннекторы 
+                                                «не так… как», «равно и», «хоть не… так», «да и», «да как». Такие коннекторы 
+                                                и значения охарактеризованы только в семантическом модуле базы данных; в 
+                                                синтаксический модуль они не попадают. Дается комментарий, указывающий на то, 
+                                                что коннектор не употребляется с полными финитными клаузами.</p>
+                                            <p>Далее, мы не даем синтаксическую разметку для конструкций с фиксированным лексическим 
+                                                наполнением (включающие предикат или другие части клаузы, напр., «Стоило ему выйти из 
+                                                дома, как его увидели соседи») и конструкций с сильным варьированием частей 
+                                                («может&nbsp;/&nbsp;возможно&nbsp;/&nbsp;может быть…», «а может&nbsp;/&nbsp;возможно&nbsp;/&nbsp;может 
+                                                быть»). Такие конструкции описаны только в семантическом модуле.</p>
+                                        </div>                                        
+                                    </div>
+                                    <div id="syntax-module">
+                                        <h4>Синтаксический модуль</h4>
+                                        <p>Для каждого семантического поля, в которое может входить рассматриваемый коннектор, синтаксические 
+                                            свойства охарактеризованы отдельно. После параметра «употребляется с клаузами» следует синтаксический модуль, 
+                                            который включает ряд свойств самого коннектора и клаузы, которую он вводит. Уточним, что база Рускон 
+                                            содержит не только сложноподчиненные, но также сложносочиненные и вводные предложения. Из подчинительных 
+                                            конструкций включены сентенциальные актанты, обстоятельственные предложения, но не относительные 
+                                            предложения. Ниже мы используем следующую терминологию:</p>
+                                        <ul>
+                                            <li>клауза с коннектором — зависимая клауза + вводное предложение + клауза, к которой 
+                                                просодически примыкает сочинительный коннектор (обычно вторая клауза в сложносочиненном предложении);</li>
+                                            <li>ассоциированная клауза — та клауза, к которой примыкает вводное предложение или клауза 
+                                                с сочинительным коннектором;</li>
+                                            <li>основная часть коннектора – та часть, которая является семантически «нагруженной», т.е. 
+                                                вводит семантическое отношение между клаузами (причина, цель и т.п.), например 
+                                                «мало того, что» в составе коннектора «мало того, что… так ещё»;</li>
+                                            <li>квази-коррелят – та часть коннектора, которая является в меньшей степени семантически 
+                                                «нагруженной» и не вводит семантическое отношение, например «так ещё» в составе коннектора 
+                                                «мало того, что… так ещё».</li>
+                                        </ul>
+                                        <div id="syntax-parameters">
+                                            <h4>Параметры синтаксического модуля базы</h4>
+                                            <div id="components">
+                                                <h5>А. Состав и синтаксические свойства коннектора</h5>
+                                                <dl class="row">
+                                                    <dt class="col-5">число компонентов в основной части и в квази-корреляте в составе главной клаузы</dt> 
+                                                    <dd class="col-7">Значения параметра: однокомпонентный/многокомпонентный.</dd>
+                                                    <dt class="col-5">обязательность компонентов основной части и критерии выделения составного коннектора</dt>
+                                                    <dd class="col-7">Для многих составных коннекторов встает вопрос о том, действительно 
+                                                        ли данное сочетание функционирует как единое целое или «собирается» из частей 
+                                                        окказионально, например, «а в результате», «да и то»; в данном пункте кратко 
+                                                        приводятся аргументы за выделения рассматриваемого коннектора как отдельного лексического входа.</dd>
+                                                    <dt class="col-5">модификация и ветвление основной части</dt>
+                                                    <dd class="col-7">Допускает ли коннектор расширение с помощью зависимых слов, присоединяемых к одной 
+                                                        из частей коннектора (например, «в свете того что» – «в свете того факта что», 
+                                                        «в свете того обстоятельства что»; «по той причине» – «по той простой причине»); 
+                                                        здесь перечисляются основные расширения коннектора.</dd>
+                                                    <dt class="col-5">позиция коннектора и обязательность данной позиции</dt>
+                                                    <dd class="col-7">Выделяются начальная, неначальная, неконечная и свободная позиции коннектора. Каждая позиция, 
+                                                        кроме свободной, дополнительно помечена как «строго» или «преимущественно». Например, 
+                                                        коннектор «хоть» — преимущественно начальный, а «чтобы» — строго.</dd>
+                                                </dl>
+                                            </div>
+                                            <div id="quasi-correlate">
+                                                <h5>Б. Характеристики квази-коррелята (если применимо)</h5>
+                                                <dl class="row">
+                                                    <dt class="col-5">список допустимых квази-коррелятов</dt>
+                                                    <dd class="col-7">Например, «то», «так», «в таком случае» для «если» в условном значении.</dd>
+                                                    <dt class="col-5">позиция коррелята</dt>
+                                                    <dd class="col-7">Начальная, конечная или свободная.</dd>
+                                                    <dt class="col-5">обязательность коррелята при данном коннекторе</dt>
+                                                    <dd class="col-7"></dd>
+                                                </dl>
+                                            </div>
+                                            <div id="clause-properties">
+                                                <h5>В. Свойства клаузы с коннектором</h5>
+                                                <dl class="row">
+                                                    <dt class="col-5">порядок главной и зависимой клауз</dt>
+                                                    <dd class="col-7">Перечисляются допустимые взаиморасположения двух клауз. 
+                                                        Они указываются относительно клаузы с коннектором, т.е. «препозиция» 
+                                                        означает, что клауза с коннектором предшествует ассоциированной (или 
+                                                        главной) клаузе. Список допустимых порядков: препозиция, интерпозиция, 
+                                                        постпозиция. Если допустимы все три порядка, указывается «свободный порядок».</dd>
+                                                    <dt class="col-5">допустимость самостоятельного употребления клаузы с коннектором</dt>
+                                                    <dd class="col-7">Имеется в виду употребление в отдельном предложении; при этом семантическая 
+                                                        связь с другим предложением сохраняется, как в примере с коннектором «чтобы»: 
+                                                        <i>Постарайтесь не ругать ее, а найти интересное для нее занятие. 
+                                                        Чтобы она получала больше радости от других занятий</i>.</dd>
+                                                    <dt class="col-5">тип клаузы с коннектором</dt>
+                                                    <dd class="col-7">В данном пункте оговариваются ограничения на полные финитные клаузы, 
+                                                        если они есть – например, коннектор «затем чтобы», в основном, присоединяет 
+                                                        инфинитивные обороты.</dd>
+                                            </div>
+                                            <p>Синтаксические параметры сопровождаются примерами на употребление, если 
+                                                значение параметра допускает вариативность или требует иллюстрации, а именно в 
+                                                следующих случаях:</p>
+                                            <ul>
+                                                <li>позиция коннектора внутри модифицируемой им клаузы является свободной;</li>
+                                                <li>позиция коннектора внутри модифицируемой им клаузы допускает варьирование 
+                                                    (несколько вариантов расположения или помета «преимущественно»);</li>
+                                                <li>позиция квази-коррелята внутри ассоциированной клаузы является свободной;</li>
+                                                <li>квази-коррелят при данном коннекторе возможен, но не обязателен;</li>
+                                                <li>допустимо более одного порядка клауз;</li>
+                                                <li>возможно употребление коннектора в самостоятельном предложении.</li>
+                                            </ul>
+                                        </div>
+                                        <div id="complex-cases">
+                                            <p>Ниже мы рассмотрим ряд <strong>сложных случаев</strong>, возникших при заполнении синтаксической 
+                                                базы, и выработанное нами описание.</p>
+                                            <ol>
+                                                <li>
+                                                    <p>Параметр «преимущественно» vs. «строго» при определении позиции коннектора внутри 
+                                                    оформляемой им клаузы.</p>
+                                                    <p>Коннекторы, статистически наиболее часто располагающиеся в какой-либо позиции, неоднородны 
+                                                        с точки зрения того, допускают ли они перестановку. Например, коннектор «когда» допускает 
+                                                        появление как в начальной позиции, так и в позиции после первой именной группы (8), 
+                                                        по крайней мере в разговорной речи. При этом неначальная позиция менее частотна и 
+                                                        приемлема, но всё ещё допустима.</p>
+                                                    <div class="row">
+                                                        <div class="col-1">(8)</div>
+                                                        <div class="col-1">a.</div>
+                                                        <div class="col-10"><p><sup>OK?</sup><i>Мы <strong>когда</strong> пришли, стол уже был накрыт.</i></p></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-1"></div>
+                                                        <div class="col-1">b.</div>
+                                                        <div class="col-10"><p><i><strong>Когда</strong> мы пришли, стол уже был накрыт.</i></p></div>
+                                                    </div>
+                                                    <p>Напротив, есть ряд коннекторов, которые разрешены только в начальной позиции:</p>
+                                                    <div class="row">
+                                                        <div class="col-1">(9)</div>
+                                                        <div class="col-11"><p>(<sup>OK</sup><i><strong>Сразу как</strong></i>) <i>мы</i> (*<i><strong>сразу 
+                                                            как</strong></i>) <i>пришли в деревню, нас арестовали.</i></p></div>
+                                                    </div>
+                                                    <p>При этом синтаксическое поведение коннекторов типа «когда» отличается от коннекторов 
+                                                        со свободной линейной позицией (10), в частности он не может занимать 
+                                                        постглагольную или конечную позицию (11).</p>
+                                                    <div class="row">
+                                                        <div class="col-1">(10)</div>
+                                                        <div class="col-11"><p><i>Он опаздывал, но уверял, что спешит в те единственные гости, 
+                                                            где его ждут. К нам.</i> (<sup>OK</sup><i><strong>Надо сказать</strong></i>) 
+                                                            <i>Многие гости</i> (<sup>OK</sup><i><strong>надо сказать</strong></i>) <i>опаздывали</i> 
+                                                            (<sup>OK</sup><i>надо сказать</i>).</p></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-1">(11)</div>
+                                                        <div class="col-11"><p>(<sup>OK</sup><i><strong>Когда</strong></i>) <i>Мы</i> 
+                                                            (<sup>OK?</sup><i><strong>когда</strong></i>) <i>пришли</i> (*<i><strong>когда</strong></i>), 
+                                                            <i>стол уже был накрыт.</i></p>
+                                                    </div>
+                                                    <p>Такая же неоднородность присутствует среди коннекторов неконечной позиции. Поэтому было решено ввести 
+                                                        дополнительный параметр «строго»/«преимущественно».</p>
+                                                    <p>Очевидно, что часть приведенных нами иллюстраций на употребление коннекторов имеет сниженную 
+                                                        приемлемость (8a). Для оценки допустимости тех или иных примеров проводился статистический 
+                                                        анализ частоты употреблений, исходя из запросов в НКРЯ, и подбирались иллюстрации употребления 
+                                                        для включения в базу. В случае, если у разметчиков синтаксической базы оставались сомнения в 
+                                                        допустимости той или иной конструкции, мы обращались к анкетированию носителей. Пяти людям в 
+                                                        письменном виде предъявлялся ряд предложений, которые они должны были оценить как хорошие, плохие 
+                                                        или удовлетворительные. Для включения в базу пример должен иметь не более одной плохой или не 
+                                                        более двух удовлетворительных оценок. В список предложений включались филлерные (т.е. однозначно 
+                                                        хорошие или плохие) примеры для контроля валидности оценки, даваемой носителями.</p>
+                                                    <p>К факторам, повышающим приемлемость употребления преимущественно начальных коннекторов во 
+                                                        второй позиции, относятся:</p>
+                                                    <ul>
+                                                        <li>фонологически короткая начальная часть клаузы (например, местоимение);</li>
+                                                        <li>семантическая связь участников двух (например, агенс в клаузе с коррелятом – 
+                                                            экспериенцер в ассоциированной клаузе).</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <p>Разрывность коннектора vs. перемещение коннектора в другую клаузу.</p>
+                                                    <p>Часть составных коннекторов русского языка допускает разрыв элементом своей клаузы:</p>
+                                                    <div class="row">
+                                                        <div class="col-1">(12)</div>
+                                                        <div class="col-1">a.</div>
+                                                        <div class="col-10"><p><i>Мы шли прямо через лес, <strong>пока не</strong> началась 
+                                                            сильная метель.</i></p></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-1"></div>
+                                                        <div class="col-1">б.</div>
+                                                        <div class="col-10"><p><i>Беги, <strong>пока</strong> он <strong>не</strong> поймал тебя!</i></p></div>
+                                                    </div>
+                                                <p>При этом первая часть коннектора остается в своей клаузе и отделена от второй части 
+                                                    некоторым материалом той же клаузы, как правило, подлежащим.</p>
+                                                <p>В отличие от таких конструкций, есть коннекторы с моделью «предлог + демонстратив + что/чтобы» 
+                                                    («затем чтобы»; «из-за того что»; включая тж. уже грамматикализованное «потому что»), которые при 
+                                                    определенном просодическом оформлении допускают разрыв с перемещением комплекса «предлог + 
+                                                    демонстратив» в главную клаузу, ср.:</p>
+                                                <div class="row">
+                                                    <div class="col-1">(13)</div>
+                                                    <div class="col-1">a.</div>
+                                                    <div class="col-10"><p><i>Мы опоздали на поезд, <strong>потому что</strong> не было 
+                                                        дано объявление по громкой связи.</i></p></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-1"></div>
+                                                    <div class="col-1">б.</div>
+                                                    <div class="col-10"><p><i>Мы <strong>потому</strong> опоздали на поезд, <strong>что</strong> не было 
+                                                        дано объявление по	громкой связи.</i></p></div>
+                                                </div>
+                                                <p>Оба вида конструкций отмечаются в базе как «разрывные», в отличие от неразрывных, напр. 
+                                                    «так как», «как будто».</p>
+                                                </li>
+                                                <li>
+                                                    <p>Позиция коннектора внутри модифицируемой им клаузы vs. размер модифицируемой коннектором составляющей.</p>
+                                                    <p>В наши задачи входит прежде всего, описание коннекторов, то есть средств связи полных 
+                                                        финитных клауз. При этом подавляющее их большинство способно оформлять как полную 
+                                                        финитную клаузу (14), так и группы меньшего размера (15).</p>
+                                                    <div class="row">
+                                                        <div class="col-1">(14)</div>
+                                                        <div class="col-11"><p>[<i><strong>То ли</strong> это ветер зашумел</i>], [<i><strong>то 
+                                                            ли</strong> машина проехала по шоссе</i>].</p></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-1">(15)</div>
+                                                        <div class="col-11"><p><i>Непонятно, правда,</i> [<i><strong>то ли</strong> его окружение</i>], 
+                                                            [<i><strong>то ли</strong> недруги</i>] <i>эту информацию запустили.</i></p></div>
+                                                    </div>
+                                                    <p>В последнем случае может оказаться, например, что коннектор занимает любую позицию в 
+                                                        предложении (15). Однако мы описываем линейную позицию коннектора, опираясь на полные 
+                                                        финитные клаузы с несовпадающими субъектами, как (14). Поэтому, например, коннектор «то ли» 
+                                                        будет описан как начальный, несмотря на наличие примеров вида (15).</p>
+                                                </li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    <div id="diachrony-module">
+                                        <h4>Диахронический модуль базы Рускон</h4>
+                                        <p>Данный модуль содержит информацию об истории функционирования в языке входящих в нее единиц и их значений. 
+                                            В настоящий момент диахроническое описание имеется для однословных коннекторов, охватывающая XI-XVII века. 
+                                            В разработке диахроническое описание составных коннекторов и данные, касающиеся XVIII-XIX веков.</p>
+                                        <p>При разработке диахронического модуля использовались следующие источники:</p>
+                                        <ul>
+                                            <li>Словарь древнерусского языка И.И. Срезневского. 1893-1912.</li>
+                                            <li>Словарь русского языка XI-XVII веков. М.: Наука, 1975-наст.вр.</li>
+                                            <li>Древнерусский подкорпус НКРЯ.</li>
+                                        </ul>
+                                        <div id="diachrony-parameters">
+                                            <h4>Параметры диахронического модуля базы</h4>
+                                            <div id="diachrony-general">
+                                                <h5>Общие</h5>
+                                                <dl class="row">
+                                                    <dt class="col-5">современная форма коннектора</dt>
+                                                    <dd class="col-7">Для связи с современной частью базы.</dd>
+                                                    <dt class="col-5">исторические формы</dt>
+                                                    <dd class="col-7">Взяты в соответствии с кодированием соответствующих лемм в словарях.</dd>
+                                                </dl>
+                                            </div>
+                                            <div id="diachrony-sem">
+                                                <h5>Историческая семантика</h5>
+                                                <dl class="row">
+                                                    <dt class="col-5">семантическое поле и подполе</dt>
+                                                    <dd class="col-7">Классифицируются по той же системе, что и в современной части базы. Выделяются 
+                                                        на основе значений, выделенных в исторических словарях и подвергнутых повторному анализу 
+                                                        составителями базы. Помимо собственно коннекторных значений, описываются некоторые типы 
+                                                        значений, модифицирующих высказывание, в частности, значение вопросительной частицы разных типов.</dd>
+                                                    <dt class="col-5">примеры употребления единицы в данном значении</dt>
+                                                    <dd class="col-7">По возможности фигурируют более ранние примеры. Примеры древнерусского и старорусского 
+                                                        периодов (в т.ч. в поздней редакции) приводятся в отдельных полях. При отсутствии в материале 
+                                                        примеров на соединение клауз в крайнем случае используются примеры на соединение единиц другого 
+                                                        уровня, например именных групп. В первую очередь приводятся примеры, цитированные в Словаре 
+                                                        древнерусского языка И.И. Срезневского и Словаре русского языка XI-XVII веков, при отсутствии 
+                                                        удовлетворительных примеров в них – из НКРЯ, при отсутствии и там – из других источников.</dd>
+                                                    <dt class="col-5">наличие/отсутствие значения в современном языке</dt>
+                                                    <dd class="col-7">Приводится для собственно коннекторных значений по сравнению с современной 
+                                                        частью базы, для неконнекторных значений – в соответствии с языковой интуицией составителей базы.</dd>
+                                                    <dt class="col-5">семантический комментарий</dt>
+                                                    <dd class="col-7">Содержит информацию о датировках примеров на значение в словарях и иную 
+                                                        информацию при необходимости.</dd>
+                                                </dl>
+                                            </div>
+                                            <div id="diachrony-synt">
+                                                <h5>Исторический синтаксис</h5>
+                                                <dl>
+                                                    <dt>положение коннектора в клаузе</dt>
+                                                    <dt>порядок клауз</dt>
+                                                    <dt>корреляты, которые зафиксированы в имеющихся примерах</dt>
+                                                    <dt>позиция коррелята</dt>
+                                                </dl>
+                                                <p>Эти параметры заполнялись преимущественно на основе корпусных данных (древнерусский подкорпус НКРЯ); 
+                                                    при очень больших объемах выдачи на единицу просматривались первые несколько страниц выдачи 
+                                                    (несколько сотен примеров, вручную отфильтрованы нерелевантные результаты выдачи). Описаны те 
+                                                    варианты коррелятов и порядка элементов, которые зафиксированы в материале, по возможности с приведением 
+                                                    примеров в случае вариативности. Отметим особо сложность определения такого свойства, как исключительность 
+                                                    или тенденция начального положения коннектора, так как найти фактический редкий пример на неначальное 
+                                                    положение, который отличает тенденцию от исключительности, зачастую представляет значительную трудность.</p>
+                                                <p>В дальнейшей перспективе планируется пополнение диахронического модуля составными коннекторами и заполнение 
+                                                    для них параметров количества и порядка частей коннектора, а также разработка признака «финитность клаузы 
+                                                    с коннектором».</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="links">
+                                    <h4>Литература, источники данных и сокращения</h4>
+                                    <div id="references">
+                                        <h5>Литература</h5>
+                                        <p>Апресян В. Ю. 2015. Уступительность. Механизмы образования и взаимодействия сложных 
+                                            значений в языке. М.: Языки славянской культуры.</p>
+                                        <p>Инькова О. Ю. 2019. (ред.) Структура коннекторов и методы ее описания. М.: Торус Пресс.</p>
+                                        <p>Инькова О. Ю. в печ. // Кобозева И. М., Сердобольская Н. В., Крюкова А. И. (ред.) 
+                                            Коннекторы современного русского языка: семантика и синтаксис, прагматика и диахрония. М. В печ.</p>
+                                        <p>Инькова О., Манзотти Э. 2019. Связность текста: мереологические логико-семантические отношения. 
+                                            М.: Издательский дом ЯСК.</p>
+                                        <p>Иорданская Л. Н. 1988. Семантика русского союза раз (в сравнении с некоторыми другими 
+                                            русскими союзами). Russian Linguistics, 12(3). C. 239–267.</p>
+                                        <p>Кибрик А. А., Подлесская В. И. (ред.). 2009. Рассказы о сновидениях. Корпусное исследование 
+                                            устного русского дискурса. М.: Языки славянских культур.</p>
+                                        <p>Кобозева И. М. Проблема идентификации и синтаксической репрезентации сложноподчиненных 
+                                            предложений русского языка с иллокутивно самостоятельной придаточной частью // 3-rd 
+                                            European Conference on “Formal Description of Slavic Languages”, Universität Leipzig, 1999. С. 67–89.</p>
+                                        <p>Крюкова А. И. 2025. Метатекстовое употребление коннекторов в русском языке // Кобозева 
+                                            И. М., Сердобольская Н. В., Крюкова А. И. (ред.) Коннекторы современного русского языка: семантика 
+                                            и синтаксис, прагматика и диахрония. М. В печ.</p>
+                                        <p>Муравьёв Н. А. Таксис и таксисные формы в языках мира: таксономия и типология. Канд. 
+                                            дисс. М. 2017. Рукопись.</p>
+                                        <p>НКРЯ: Национальный корпус русского языка. Режим доступа: <a href="https://ruscorpora.ru">https://ruscorpora.ru</a>.</p>
+                                        <p>Падучева Е. В. 1985. Высказывание и его соотнесенность с действительностью 
+                                            (Референциальные аспекты семантики местоимений). М.: Наука.</p>
+                                        <p>Пекелис О. Е. 2013. Иллокутивное употребление союзов // Материалы для проекта корпусного 
+                                            описания русской грамматики (<a href="http://rusgram.ru">http://rusgram.ru</a>). На правах 
+                                            рукописи. М., 2013.</p>
+                                        <p>Пекелис О. Е. 2018. Иллокутивное употребление союзов: шкала иллокутивности и ее отражение 
+                                            в грамматике // Компьютерная лингвистика и интеллектуальные технологии: по материалам 
+                                            международной конференции «Диалог 2018». М., 2018. С. 565–577.</p>
+                                        <p>Рахилина Е. В. В печ. О принципах глагольной колексификации // Вопросы языкознания.</p>
+                                        <p>Санников В. З. 2005. Иллокутивное употребление или синтаксический эллипсис? // Русский 
+                                            язык в научном освещении, 2 (10). С. 121-136.</p>
+                                        <p>Санников В. З. 2008. Русский синтаксис в семантико-прагматическом пространстве. М.: Языки славянских культур.</p>
+                                        <p>König E. 1986. Conditionals, concessive conditionals and concessives: Areas of contrast, 
+                                            overlap and neutralization. In E. C. Traugott, A. ter Meulen, J. Snitzer Reilly, Ch. A. 
+                                            Ferguson (eds.). On conditionals. Cambridge: Cambridge University Press. P. 229–246.</p>
+                                        <p>Kortmann B. (2012). Adverbial Subordination: A Typology and History of Adverbial Subordinators 
+                                            Based on European Languages. Walter de Gruyter.</p>
+                                        <p>Mann W. C., Thompson S. A. (1988). Rhetorical Structure Theory: Toward a functional theory of 
+                                            text organization. Text.  8 (3), 243–281.</p>
+                                        <p>Thompson  S. A.,  Longacre  R. E. (1985). Adverbial  clauses.  In:  Shopen T. (Ed.), Language 
+                                            typology  and  syntactic description, Vol. 2: Complex constructions. Cambridge University Press.</p>
+                                        <p>Tsunoda T.  2018. Levels in Clause Linkage. (Comparative Handbooks of Linguistics, 2). Mouton de Gruyter.</p>
+                                        <p>Wierzbicka А. 1971. Metatext w tekście. In Mayenova M. R. (red.) O spójności textu (pp. 105-121). 
+                                            Wroclaw – Warsawa – Kraków – Gdańsk.</p>
+                                    </div>
+                                    <div id="sources">
+                                        <h5>Источники</h5>
+                                        <p>При отборе базового инвентаря коннекторов мы опирались на следующие источники:</p>
+                                        <p>АГ-80: Русская грамматика / Под ред. Н. Ю. Шведовой (ред.). М., Наука, 1980 (2005).</p>
+                                        <p>БТС: Большой толковый словарь русского языка. Гл. ред. С. А. Кузнецов. Первое издание: СПб.: Норинт, 1998.</p>
+                                        <p>Ефремова Т. Ф. (ред.) 2004. Толковый словарь служебных частей речи русского языка. М., Астрель: АСТ.</p>
+                                        <p>МАС: Малый академический словарь: Словарь русского языка: В 4-х т / АН СССР, Ин-т рус. яз.; 
+                                            Под ред. А. П. Евгеньевой. 2-е изд., испр. и доп. М.: Русский язык, 1981–1984.</p>
+                                        <p>Морковкин В. В. и др. (ред.). 2003. Объяснительный словарь русского языка: структурные 
+                                            слова: предлоги, союзы, частицы, междометия, вводные слова, местоимения, числительные, 
+                                            связочные глаголы: около 1200 единиц. Гос. ин-т рус. яз. им. А. С. Пушкина. Изд. 2-е, 
+                                            испр. М.: Астрель: АСТ.</p>
+                                        <p>Ушаков Д. Н. 1935–1940. Толковый словарь русского языка. М.: Гос. ин-т Сов. энциклопедия.</p>
+                                        <p>Шимчук Э. Г., Щур М. Г. 1999. Словарь русских частиц. Франкфурт на Майне: Peterlang.</p>
+                                        <p>Конструктикон: Bast, R., A. Endresen, L. A. Janda, M. Lund, O. Lyashevskaya, D. Mordashova, 
+                                            T. Nesset, E. Rakhilina, F. M. Tyers, V. Zhukova. 2021. The Russian Constructicon. An electronic database 
+                                            of the Russian grammatical constructions [Электронный ресурс]. Режим доступа: 
+                                            <a href="https://constructicon.github.io/russian/">https://constructicon.github.io/russian/</a></p>
+                                        <p>Поиск дополнительной информации, в частности сведений об этимологии или словообразовании 
+                                            осуществляется по следующему источнику:</p>
+                                        <p>Рогожникова Р. П. 1991. Сводный словарь современной русской лексики. Том 1, 2. М., Русский язык.</p>
+                                    </div>
+                                </div>
+                                <div id="cite">
+                                    <h4>Как ссылаться на базы</h4>
+                                    <p>Для краткой ссылки на русскую базу удобно использовать сокращение Рускон (= русские коннекторы). 
+                                        Если Вы используете нашу базу для подсчета и анализа количественных данных, а также цитируете 
+                                        выводы (например, разбиение по семантическим полям), просим ставить следующую ссылку:</p>
+                                    <p>Кобозева И. М., Сердобольская Н. В., Пилюгина Д. А., Крюкова А. И., Осипова А. А., 
+                                        Данилова А. А. Колобродова Е. А., Птенцова А. В. 2024. База данных русских коннекторов. 
+                                        Доступна на <a href="http://ruscon.belyaev.io">http://ruscon.belyaev.io</a></p>
+                                    <p>Осипова А. А. База данных осетинских коннекторов. Доступна на 
+                                        <a href="http://ruscon.belyaev.io">http://ruscon.belyaev.io</a></p>
+                                    <p>Халилова З. М. База данных бежтинских коннекторов. Доступна на 
+                                        <a href="http://ruscon.belyaev.io">http://ruscon.belyaev.io</a></p>
+                                    <p>Муравьев Н. А. Каталог темпоральных коннекторов финно-угорских языков. Доступен на 
+                                        <a href="http://ruscon.belyaev.io">http://ruscon.belyaev.io</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
             </div>
         </div>
     </div>
