@@ -1,5 +1,5 @@
-@import "../bootstrap-src/scss/functions";
-@import "../bootstrap-src/scss/variables";
+@import "../bootstrap/scss/functions";
+@import "../bootstrap/scss/variables";
 
 
 $primary: $green-700;
@@ -13,4 +13,4 @@ $theme-colors: map-merge($theme-colors, (
 ));
 
 
-@import "../bootstrap-src/scss/bootstrap";
+@import "../bootstrap/scss/bootstrap";
