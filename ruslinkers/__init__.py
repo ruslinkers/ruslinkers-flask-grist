@@ -4,7 +4,7 @@ from collections import defaultdict
 
 from flask import Flask, render_template, request, redirect, url_for, send_file
 
-from ruslinkers.database import db_session
+from ruslinkers.database import db_session, diachronic
 from ruslinkers.models import *
 import sqlalchemy as db
 
@@ -109,7 +109,15 @@ def create_app(test_config=None):
         pos_uniq.sort()
         # Get sources
         sources = sorted(db_session.scalars(db.select(Source)).all(), key = lambda source: source.biblio)
-        return render_template('units.html', sources=sources, pos_list=pos_uniq, edit=False, units=units_gr, examples=examples, linker=linker, error=error)
+        return render_template('units.html',
+                               sources=sources,
+                               pos_list=pos_uniq,
+                               edit=False,
+                               units=units_gr,
+                               examples=examples,
+                               linker=linker,
+                               error=error,
+                               olds=diachronic[linker])
     
     @app.teardown_appcontext
     def shutdown_session(exception=None):
