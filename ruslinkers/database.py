@@ -13,7 +13,7 @@ diachronic = { }
 with open('ruslinkers-dia-1.0.csv') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
-        modforms = row.split('; ')
+        modforms = row['modern_form'].split('; ')
         for form in modforms:
             diachronic.setdefault(form, []).append(row)
 
