@@ -117,7 +117,7 @@ def create_app(test_config=None):
                                examples=examples,
                                linker=linker,
                                error=error,
-                               olds=diachronic[linker])
+                               olds=diachronic[linker] if linker in diachronic.keys() else None)
     
     @app.teardown_appcontext
     def shutdown_session(exception=None):

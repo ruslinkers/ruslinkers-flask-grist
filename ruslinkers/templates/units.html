@@ -52,6 +52,10 @@
     </div>
     <main class="d-flex col-10 flex-column overflow-scroll">
         <!-- <p>Currently selected linker: {{linker}}</p> -->
+        <div class="row mx-2"><h4>{{linker}}</h4></div>
+        <div class="d-flex flex-row mx-2 mb-2">{% if olds is not none %}<button class="btn btn-link" 
+            data-bs-toggle="modal" 
+            data-bs-target="#diachrony">Историческая справка</button>{% endif %}</div>
         {% for unit in units[linker] %}
         <!-- <div class="row justify-content-center m-3"> -->
         <div class="card m-3">
@@ -59,7 +63,7 @@
             <h5 class="card-header">
                 <span class="badge rounded-pill text-bg-primary">{{unit.semfield.keyword}}
                     {% if unit.subfields|length > 0 and
-                    unit.subfields|selectattr('semfield.name',"eq",unit.semfield.name)|list|length > 0%}
+                    unit.subfields|selectattr('semfield.name',"eq",unit.semfield.name)|list|length > 0 %}
                     : {% for sf in unit.subfields %}
                     {{sf.name if sf.semfield == unit.semfield}}
                     {% endfor %}
@@ -388,6 +392,146 @@
         </div>
     </div>
 </div>
+
+{% if olds is not none %}
+<div class="modal fade" id="diachrony" tabindex="-1" aria-labelledby="diachronyLabel" aria-hidden="true">
+    <div class="modal-dialog modal-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <div class="row"> -->
+                    <h1 class="modal-title fs-4" id="diachronyLabel">Историческая справка к коннектору «{{linker}}»</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                <!-- </div> -->
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <h5 class="fs-5">Древнерусская форма: {{olds[0].old_form}}</h5>
+                </div>
+                {% for old in olds %}
+                <div class="card m-3">
+                    <h5 class="card-header"><span class="badge rounded-pill text-bg-primary">{{old['old semfield']}}
+                        {% if old['old subfield1'] != 'NA' and old['old subfield1'] != '' %}
+                         : {{old['old subfield1']}}{% endif %}</span>
+                        {% if old['old semfield2'] != '' %}
+                            <span class="badge rounded-pill text-bg-secondary">{{old['old semfield2']}}
+                                {% if old['old subfield2'] != '' %}
+                                 : {{old['old subfield2']}} 
+                                {% endif %}
+                            </span>
+                        {% endif %}
+                    </h5>
+                    <div class="modal-body">
+                        {% if old['example_old_rus'] != '' %}
+                            <div class="row mb-3">
+                                <label class="col-6 col-form-label">Древнерусский пример:</label>
+                                <textarea class="form-control" readonly disabled>{{old['example_old_rus']}}</textarea>
+                            </div>
+                        {% endif %}
+                        {% if old['example_middle_rus'] != '' %}
+                            <div class="row mb-3">
+                                <label class="col-6 col-form-label">Старорусский пример:</label>
+                                <textarea class="form-control" readonly disabled>{{old['example_middle_rus']}}</textarea>
+                            </div>
+                        {% endif %}
+                        <div class="row mb-3">
+                            <div class="row align-items-center">
+                                <label class="col-7 col-form-label">Значение существует в современном языке:</label>
+                                <div class="col-5">{{old['found_in_modern']}}</div>
+                            </div>
+                        </div>
+                        {%- if old['sem_comment'] != '' and old['sem_comment'] != 'NA' -%}
+                            <div class="row mb-3">
+                                <label class="col-6 col-form-label">Комментарий к значению:</label>
+                                <textarea class="form-control" readonly disabled>{{old['sem_comment']}}</textarea>
+                            </div>                        
+                        {%- endif -%}
+                        {%- if old['clause.order'] != '' and old['clause.order'] != 'NA' -%}
+                            <div class="row mb-3">
+                                <div class="row align-items-center">
+                                    <label class="col-7 col-form-label">Позиция зависимой клаузы:</label>
+                                    <div class="col-5">
+                                        {%- if old['clause.order'] == 'preposition' -%}
+                                        препозиция
+                                        {%- endif -%}
+                                        {%- if old['clause.order'] == 'postposition' -%}
+                                        постпозиция
+                                        {%- endif -%}
+                                        {%- if old['clause.order'] == 'free' -%}
+                                        свободная
+                                        {%- endif -%}
+                                    </div>
+                                </div>
+                            </div>
+                            {% if old['clause.order.example'] != '' and old['clause.order.example'] != 'NA' %}
+                                <div class="row mb-3">
+                                    <textarea class="form-control" readonly disabled>{{old['clause.order.example']}}</textarea>
+                                </div>
+                            {% endif %}
+                        {%- endif -%}
+                        {%- if old['linker_position'] != '' -%}
+                            <div class="row mb-3">
+                                <div class="row align-items-center">
+                                    <label class="col-7 col-form-label">Позиция коннектора:</label>
+                                    <div class="col-5">
+                                        {% if old['linker_position'] == 'initial' %}
+                                        начальная
+                                        {% endif %}
+                                        {% if old['linker_position_exclusivity'] != '' %}
+                                        (
+                                            {%- if old['linker_position_exclusivity'] == 'exclusively' -%}
+                                            исключительно
+                                            {%- elif old['linker_position_exclusivity'] == 'predominately' -%}
+                                            преимущественно
+                                            {%- endif -%}
+                                        )
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {%- if old['linker_position_example'] != '' and old['linker_position_example'] != 'NA' -%}
+                                    <div class="row mb-3">
+                                        <!-- <label class="col-6 col-form-label">Древнерусский пример:</label> -->
+                                        <textarea class="form-control" readonly disabled>{{old['linker_position_example']}}</textarea>
+                                    </div>
+                                {%- endif -%}
+                            </div>
+                        {%- endif -%}
+                        {%- if old['correl'] != 'NA' and old['correl'] != '' -%}
+                            <div class="row mb-3">
+                                <div class="row align-items-center">
+                                    <label class="col-7 col-form-label">Коррелят:</label>
+                                    <div class="col-5">{{old['correl']}}</div>
+                                </div>
+                            </div>
+                            {%- if old['correl.position'] != 'NA' and old['correl.position'] != '' -%}
+                            {% set pos = old['correl.position'].removeprefix('NA; ') %}
+                            <div class="row mb-3">
+                                <div class="row align-items-center">
+                                    <label class="col-7 col-form-label">Позиция коррелята:</label>
+                                    <div class="col-5">
+                                        {%- if pos == 'initial' -%}
+                                        начальная
+                                        {%- elif pos == 'free' -%}
+                                        свободная
+                                        {%- endif -%}
+                                    </div>
+                                </div>
+                            </div>
+                            {%- endif -%}
+                            {%- if old['correl example'] != '' and old['correl example'] != 'NA' -%}
+                                    <div class="row mb-3">
+                                        <!-- <label class="col-6 col-form-label">Древнерусский пример:</label> -->
+                                        <textarea class="form-control" readonly disabled>{{old['correl example']}}</textarea>
+                                    </div>
+                            {%- endif -%}
+                        {%- endif -%}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 <div class="modal fade" id="moreDB" tabindex="-1" aria-labelledby="moreDBLabel" aria-labelledby="moreDBLabel"
     aria-hidden="false">
