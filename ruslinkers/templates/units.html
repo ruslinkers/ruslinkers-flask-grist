@@ -239,9 +239,9 @@
                             {{showparam_collapse('Пример',
                                                 unit.parts_order_example,
                                                 'collapse-'+unit.id|string+'-parts_order_example')}}
-                            {{showparam('Обязательность частей составного коннектора:',
+                            {{showparam_collapse('Обязательность частей составного коннектора:',
                                         unit.comp_oblig,
-                                        lw=6,pw=6,right=True)}}                                                                                    
+                                        'collapse'+unit.id|string+'-comp-oblig',bold=True)}}
                             {{showparam('Квази-коррелят:',
                                         unit.correl,
                                         lw=6,pw=6,right=True)}}
