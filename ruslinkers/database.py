@@ -9,22 +9,22 @@ api = GristDocAPI(DOC_ID, server=SERVER)
 linkers = {x.id : x for x in api.fetch_table('Linkers')}
 
 # Semantic field info
-semfields = {x.id : x for x in api.fetch_table('Semfields')}
-subfields = {x.id : x for x in api.fetch_table('Subfields')}
+# semfields = {x.id : x for x in api.fetch_table('Semfields')}
+# subfields = {x.id : x for x in api.fetch_table('Subfields')}
 
 # Values for parameters
-val_parts_num = {x.id : x for x in api.fetch_table('Parts_num_values')}
-val_parts_order = {x.id : x for x in api.fetch_table('Parts_order_values')}
-val_linker_position = {x.id : x for x in api.fetch_table('Linker_position_values')}
-val_linker_position_exclusivity = {x.id : x for x in api.fetch_table('Linker_position_exclusivity_values')}
-val_correl_oblig = {x.id : x for x in api.fetch_table('Correl_oblig_values')}
-val_correl_position = {x.id : x for x in api.fetch_table('Correl_position_values')}
-val_clause_order = {x.id : x for x in api.fetch_table('Clause_order_values')}
-val_indep_sentence = {x.id : x for x in api.fetch_table('Indep_sentence_values')}
+# val_parts_num = {x.id : x for x in api.fetch_table('Parts_num_values')}
+# val_parts_order = {x.id : x for x in api.fetch_table('Parts_order_values')}
+# val_linker_position = {x.id : x for x in api.fetch_table('Linker_position_values')}
+# val_linker_position_exclusivity = {x.id : x for x in api.fetch_table('Linker_position_exclusivity_values')}
+# val_correl_oblig = {x.id : x for x in api.fetch_table('Correl_oblig_values')}
+# val_correl_position = {x.id : x for x in api.fetch_table('Correl_position_values')}
+# val_clause_order = {x.id : x for x in api.fetch_table('Clause_order_values')}
+# val_indep_sentence = {x.id : x for x in api.fetch_table('Indep_sentence_values')}
 
 # Dictionary stuff
 meanings = {x.id : x for x in api.fetch_table('Meanings')}
-sources = {x.id : x for x in api.fetch_table('Sources')}
+# sources = {x.id : x for x in api.fetch_table('Sources')}
 
 import csv
 # Generate the dictionary of lists of dictionaries, for diachronic db
