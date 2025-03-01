@@ -1,5 +1,37 @@
 {% extends "base.html" %}
 
+{% macro showparam(label,param,lw=3,pw=9,with_row=True,right=False) %}
+    {%- if param|length > 0 -%}
+    {%- if with_row -%}
+    <div class="row mb-3 g-0">
+    {%- endif -%}
+        <label class="col-{{lw}}">{{label}}</label>
+        <div class="col-{{pw}} {{'text-end' if right}}">{{param}}</div>
+    {%- if with_row -%}
+    </div>
+    {%- endif -%}
+    {%- endif -%}
+{% endmacro %}
+
+{% macro showparam_collapse(label,param,collapse_id,with_row=True,bold=False) %}
+{%- if param|length > 0 -%}
+{%- if with_row -%}
+<div class="row mb-3 g-0">
+{%- endif -%}
+    <p class="m-0">
+        <button class="btn btn-link {%- if bold %} fw-bold{%- endif -%}" type="button" data-bs-toggle="collapse" data-bs-target="#{{collapse_id}}"
+            aria-expanded="false" aria-controls="{{collapse_id}}">
+            <i class="bi bi-plus text-primary"></i>{{label}}</button>
+    </p>
+    <p class="collapse m-0" id="{{collapse_id}}">
+        {{ param }}
+    </p>
+{%- if with_row -%}
+</div>
+{%- endif -%}
+{%- endif -%}
+{% endmacro %}
+
 {% block script %}
 <script src="{{url_for('static', filename='units.js')}}"></script>{% endblock %}
 
@@ -16,230 +48,218 @@
 </div>
 <div class="d-flex flex-row flex-nowrap h-75">
     <div class="d-flex col-2 flex-column">
-        <!-- <"/"
-                    class= px-1 align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-                    <svg class="bi me-2" width="30" height="24">
-                        <use xlink:href="#bootstrap"></use>
-                    </svg>
-                    <span class="fs-5 fw-semibold">Коннекторы</span>
-                </a> -->
-        <!-- <aside class="border-bottom"> -->
-        <!-- <form class="d-flex" role="search"> -->
         <div class="d-flex input-group">
             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#advancedSearch"><i
                     class="bi bi-search"></i></button>
             <input class="form-control" type="search" placeholder="Фильтр…" aria-label="Фильтр" id="filter-linkers">
         </div>
-        <!-- </form> -->
         <div id="sidebar" class="list-group list-group-flush overflow-scroll">
             {% for unit in units %}
-            <a href="/units/{{unit}}"
+            <a href="/units/{{unit|quote_lnk}}"
                 class="lnkr btn list-group-item list-group-item-action py-3 lh-tight border border-0 {{'active' if unit == linker else 'bg-light'}}"
                 aria-current="true">
                 <div class="d-flex w-100 align-items-center justify-content-between linker-name">
                     <strong class="mb-1">{{unit}}</strong>
-                    <!-- <small>Wed</small> -->
                 </div>
                 <div class="col-10 mb-1 small">
                     {% for conn in units[unit] %}
-                    <span class="badge rounded-pill text-bg-primary">{{conn.semfield.keyword}}</span>
+                    <span class="badge rounded-pill text-bg-primary">{{conn.semfield1_ru}}</span>
                     {% endfor %}
                 </div>
             </a>
             {% endfor %}
         </div>
-        <!-- </aside> -->
     </div>
     <main class="d-flex col-10 flex-column overflow-scroll">
-        <!-- <p>Currently selected linker: {{linker}}</p> -->
         <div class="row mx-2"><h4>{{linker}}</h4></div>
         <div class="d-flex flex-row mx-2 mb-2">{% if olds is not none %}<button class="btn btn-link" 
             data-bs-toggle="modal" 
             data-bs-target="#diachrony">Историческая справка</button>{% endif %}</div>
         {% for unit in units[linker] %}
-        <!-- <div class="row justify-content-center m-3"> -->
         <div class="card m-3">
-            <!-- <div class="card-header"> -->
             <h5 class="card-header">
-                <span class="badge rounded-pill text-bg-primary">{{unit.semfield.keyword}}
-                    {% if unit.subfields|length > 0 and
-                    unit.subfields|selectattr('semfield.name',"eq",unit.semfield.name)|list|length > 0 %}
-                    : {% for sf in unit.subfields %}
-                    {{sf.name if sf.semfield == unit.semfield}}
+                <span class="badge rounded-pill text-bg-primary">{{unit.semfield1_ru}}
+                    {% if unit.subfield1_ru|length > 1 %}
+                    : {% for sf in unit.subfield1_ru[1:] %}
+                    {{sf}}
                     {% endfor %}
                     {% endif %}
                 </span>
-                {% if unit.extra_semfields|length > 0 %}
-                {% for sf in unit.extra_semfields %}
+                {% if unit.semfield2_ru != '' %}
                 <span class="badge rounded-pill text-bg-secondary">
-                    {{sf.name}}
-                    {% if unit.subfields|length > 0 and
-                    unit.subfields|selectattr('semfield.name',"eq",sf.name)|list|length > 0%}
-                    : {% for subf in unit.subfields %}
-                    {{subf.name if subf.semfield == sf}}
+                    {{unit.semfield2_ru}}
+                    {% if unit.subfield2_ru|length > 1 %}
+                    : {% for subf in unit.subfield2_ru[1:] %}
+                    {{subf}}
                     {% endfor %}
                     {% endif %}
                 </span>
-                {% endfor %}
                 {% endif %}
             </h5>
             <!-- </div> -->
             <div class="card-body">
-                {% if unit.links|length > 0 and 'hyperlink' in
-                unit.links|map(attribute='unitlinktype')|map(attribute='keyword')%}
+                {%- if unit.hyperlink_form|length > 1 -%}
                 <div class="row mb-3">
-                    <strong><i class="bi bi-plus-circle"></i> См. также:</strong>
-                    {% for link in unit.links if link.unitlinktype.keyword == 'hyperlink'%}
-                    <a href="/hello/{{link.target.linker}}">{{link.target.linker}}</a>
-                    {% if not loop.last %}, {% endif %}
-                    {% endfor %}
+                    <p>
+                    <strong><i class="bi bi-plus-circle"></i> См. также: </strong>
+                    {%- for link in unit.hyperlink_form[1:] -%}
+                    <a href="/units/{{link|quote_lnk}}">{{link}}</a>
+                    {%- if not loop.last -%}, {% endif -%}
+                    {%- endfor -%}
+                    </p>
                 </div>
-                {% endif %}
+                {%- endif -%}
+
+                {{showparam('Стилистические ограничения',unit.style_constraints)}}
+
+                <!-- {%- if unit.style_constraints|length > 0 -%}
                 <div class="row mb-3 g-0">
-                    <!-- <div class="row"> -->
-                    <div class="col-6">
-                        <label class="col-form-label">Стилистические
+                    <label class="col-3">Стилистические
                             ограничения:</label>
+                    <div class="col-9">
+                        {{unit.style_constraints}}
                     </div>
-                    <div class="col">
-                        <div class="input-group">
-                            {{ setattr_macro(unit, 'unit', 'style') }}
-                        </div>
-                    </div>
-                    <!-- </div> -->
                 </div>
-                <div class="row mb-3 g-0 align-items-center">
+                {%- endif -%} -->
+
+                {%- if unit.phonvars|length > 1 -%}
+                <div class="row mb-3 g-0">
                     <!-- <div class="input-group"> -->
-                    <div class="col-6">
-                        <label class="col-form-label">Фонетические варианты:</label>
+                    <label class="col-3">Фонетические варианты:</label>
+                    {% for pv in unit.phonvars[1:] %}
+                    <div class="col-9">
+                        {{pv}}
+                        {%- if not loop.last %}, {% endif -%}
                     </div>
-                    {#{% if unit.forms|length > 0 and 'phonvar' in
-                    unit.forms|map(attribute='formtype')|map(attribute='keyword')%}#}
-                    {% for form in unit.forms if form.formtype.keyword == 'phonvar'%}
-                    <div class="col">
-                        <div class="input-group">
-                            <!-- <input class="form-control setattr" data-unit_id="{{unit.id}}"
-                                        data-target_type="form" data-target_id="{{form.id}}" data-attr="text"
-                                        value="{{form.text}}" /><button class="btn btn-primary invisible setattr"
-                                        type="button" data-target_id="{{unit.id}}" data-target_type="form"
-                                        data-attr="text"><i class="bi bi-check-lg"></i></button> -->
-                            {{ setattr_macro(form,'form','text') }}
-                            {% if edit is true %}{{ delobject_macro(form.id, 'form') }}{% endif %}
-                        </div>
-                    </div>
-                    {% endfor %}
-                    {% if edit is true %}
-                    <div class="col">
-                        <div class="input-group">
-                            {{ addform_macro(unit.id, 'phonvar') }}
-                        </div>
-                    </div>
-                    {% endif %}
-                    {#{% else %}
-                    нет
-                    {% endif %}#}
-                    <!-- </div> -->
+                    {%- endfor -%}
                 </div>
+                {%- endif -%}
+
+                {%- if unit.pos|length > 1 -%}
                 <div class="row mb-3 align-items-center">
-                    <label class="col-sm-6 col-form-label">Части речи:</label>
-                    <div class="col-sm-6">
-                        {% for pos, items in unit.meanings|groupby("pos") %}
-                        {{pos}} ({{items|map(attribute='source')|map(attribute='keyword')|unique|join(',
-                        ')}}){% if not loop.last %}, {% endif %}
-                        {% endfor %}
+                    <label class="col-3">Части речи:</label>
+                    <div class="col-9">
+                        {%- for pos in unit.pos[1:] -%}
+                        {{pos}}
+                        {%- if not loop.last -%}, {% endif -%}
+                        {%- endfor -%}
                     </div>
                 </div>
+                {%- endif -%}
+
+                {%- if unit.meanings|length > 1 -%}
                 <div class="row mb-3">
-                    <label class="col-sm-6 col-form-label">Словарные значения:</label>
+                    <label class="col-3">Словарные значения:</label>
                     <div class="accordion accordion-preview accordion-flush" id="meanings{{unit.id}}">
-                        {% for meaning in unit.meanings %}
+                        {%- for m in unit.meanings[1:] -%}
+                        {%- set mng = meanings[m] -%}
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#meaning{{meaning.id}}" aria-expanded="false"
-                                    aria-controls="meaning{{meaning.id}}">
-                                    <div><strong>{{meaning.source.keyword}}: </strong>
-                                        {{meaning.meaning}}
+                                    data-bs-target="#meaning{{m}}" aria-expanded="false"
+                                    aria-controls="meaning{{m}}">
+                                    <div><strong>{{mng.dict_label}}: </strong>
+                                        {{mng.meaning}}
                                     </div>
                                 </button>
                             </h2>
-                            <div id="meaning{{meaning.id}}" class="accordion-collapse collapse"
+                            <div id="meaning{{m}}" class="accordion-collapse collapse shadow"
                                 data-bs-parent="#meanings{{unit.id}}">
                                 <div class="accordion-body">
-                                    <div class="input-group">
-                                        <span class="input-group-text w-25">Часть речи</span>
-                                        <input class="form-control" aria-label="Часть речи" readonly disabled
-                                            value="{{meaning.pos}}" />
-                                        <span class="input-group-text">Тип</span>
-                                        <input class="form-control" aria-label="Тип" readonly disabled
-                                            value="{{meaning.pos_type}}" />
+                                    {%- if mng.pos|length > 0 or mng.pos_type|length > 0 -%}
+                                    <div class="row">
+                                        {{showparam('Часть речи:',mng.pos,pw=3,with_row=False)}}
+                                        {{showparam('Тип:',mng.pos_type,pw=3,with_row=False)}}
                                     </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text w-25">Другие части речи</span>
-                                        <input class="form-control" aria-label="Другие части речи" readonly disabled
-                                            value="{{meaning.other_pos}}" />
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text w-25">Другие значения</span>
-                                        <textarea class="form-control" aria-label="Другие значения" readonly
-                                            disabled>{{meaning.other_senses}}</textarea>
-                                    </div>
+                                    {%- endif -%}
+                                    {{showparam('Другие части речи:',mng.other_pos)}}
+                                    {{showparam('Другие значения:',mng.other_senses)}}
                                 </div>
                             </div>
                         </div>
                         {% endfor %}
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="input-group">
-                        <label for="style{{unit.id}}" class="col-sm-6 col-form-label">Семантический
-                            комментарий</label>
-                        <div class="col-sm-6">
-                            <input class="form-control" id="sem_comment{{unit.id}}" readonly disabled
-                                value="{{unit.sem_comment}}" />
-                        </div>
-                    </div>
-                </div>
+                {%- endif -%}
+
+                {{showparam('Семантический комментарий:',unit.sem_comment)}}
+
                 <hr class="border border-black" />
-                <div class="row mb-3">
-                    <label class="col-sm-6 col-form-label">Примеры употребления:</label>
-                    {{ examples_macro(unit.examples,unit.id) }}
-                </div>
+                {{showparam('Примеры употребления:',unit.example)}}
                 <hr />
-                {{ parameters_macro(unit,unit.parameters|selectattr('semantic')) }}
+                {{showparam('Иллокутивное употребление:',unit.illoc_example)}}
+                {{showparam('Инферентивное употребление:',unit.inferential_example)}}
+                {{showparam('Метатекстовое употребление:',unit.metatext_example)}}
+                {{showparam('Употребляется с клаузами:',unit.dep_clause_type)}}
                 <hr class="border border-black" />
                 <hr class="border border-black" />
-                <h4>Синтаксические свойства</h3>
+                <h4>Синтаксические свойства</h4>
                     <div class="row">
                         <div class="col">
-                            {{ parameters_macro(unit,unit.parameters|rejectattr('semantic')) }}
-                        </div>
-                        <div class="col">
-                            {{ parameters_macro(unit,unit.textparameters, is_text=true) }}
-                            <h6>Компоненты</h6>
-                            {% for form in unit.forms|sort(attribute="formtype.keyword") if
-                            form.formtype.keyword != 'phonvar' %}
-                            <!-- <div class="row"> -->
-                            <div class="card">
-                                <div class="card-header">
-                                    {{form.formtype.name|capitalize()}}
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <label class="col-sm-4 col-form-label">Форма:</label>
-                                        <div class="col-sm-8">
-                                            <input class="form-control textForm" data-form_id="{{form.id}}" {% if edit
-                                                is false %}readonly disabled{% endif %} value="{{form.text}}" />
-                                        </div>
-                                    </div>
-                                    {{ parameters_macro(form, form.parameters, class="form") if
-                                    form.parameters|length() > 0}}
-                                    {{ parameters_macro(form, form.textparameters, class="form",
-                                    is_text=true) if form.textparameters|length() > 0}}
+                            {%- if unit.linker_position_ru != '' -%}
+                            <div class="row">
+                                <label class="col-6">Позиция коннектора в клаузе:</label>
+                                <div class="col-6 text-end">{{unit.linker_position_ru}}
+                                    {%- if unit.linker_position_exclusivity_ru != '' -%}
+                                    <br>
+                                    ({{unit.linker_position_exclusivity_ru}})
+                                    {%- endif -%}
                                 </div>
                             </div>
-                            <!-- </div> -->
-                            {% endfor %}
+                            {%- endif -%}
+                            {{showparam_collapse('Пример',
+                                                unit.position_example,
+                                                'collapse-'+unit.id|string+'-position_example')}}
+                            {{showparam('Порядок клауз:',
+                                        unit.clause_order_ru,
+                                        lw=6,pw=6,right=True)}}
+                            {{showparam_collapse('Пример',
+                                                unit.clause_order_example_ru,
+                                                'collapse-'+unit.id|string+'-clause_order_example')}}
+                            {{showparam('Допустимость в независимом предложении:',
+                                        unit.indep_sentence_ru,
+                                        lw=6,pw=6,right=True)}}
+                            {{showparam_collapse('Пример',
+                                                unit.indep_sentence_example,
+                                                'collapse-'+unit.id|string+'-indep_sentence_example')}}
+                            {{showparam_collapse('Ветвление коннектора',
+                                                unit.expansion,
+                                                'collapse-'+unit.id|string+'-expansion',bold=True)}}                                         
+                            {{showparam_collapse('Комментарий',
+                                                unit.public_comments,
+                                                'collapse-'+unit.id|string+'-public_comments',bold=True)}}
+                        </div>
+                        <div class="col">
+                            {{showparam('Количество компонентов основной части коннектора:',
+                                        unit.parts_num_ru,
+                                        lw=6,pw=6,right=True)}}
+                            {{showparam('Порядок частей составного коннектора:',
+                                        unit.parts_order_ru,
+                                        lw=6,pw=6,right=True)}}
+                            {{showparam_collapse('Пример',
+                                                unit.parts_order_example,
+                                                'collapse-'+unit.id|string+'-parts_order_example')}}
+                            {{showparam('Обязательность частей составного коннектора:',
+                                        unit.comp_oblig,
+                                        lw=6,pw=6,right=True)}}                                                                                    
+                            {{showparam('Квази-коррелят:',
+                                        unit.correl,
+                                        lw=6,pw=6,right=True)}}
+                            {{showparam('Обязательность квази-коррелята:',
+                                        unit.correl_oblig_ru,
+                                        lw=6,pw=6,right=True)}}
+                            {{showparam_collapse('Комментарий',
+                                                unit.correl_oblig_comment,
+                                                'collapse-'+unit.id|string+'-correl_oblig_comment')}}                                                                                                
+                            {{showparam_collapse('Пример',
+                                                unit.correl_oblig_example,
+                                                'collapse-'+unit.id|string+'-correl_oblig_example')}}
+                            {{showparam('Позиция квази-коррелята:',
+                                        unit.correl_position_ru,
+                                        lw=6,pw=6,right=True)}}
+                            {{showparam_collapse('Пример',
+                                                unit.correl_position_example,
+                                                'collapse-'+unit.id|string+'-correl_position_example')}}
                         </div>
                     </div>
             </div>
@@ -249,58 +269,7 @@
     </main>
 </div>
 
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="updateToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex">
-            <div class="toast-body">
-                Данные обновлены.
-            </div>
-            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-    </div>
-</div>
-
-{% if edit is true %}
-<div class="modal fade" id="addExample" tabindex="-1" aria-labelledby="addExampleLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addExampleLabel">Добавить пример</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-            </div>
-            <div class="modal-body">
-                <!-- <div class="table-responsive"> -->
-                <table class="table" id="exampleTable">
-                    <thead>
-                        <tr>
-                            <th scope="col">Текст</th>
-                            <th scope="col">Коннекторы</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for example in examples %}
-                        <tr>
-                            <td>{{example.text}}</td>
-                            <td>
-                                {% for u in example.get_related_units() %}
-                                {{u.linker}}{% if not loop.last %}, {% endif %}
-                                {% endfor %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <!-- </div> -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
-
-<div class="modal fade" id="advancedSearch" tabindex="-1" aria-labelledby="advancedSearchLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="advancedSearch" tabindex="-1" aria-labelledby="advancedSearchLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
         <div class="modal-content">
             <div class="modal-header">
@@ -377,13 +346,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row justify-content-center">
-                    <div class="col-10">
-                        <div class="card bg-light mt-3">
-                            SANCTIFICATUR NOMEN TUUM, ADVENIAT REGNUM TUUM
-                        </div>
-                    </div>
-                </div> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -391,7 +353,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 {% if olds is not none %}
 <div class="modal fade" id="diachrony" tabindex="-1" aria-labelledby="diachronyLabel" aria-hidden="true">
