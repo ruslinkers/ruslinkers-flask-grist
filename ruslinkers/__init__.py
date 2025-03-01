@@ -4,9 +4,16 @@ from collections import defaultdict
 
 from flask import Flask, render_template, request, redirect, url_for, send_file
 
+from urllib.parse import quote_plus,unquote_plus
+
 # from ruslinkers.database import db_session, diachronic
 # from ruslinkers.models import *
 import ruslinkers.database as db
+
+def quote_lnk(u):
+    return quote_plus(u.replace('/','$'))
+def unquote_lnk(u):
+    return unquote_plus(u).replace('$','/')
 
 def create_app(test_config=None):
     # create and configure the app
@@ -15,13 +22,15 @@ def create_app(test_config=None):
         SECRET_KEY='dev'
         # DATABASE=os.path.join(app.instance_path, 'ruslinkers-new4.db'),
     )
+    app.jinja_env.filters['quote_lnk'] = quote_lnk
+    app.jinja_env.filters['unquote_lnk'] = unquote_lnk
 
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
+    # if test_config is None:
+    #     # load the instance config, if it exists, when not testing
+    #     app.config.from_pyfile('config.py', silent=True)
+    # else:
+    #     # load the test config if passed in
+    #     app.config.from_mapping(test_config)
 
     # ensure the instance folder exists
     try:
@@ -53,7 +62,7 @@ def create_app(test_config=None):
         return render_template('participants.html')
 
     # show unit
-    @app.route('/units/<linker>', methods=['GET'])
+    @app.route('/units/<string:linker>', methods=['GET'])
     def units(linker: str):
         # # Filter the units according to search request
         # stmt = db.select(Unit)
@@ -67,25 +76,19 @@ def create_app(test_config=None):
         # if request.args.get("search-correl") is not None:
         #     stmt = stmt.where(FormType.keyword == 'correl').where(Form.formtype_id == FormType.id and Form.unit_id == Unit.id)
 
-        # units = db_session.scalars(stmt.distinct()).all()
-
         units_gr = defaultdict(list)
         for u in db.linkers.values():
             units_gr[u.form].append(u)
-        # Collect all unique parts of speech
-        pos_list = [mng.pos for mng in db.meanings.values()]
-        seen = set()
-        pos_uniq = [val for val in pos_list if val not in seen and (seen.add(val) or True)]
-        pos_uniq.sort()
-        # Get sources
+        
+        lnkr = unquote_lnk(linker)
         return render_template('units.html',
-                               sources=db.sources,
-                               pos_list=pos_uniq,
-                               edit=False,
+                            #    sources=db.sources,
+                            #    pos_list=pos_uniq,
+                            #    edit=False,
                                units=units_gr,
-                               examples=db.examples,
-                               linker=linker,
-                               olds=db.diachronic[linker] if linker in db.diachronic.keys() else None)
+                               meanings=db.meanings,
+                               linker=lnkr,
+                               olds=db.diachronic[lnkr] if lnkr in db.diachronic.keys() else None)
     
     @app.teardown_appcontext
     def shutdown_session(exception=None):
