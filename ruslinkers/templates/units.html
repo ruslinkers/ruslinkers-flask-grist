@@ -172,8 +172,8 @@
                                         {{showparam('Тип:',mng.pos_type,pw=3,with_row=False)}}
                                     </div>
                                     {%- endif -%}
-                                    {{showparam('Другие части речи:',mng.other_pos)}}
-                                    {{showparam('Другие значения:',mng.other_senses)}}
+                                    {{showparam('Другие части речи:',mng.pos_other)}}
+                                    {{showparam('Другие значения:',mng.meaning_other)}}
                                 </div>
                             </div>
                         </div>
@@ -214,7 +214,7 @@
                                         unit.clause_order_ru,
                                         lw=6,pw=6,right=True)}}
                             {{showparam_collapse('Пример',
-                                                unit.clause_order_example_ru,
+                                                unit.clause_order_example,
                                                 'collapse-'+unit.id|string+'-clause_order_example')}}
                             {{showparam('Допустимость в независимом предложении:',
                                         unit.indep_sentence_ru,
