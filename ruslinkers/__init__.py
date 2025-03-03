@@ -85,7 +85,8 @@ def create_app(test_config=None):
                             #    sources=db.sources,
                             #    pos_list=pos_uniq,
                             #    edit=False,
-                               units=units_gr,
+                            #    units=dict(sorted(units_gr.items(),key=lambda s: s[0] if s[0][0].isalnum() else 'Ω' + s[0][1:])),
+                               units={k:units_gr[k] for k in sorted(units_gr.keys(), key=lambda s: s[0] if s[0].isalnum() else 'ع' + s[1:])},
                                meanings=db.meanings,
                                linker=lnkr,
                                olds=db.diachronic[lnkr] if lnkr in db.diachronic.keys() else None)
