@@ -159,8 +159,10 @@
                                     data-bs-target="#meaning{{m}}" aria-expanded="false"
                                     aria-controls="meaning{{m}}">
                                     <div><strong>{{mng.dict_label}}: </strong>
-                                        {{mng.meaning}}
+                                        {%- if mng.form != unit.form -%}<i>{{mng.form}}</i> {{'(' if mng.meaning != ''}}{% endif -%}
+                                        {{mng.meaning}}{{')' if mng.form != unit.form and mng.meaning !=''}}
                                     </div>
+                                    
                                 </button>
                             </h2>
                             <div id="meaning{{m}}" class="accordion-collapse collapse shadow"
@@ -182,15 +184,21 @@
                 </div>
                 {%- endif -%}
 
-                {{showparam('Семантический комментарий:',unit.sem_comment)}}
+                {{showparam('Комментарий:',unit.sem_comment)}}
 
                 <hr class="border border-black" />
                 {{showparam('Примеры употребления:',unit.example)}}
+                {%- if unit.illoc_example != '' 
+                or unit.inferential_example != '' 
+                or unit.metatext_example != ''
+                or unit.dep_clause_type != '' -%}
                 <hr />
                 {{showparam('Иллокутивное употребление:',unit.illoc_example)}}
                 {{showparam('Инферентивное употребление:',unit.inferential_example)}}
                 {{showparam('Метатекстовое употребление:',unit.metatext_example)}}
                 {{showparam('Употребляется с клаузами:',unit.dep_clause_type)}}
+                {%- endif -%}
+                {%- if unit.dep_clause_type != '' -%}
                 <hr class="border border-black" />
                 <hr class="border border-black" />
                 <h4>Синтаксические свойства</h4>
@@ -225,15 +233,12 @@
                             {{showparam_collapse('Ветвление коннектора',
                                                 unit.expansion,
                                                 'collapse-'+unit.id|string+'-expansion',bold=True)}}                                         
-                            {{showparam_collapse('Комментарий',
-                                                unit.public_comments,
-                                                'collapse-'+unit.id|string+'-public_comments',bold=True)}}
                         </div>
                         <div class="col">
                             {{showparam('Количество компонентов основной части коннектора:',
                                         unit.parts_num_ru,
                                         lw=6,pw=6,right=True)}}
-                            {{showparam('Порядок частей составного коннектора:',
+                            {{showparam('Разрывность основной части коннектора:',
                                         unit.parts_order_ru,
                                         lw=6,pw=6,right=True)}}
                             {{showparam_collapse('Пример',
@@ -251,7 +256,7 @@
                             {{showparam_collapse('Комментарий',
                                                 unit.correl_oblig_comment,
                                                 'collapse-'+unit.id|string+'-correl_oblig_comment')}}                                                                                                
-                            {{showparam_collapse('Пример',
+                            {{showparam_collapse('Пример на наличие/отсутствие коррелята',
                                                 unit.correl_oblig_example,
                                                 'collapse-'+unit.id|string+'-correl_oblig_example')}}
                             {{showparam('Позиция квази-коррелята:',
@@ -262,6 +267,12 @@
                                                 'collapse-'+unit.id|string+'-correl_position_example')}}
                         </div>
                     </div>
+                    <div class="row">
+                        {{showparam_collapse('Комментарий',
+                        unit.public_comments,
+                        'collapse-'+unit.id|string+'-public_comments',bold=True)}}
+                    </div>
+                {%- endif -%}
             </div>
         </div>
         <!-- </div> -->
