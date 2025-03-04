@@ -3,7 +3,7 @@
 {% macro showparam(label,param,lw=3,pw=9,with_row=True,right=False) %}
     {%- if param|length > 0 -%}
     {%- if with_row -%}
-    <div class="row mb-3 g-0">
+    <div class="row mb-1 g-0">
     {%- endif -%}
         <label class="col-{{lw}}">{{label}}</label>
         <div class="col-{{pw}} {{'text-end' if right}}">{{param}}</div>
@@ -16,7 +16,7 @@
 {% macro showparam_collapse(label,param,collapse_id,with_row=True,bold=False) %}
 {%- if param|length > 0 -%}
 {%- if with_row -%}
-<div class="row mb-3 g-0">
+<div class="row mb-1 g-0">
 {%- endif -%}
     <p class="m-0">
         <button class="btn btn-link {%- if bold %} fw-bold{%- endif -%}" type="button" data-bs-toggle="collapse" data-bs-target="#{{collapse_id}}"
@@ -110,17 +110,7 @@
                 </div>
                 {%- endif -%}
 
-                {{showparam('Стилистические ограничения',unit.style_constraints)}}
-
-                <!-- {%- if unit.style_constraints|length > 0 -%}
-                <div class="row mb-3 g-0">
-                    <label class="col-3">Стилистические
-                            ограничения:</label>
-                    <div class="col-9">
-                        {{unit.style_constraints}}
-                    </div>
-                </div>
-                {%- endif -%} -->
+                {{showparam('Стилистические ограничения',unit.style_constraints_ru)}}
 
                 {%- if unit.phonvars|length > 1 -%}
                 <div class="row mb-3 g-0">
@@ -162,17 +152,16 @@
                                         {%- if mng.form != unit.form -%}<i>{{mng.form}}</i> {{'(' if mng.meaning != ''}}{% endif -%}
                                         {{mng.meaning}}{{')' if mng.form != unit.form and mng.meaning !=''}}
                                     </div>
-                                    
                                 </button>
                             </h2>
                             <div id="meaning{{m}}" class="accordion-collapse collapse shadow"
                                 data-bs-parent="#meanings{{unit.id}}">
                                 <div class="accordion-body">
                                     {%- if mng.pos|length > 0 or mng.pos_type|length > 0 -%}
-                                    <div class="row">
-                                        {{showparam('Часть речи:',mng.pos,pw=3,with_row=False)}}
-                                        {{showparam('Тип:',mng.pos_type,pw=3,with_row=False)}}
-                                    </div>
+                                    <!-- <div class="row"> -->
+                                    {{showparam('Часть речи:',mng.pos,pw=3)}}
+                                    {{showparam('Тип:',mng.pos_type,pw=3)}}
+                                    <!-- </div> -->
                                     {%- endif -%}
                                     {{showparam('Другие части речи:',mng.pos_other)}}
                                     {{showparam('Другие значения:',mng.meaning_other)}}
@@ -196,7 +185,8 @@
                 {{showparam('Иллокутивное употребление:',unit.illoc_example)}}
                 {{showparam('Инферентивное употребление:',unit.inferential_example)}}
                 {{showparam('Метатекстовое употребление:',unit.metatext_example)}}
-                {{showparam('Употребляется с клаузами:',unit.dep_clause_type)}}
+                {%- if unit.dep_clause_type == 'финитная' -%}{{showparam('Употребляется с клаузами:','да')}}
+                {%- else -%}{{showparam('Употребляется с клаузами:',unit.dep_clause_type)}}{%- endif -%}
                 {%- endif -%}
                 {%- if unit.dep_clause_type != '' -%}
                 <hr class="border border-black" />
@@ -205,7 +195,7 @@
                     <div class="row">
                         <div class="col">
                             {%- if unit.linker_position_ru != '' -%}
-                            <div class="row">
+                            <div class="row mb-1 g-0">
                                 <label class="col-6">Позиция коннектора в клаузе:</label>
                                 <div class="col-6 text-end">{{unit.linker_position_ru}}
                                     {%- if unit.linker_position_exclusivity_ru != '' -%}
