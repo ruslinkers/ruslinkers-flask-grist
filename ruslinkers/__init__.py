@@ -95,7 +95,7 @@ def create_app(test_config=None):
         for u in db.linkers:
             units_gr[u.form].append(u)
 
-        units_f = units_gr.keys()
+        units_f = sorted(list(units_gr.keys()), key=lambda s: s[0] if s[0].isalnum() else 'ع' + s[1:])
         filters = dict()
 
         if request.args.get('search-pos') is not None:
@@ -118,7 +118,7 @@ def create_app(test_config=None):
                             #    edit=False,
                             #    units=dict(sorted(units_gr.items(),key=lambda s: s[0] if s[0][0].isalnum() else 'Ω' + s[0][1:])),
                                units=units_gr, 
-                               units_f=sorted(units_f, key=lambda s: s[0] if s[0].isalnum() else 'ع' + s[1:]),
+                               units_f=units_f,
                                meanings=db.meanings,
                                sources=db.sources,
                                params=db.param_values,

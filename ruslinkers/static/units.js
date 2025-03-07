@@ -46,8 +46,18 @@ $(document).ready(function () {
                 params += obj.id + '=' + encodeURI($(this).val());
                 j++;
             }
-        })
+        });
         // window.location.href = window.location.href.split(/[?#]/)[0] + params;
+        window.location.href = '/units' + params;
+    });
+
+    // Remove filter
+    $("#clearFilter").on("click", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        let params = '';
+        if(urlParams.has('linker')) {
+            params = '?linker=' + urlParams.get('linker');
+        }
         window.location.href = '/units' + params;
     });
 });
