@@ -61,6 +61,10 @@ def create_app(test_config=None):
     def participants():
         return render_template('participants.html')
 
+    @app.route('/feedback', methods=['GET'])
+    def feedback():
+        return render_template('feedback.html')
+
     # show unit
     @app.route('/units/<string:linker>', methods=['GET'])
     def units(linker: str):
