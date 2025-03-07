@@ -64,6 +64,10 @@ def create_app(test_config=None):
     @app.route('/feedback', methods=['GET'])
     def feedback():
         return render_template('feedback.html')
+    
+    @app.route('/publications', methods=['GET'])
+    def publications():
+        return render_template('publications.html')    
 
     # show unit
     @app.route('/units/<string:linker>', methods=['GET'])
