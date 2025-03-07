@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Обратная связь{% endblock %}
+
+{% block script %}
+<script src="{{url_for('static', filename='spamspan.js')}}"></script>{% endblock %}
+
+{% block content %}
+<main class="d-flex col-12 bg-light justify-content-center">
+    <div class="flex-column col-9 justify-content-center">
+        <div class="flex-row">
+            <h4 class="display-4">Обратная связь</h4>
+        </div>
+        <div class="flex-row p-3">
+            <p class="fs-6">Все замечания и комментария просьба направлять на адрес <span class="spamspan">
+                <span class="u">conf-konnektory</span>
+                [at]
+                <span class="d">yandex.ru</span>
+                </span>.</p>
+        </div>
+    </div>
+</main>
+{% endblock %}
