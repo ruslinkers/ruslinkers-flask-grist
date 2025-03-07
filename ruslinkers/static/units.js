@@ -26,6 +26,8 @@ $(document).ready(function () {
     });
 
     // Search stuff
+
+    // Toggle enabled/disabled for search fields
     $(".toggleSearch").on("change", function () {
         target = $('#' + $(this).attr('data-toggle'));
         console.log(target);
@@ -37,6 +39,20 @@ $(document).ready(function () {
         }
     });
 
+    // When opening search modal, restore the search fields
+    $("#advancedSearch").on("shown.bs.modal", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        for (const [key, value] of urlParams) {
+            if (key.startsWith('search-')) {
+                $("#"+key).val(value);
+                console.log($(`.toggleSearch[data-toggle="${key}"]`).first())
+                $(`.toggleSearch[data-toggle="${key}"]`)[0].checked = true;
+                $(`.toggleSearch[data-toggle="${key}"]`).first().trigger('change');
+            }
+        }
+    });
+
+    // When clicking search, send the URL parameters
     $("#searchButton").on("click", function () {
         let params = "?";
         j = 0;
@@ -51,7 +67,7 @@ $(document).ready(function () {
         window.location.href = '/units' + params;
     });
 
-    // Remove filter
+    // Remove filter when the red button is clicked, keeping only linker
     $("#clearFilter").on("click", function () {
         const urlParams = new URLSearchParams(window.location.search);
         let params = '';
