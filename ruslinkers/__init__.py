@@ -77,8 +77,8 @@ def create_app(test_config=None):
         return render_template('publications.html')    
 
     # show unit
-    @app.route('/units/<string:linker>', methods=['GET'])
-    def units(linker: str):
+    @app.route('/units', methods=['GET'])
+    def units():
         # # Filter the units according to search request
         # stmt = db.select(Unit)
         # if request.args.get("search-pos") is not None:
@@ -92,19 +92,38 @@ def create_app(test_config=None):
         #     stmt = stmt.where(FormType.keyword == 'correl').where(Form.formtype_id == FormType.id and Form.unit_id == Unit.id)
 
         units_gr = defaultdict(list)
-        for u in db.linkers.values():
+        for u in db.linkers:
             units_gr[u.form].append(u)
+
+        units_f = units_gr.keys()
+        filters = dict()
+
+        if request.args.get('search-pos') is not None:
+            filters['search-pos'] = request.args.get('search-pos')
+            units_f = [k for k in units_f if any(filters['search-pos'] in x.pos_txt[1:] for x in units_gr[k])]
+        if request.args.get('search-dict') is not None:
+            filters['search-dict'] = request.args.get('search-dict')
+            units_f = [k for k in units_f if any(int(filters['search-dict']) in x.dicts[1:] for x in units_gr[k])]
+        if request.args.get('linker') is not None:
+            linker = unquote_lnk(request.args.get('linker'))
+        else: 
+            linker = unquote_lnk(units_f[0])
+
+        pos_uniq = sorted(list(dict.fromkeys([x.pos for x in db.meanings])))
         
-        lnkr = unquote_lnk(linker)
         return render_template('units.html',
                             #    sources=db.sources,
-                            #    pos_list=pos_uniq,
+                               pos_list=pos_uniq,
+                               filters=filters,
                             #    edit=False,
                             #    units=dict(sorted(units_gr.items(),key=lambda s: s[0] if s[0][0].isalnum() else 'Ω' + s[0][1:])),
-                               units={k:units_gr[k] for k in sorted(units_gr.keys(), key=lambda s: s[0] if s[0].isalnum() else 'ع' + s[1:])},
+                               units=units_gr, 
+                               units_f=sorted(units_f, key=lambda s: s[0] if s[0].isalnum() else 'ع' + s[1:]),
                                meanings=db.meanings,
-                               linker=lnkr,
-                               olds=db.diachronic[lnkr] if lnkr in db.diachronic.keys() else None)
+                               sources=db.sources,
+                               params=db.param_values,
+                               linker=linker,
+                               olds=db.diachronic[linker] if linker in db.diachronic.keys() else None)
     
     @app.teardown_appcontext
     def shutdown_session(exception=None):

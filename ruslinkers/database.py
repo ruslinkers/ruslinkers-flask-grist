@@ -6,25 +6,30 @@ DOC_ID = "sPb2VvqpDspMzd7j1ZMtJD"
 api = GristDocAPI(DOC_ID, server=SERVER)
 
 # Main table with data
-linkers = {x.id : x for x in api.fetch_table('Linkers')}
+linkers = api.fetch_table('Linkers')
 
 # Semantic field info
-# semfields = {x.id : x for x in api.fetch_table('Semfields')}
-# subfields = {x.id : x for x in api.fetch_table('Subfields')}
+semfields = api.fetch_table('Semfields')
+subfields = api.fetch_table('Subfields')
 
 # Values for parameters
-# val_parts_num = {x.id : x for x in api.fetch_table('Parts_num_values')}
-# val_parts_order = {x.id : x for x in api.fetch_table('Parts_order_values')}
-# val_linker_position = {x.id : x for x in api.fetch_table('Linker_position_values')}
-# val_linker_position_exclusivity = {x.id : x for x in api.fetch_table('Linker_position_exclusivity_values')}
-# val_correl_oblig = {x.id : x for x in api.fetch_table('Correl_oblig_values')}
-# val_correl_position = {x.id : x for x in api.fetch_table('Correl_position_values')}
-# val_clause_order = {x.id : x for x in api.fetch_table('Clause_order_values')}
-# val_indep_sentence = {x.id : x for x in api.fetch_table('Indep_sentence_values')}
+def make_param(param):
+    return api.fetch_table(param)
+
+param_values = {
+    'parts_num': make_param('Parts_num_values'),
+    'parts_order': make_param('Parts_order_values'),
+    'linker_position': make_param('Linker_position_values'),
+    'linker_position_exclusivity': make_param('Linker_position_exclusivity_values'),
+    'correl_oblig': make_param('Correl_oblig_values'),
+    'correl_position': make_param('Correl_position_values'),
+    'clause_order': make_param('Clause_order_values'),
+    'indep_sentence': make_param('Indep_sentence_values')
+}
 
 # Dictionary stuff
-meanings = {x.id : x for x in api.fetch_table('Meanings')}
-# sources = {x.id : x for x in api.fetch_table('Sources')}
+meanings = api.fetch_table('Meanings')
+sources = api.fetch_table('Sources')
 
 import csv
 # Generate the dictionary of lists of dictionaries, for diachronic db

@@ -46,7 +46,7 @@
                 Рускон</button></h5>
     </div>
 </div>
-<div class="d-flex flex-row flex-nowrap h-75">
+<div class="d-flex flex-row flex-nowrap h-100">
     <div class="d-flex col-2 flex-column">
         <div class="d-flex input-group">
             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#advancedSearch"><i
@@ -54,8 +54,8 @@
             <input class="form-control" type="search" placeholder="Фильтр…" aria-label="Фильтр" id="filter-linkers">
         </div>
         <div id="sidebar" class="list-group list-group-flush overflow-scroll">
-            {% for unit in units %}
-            <a href="/units/{{unit|quote_lnk}}"
+            {% for unit in units_f %}
+            <a href="{{url_for('units', linker=unit|quote_lnk, **filters)}}"
                 class="lnkr btn list-group-item list-group-item-action py-3 lh-tight border border-0 {{'active' if unit == linker else 'bg-light'}}"
                 aria-current="true">
                 <div class="d-flex w-100 align-items-center justify-content-between linker-name">
@@ -103,7 +103,7 @@
                     <p>
                     <strong><i class="bi bi-plus-circle"></i> См. также: </strong>
                     {%- for link in unit.hyperlink_form[1:] -%}
-                    <a href="/units/{{link|quote_lnk}}">{{link}}</a>
+                    <a href="{{url_for('units', linker=link|quote_lnk, **filters)}}">{{link}}</a>
                     {%- if not loop.last -%}, {% endif -%}
                     {%- endfor -%}
                     </p>
@@ -270,7 +270,7 @@
     </main>
 </div>
 
-<!-- <div class="modal fade" id="advancedSearch" tabindex="-1" aria-labelledby="advancedSearchLabel" aria-hidden="true">
+<div class="modal fade" id="advancedSearch" tabindex="-1" aria-labelledby="advancedSearchLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
         <div class="modal-content">
             <div class="modal-header">
@@ -287,7 +287,7 @@
                                         <div class="col-4">
                                             <input class="form-check-input toggleSearch" data-toggle="search-pos"
                                                 type="checkbox">
-                                            <label class="form-check-label"><strong>Часть речи:</strong></label>
+                                            <label class="form-check-label">Часть речи:</label>
                                         </div>
                                         <div class="col-8">
                                             <select id="search-pos" class="form-select form-select-sm searchData"
@@ -302,13 +302,13 @@
                                         <div class="col-4">
                                             <input class="form-check-input toggleSearch" data-toggle="search-dict"
                                                 type="checkbox">
-                                            <label class="form-check-label"><strong>Словарь:</strong></label>
+                                            <label class="form-check-label">Словарь:</label>
                                         </div>
                                         <div class="col-8">
                                             <select id="search-dict" class="form-select form-select-sm searchData"
                                                 disabled multiple size="3">
                                                 {% for source in sources %}
-                                                <option value="{{source.id}}">{{source.biblio}}</option>
+                                                <option value="{{source.id}}">{{source.label}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -317,10 +317,11 @@
                                         <div class="col-4">
                                             <input class="form-check-input toggleSearch" data-toggle="search-meaning"
                                                 type="checkbox">
-                                            <label class="form-check-label"><strong>Значение:</strong></label>
+                                            <label class="form-check-label">Значение:</label>
                                         </div>
                                         <div class="col-8">
-                                            <input id="search-meaning" type="text" class="form-control searchData"
+                                            <input id="search-meaning" type="text" class="form-control searchData" 
+                                                placeholder="Текст значения"
                                                 disabled>
                                         </div>
                                     </div>
@@ -354,7 +355,7 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
 
 {% if olds is not none %}
 <div class="modal fade" id="diachrony" tabindex="-1" aria-labelledby="diachronyLabel" aria-hidden="true">
