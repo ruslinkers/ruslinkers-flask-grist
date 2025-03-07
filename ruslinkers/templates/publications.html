@@ -1,0 +1,897 @@
+{% macro pic(name, h='1em',url='#') %}
+<a href="{{url}}"><img src="{{url_for('static', filename=name)}}" 
+class="img-fluid" 
+alt="scopus"
+style="height: {{h}};"></a>
+{% endmacro %}
+
+{% macro scopus(url='https://scopus.com') %}
+{{pic('scopus.svg', h='1em',url=url)}}
+{% endmacro %}
+
+{% macro wos(url='https://webofknowledge.com') %}
+{{pic('wos.svg',h='0.7em',url=url)}}
+{% endmacro %}
+
+{% macro rinc(url='https://elibrary.ru') %}
+{{pic('rinc.svg',h='1em',url=url)}}
+{% endmacro %}
+
+{% macro erih(url='https://kanalregister.hkdir.no/publiseringskanaler/erihplus/') %}
+{{pic('erihplus-inv.png',h='1em',url=url)}}
+{% endmacro %}
+
+{% macro rsci(url='https://www.elibrary.ru/projects/rsci/rsci.pdf') %}
+<a href="{{url}}" class="link-body-emphasis link-underline-opacity-25"><strong>RSCI</strong></a>
+{% endmacro %}
+
+{% macro whitelist(url='https://journalrank.rcsi.science/ru/') %}
+{{pic('rcsi.png',h='1em',url=url)}}
+{% endmacro %}
+
+{% extends "base.html" %}
+
+{% block title %}Публикации{% endblock %}
+
+{% block content %}
+<main class="d-flex col-12 bg-light justify-content-center">
+    <div class="flex-column col-9 justify-content-center">
+        <div class="flex-row">
+            <h4 class="display-4">Публикации и научные доклады участников проекта</h4>
+        </div>
+        <div class="flex-row p-3">
+            <h5>Книги</h5>
+            <p>Кобозева&nbsp;И.&nbsp;М., Сердобольская&nbsp;Н.&nbsp;В., 
+                Крюкова&nbsp;А.&nbsp;И. (ред.). <i>Коннекторы 
+                современного русского языка: семантика и синтаксис, прагматика 
+                и диахрония</i>. М.: в печати (2025).</p>
+            <p>Кобозева&nbsp;И.&nbsp;М., Крюкова&nbsp;А.&nbsp;И., Сердобольская&nbsp;Н.&nbsp;В. 
+                (ред.) <a href="https://iling-ran.ru/web/sites/default/files/conferences/2023/%D0%A2%D0%B5%D0%B7%D0%B8%D1%81%D1%8B%20%D0%BA%D0%BE%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D0%B8.pdf">
+                    <i>Связь пропозициональных единиц в предложении и в тексте. 
+                        27–28 сентября 2023 г. Сборник тезисов</i></a>. М.: 
+                        Буки-Веди, 2023.</p>
+        </div>
+        <div class="flex-row p-3">
+            <h5>Статьи</h5>
+            <p>Беляев&nbsp;О.&nbsp;И. (Belyaev Oleg). <a href="https://zenodo.org/records/10185934/files/312-dalrymple-2023-1.pdf?download=1">
+                Grammatical functions in LFG</a>. In: Mary Dalrymple (ed.). 
+                <i>The Handbook of Lexical Functional Grammar</i>. Berlin: Language 
+                Science Press, 2023. {{scopus()}}
+            </p>
+            <p>Беляев&nbsp;О.&nbsp;И. (Belyaev Oleg). 
+                <a href="https://lfg-proceedings.org/lfg/index.php/main/article/view/26/7">
+                    Phrase structure and configurationality in Ossetic</a>. Miriam Butt, 
+                    Jamie Y. Findlay, Ida Toivonen (eds.). <i>Proceedings of the LFG'22 
+                        Conference</i>. Konstanz: University of Konstanz, 2022.
+            </p>
+            <p>Беляев&nbsp;О.&nbsp;И. 
+                <a href="https://nextcloud.cucurri.ru/s/35R6yyEQCNjaXbC">
+                    Полифункциональные подчинительные конструкции в бартангском языке: к единому анализу</a>. 
+                    <i>Вопросы языкознания</i>, 2025. В печати. 
+                    {{wos()}} 
+                    {{scopus()}} 
+                    {{rsci()}} 
+                    {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/21458/')}}
+                    {{rinc(url='https://www.elibrary.ru/title_about_new.asp?id=7716')}}
+            </p>
+            <p>Беляев&nbsp;О.&nbsp;И., Хомченкова&nbsp;И.&nbsp;А.
+                <a href="https://rhema-journal.com/Rema_2022_4_Belyaev_Khomchenkova.pdf">
+                    Соединение ИГ в осетинском языке</a>. 
+                    <i>Rhema. Рема</i>, №&nbsp;4, 2022. С.&nbsp;32–54. 
+                    {{erih(url='https://kanalregister.hkdir.no/publiseringskanaler/erihplus/periodical/info.action?id=497787')}}
+                    {{rinc(url='https://www.elibrary.ru/item.asp?id=50148837')}}
+            </p>
+            <p>Беляев&nbsp;О.&nbsp;И., Хомченкова&nbsp;И.&nbsp;А. 
+                <a href="http://tipl.philol.msu.ru/~otipl/application/files/7216/8053/4919/Malye_jazyki-2022.pdf">Сочинительные функции аблатива в осетинском языке</a>. 
+                И.&nbsp;А.&nbsp;Хомченкова (ред.). 
+                <i>Малые языки в большой лингвистике. Вып.&nbsp;4</i>. М.: Буки Веди, 2022. 
+                С.&nbsp;44–54.
+            </p>
+            <p>Беляев&nbsp;О.&nbsp;И., Осипова&nbsp;А.&nbsp;А.
+                <a href="https://nextcloud.cucurri.ru/s/x7ywMLztj8sdsQi">
+                    Грамматикализация интенсификатора <i>фыр</i> как показателя внутренней именной причины в осетинском языке</a>. 
+                    <i>Вопросы языкознания</i>, №&nbsp;6, 2023. С.&nbsp;31–48. 
+                    {{wos()}}
+                    {{scopus()}} 
+                    {{rsci()}} 
+                    {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/21458/')}}
+                    {{rinc(url='https://www.elibrary.ru/item.asp?id=57225834')}}
+            </p>
+            <p>Гончаров&nbsp;А.&nbsp;А., Кобозева&nbsp;И.&nbsp;М.
+                <a href="https://nextcloud.cucurri.ru/s/bdmtgB55DELRQ6H">Еще раз о 
+                    существительном <i>причина</i>: конструкции
+                    с сентенциальным актантом, вводимым союзом <i>что</i></a>. 
+                    <i>Компьютерная лингвистика и интеллектуальные технологии: 
+                        по материалам международной конференции «Диалог» (2022)</i>. 
+                        Вып.&nbsp;21, 2022. С.&nbsp;234–246. {{scopus()}}
+            </p>
+            <p>Давидюк&nbsp;Т.&nbsp;И., Крюкова&nbsp;А.&nbsp;И. 
+                <a href="https://nextcloud.cucurri.ru/s/qtLP7LAnr6By7nC">Семантические 
+                    переходы ‘зад, спина - после - причина' и ‘говорить - 
+                    комплементайзер - причина' на материале татышлинского 
+                    удмуртского.</a> 
+                <i>Семантические переходы в языках мира: материалы к лингвистическому 
+                    форуму, Москва, 21–23 ноября 2024 года</i>. М.: МАКС Пресс, 2024. 
+                    {{rinc(url='https://www.elibrary.ru/item.asp?id=74215106&pff=1')}}
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М. 
+                <a href="https://nextcloud.cucurri.ru/s/EabF2obqcTjfPkE">Контрастивный 
+                    когнитивно-семантический анализ 
+                    наречий временного следования <i>затем</i>, <i>потом</i> в русском и 
+                    <i>puis</i>, <i>ensuite</i> во французском языке</a>. 
+                    <i>mediAzioni</i> 36, 2023. С.&nbsp;A212–A232. {{erih(url='https://kanalregister.hkdir.no/publiseringskanaler/erihplus/periodical/info.action?id=505892')}}
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М.
+                <a href="https://nextcloud.cucurri.ru/s/FJT2c6cpLxEwPo3">Оценка в 
+                    семантике союзов (заметки на полях двух грамматик)</a>.
+                М.&nbsp;Л.&nbsp;Ковшова (ред.). <i>Логический анализ языка. Язык и мир. 
+                    К столетию со дня рождения Нины Давидовны Арутюновой</i>. 
+                    М.: «Канцлер», 2024. 
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=75189979')}}
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М. 
+                <a href="https://nextcloud.cucurri.ru/s/EZi9dyKEMZwPg7z">Оценочные 
+                    сентенциальные адвербиалы в русском и французском тексте.</a> 
+                Marina di Filippo, Olga Inkova, Petra Macurová (eds). <i>Architetture 
+                    testuali. Simmetrie e assimetrie a confronto</i>. 
+                    Napoli: UniorPress, 2024.
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М. 
+                <a href="https://nextcloud.cucurri.ru/s/8PtAnfpibeXcqWG">Наречия 
+                    оценки: корреляция семантических различий с синтаксическими 
+                    (на примере наречий общей и гедонистической оценки)</a>. 
+                    <i>Критика и семиотика</i>, №&nbsp;1, 2022. С.&nbsp;90–109. 
+                    {{scopus()}}
+                    {{rinc(url='https://www.elibrary.ru/item.asp?id=48374101')}}
+                    {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/26471/')}}
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М., Сердобольская&nbsp;Н.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/EtkwcFQ8cNScLD8">Источники 
+                    грамматикализации коннекторов русского языка (на материале базы 
+                    Рускон)</a>. <i>Ученые записки Петрозаводского государственного 
+                        университета</i>. Т.&nbsp;46, №&nbsp;7, 2024. С.&nbsp;1–9. 
+                    {{erih(url='https://kanalregister.hkdir.no/publiseringskanaler/erihplus/periodical/info.action?id=490534')}} 
+                    {{rinc(url='https://www.elibrary.ru/item.asp?id=74035724')}}
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М., 
+                Сердобольская&nbsp;Н.&nbsp;В.
+                <a href="https://nextcloud.cucurri.ru/s/28GRHQPJab3AXyp">Конструкции 
+                    причины с <i>как(о)</i> в истории русского языка</a>. 
+                <i>Вестник Московского университета. Серия 9. Филология</i>, вып.&nbsp;2, 2023. 
+                С.&nbsp;9–29.
+                {{rsci()}}
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=50750865')}}
+                {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/29555/')}}
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М., Сердобольская&nbsp;Н.&nbsp;В., 
+                Крюкова&nbsp;А.&nbsp;И., Пилюгина&nbsp;Д.&nbsp;А.
+                <a href="https://nextcloud.cucurri.ru/s/j87TtqbQcCEeHZZ">Создание базы данных 
+                    коннекторов современного русского языка: принципы, проблемы, 
+                    результаты</a>. <i>Вестник ТюмГУ. Гуманитарные исследования. 
+                        Humanitates</i>. Т.&nbsp;9, №&nbsp;4, 2023. С.&nbsp;36–47.
+                {{rinc('https://www.elibrary.ru/item.asp?id=56719822')}}
+            </p>
+            <p>
+                Колобродова&nbsp;Е.&nbsp;А.
+                <a href="https://nextcloud.cucurri.ru/s/yM6YTk5gAF9fpeT">Филиация 
+                    значений слова <i>толико/только</i> в древнерусском языке: 
+                    местоименное наречие количества — фокусная частица — союз</a>. 
+                <i>Вестник Московского университета. Серия 9. Филология</i>, 
+                вып.&nbsp;1, 2025. С.&nbsp;109–124.
+                {{rsci()}}
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=80378176')}}
+                {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/29555/')}}
+            </p>
+            <p>
+                Муравьёв&nbsp;Н.&nbsp;А.
+                <a href="https://nextcloud.cucurri.ru/s/3269nRFd9BfdKiB">Обстоятельственные 
+                конструкции с деепричастиями на <i>-mə̑kə̑</i> и <i>-meškə̈</i></a>. 
+                Кашкин&nbsp;Е.&nbsp;А., Винклер&nbsp;М.-Э.&nbsp;А., Давидюк&nbsp;Т.&nbsp;И., 
+                Дьячков&nbsp;В.&nbsp;В., Иванов&nbsp;В.&nbsp;А., Мордашова&nbsp;Д.&nbsp;Д., 
+                Плешак&nbsp;П.&nbsp;С., Хомченкова&nbsp;И.&nbsp;А. (ред.). 
+                <i>Элементы горномарийского языка в типологическом освещении</i>. 
+                М.: Буки Веди, 2023. С.&nbsp;775–794.
+            </p>
+            <p>
+                Муравьёв&nbsp;Н.&nbsp;А. 
+                <a href="https://nextcloud.cucurri.ru/s/MR8DCNWMcxXisJ5">Причастные 
+                    конструкции со значением одновременности в казымском диалекте 
+                    хантыйского языка</a>. 
+                <i>Томский журнал лингвистических и антропологических исследований</i>, 
+                вып. 4 (38), 2022. С.&nbsp;59-72.
+                {{wos()}}
+                {{rsci()}}
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=50415761')}}
+                {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/20764/')}}
+            </p>
+            <p>
+                Осипова&nbsp;А.&nbsp;А.
+                <a href="#">Этюд о целевых конструкциях в осетинском языке</a>. 
+                <i>ПрОЛЕГомены ко всякой будущей лингвистике, могущей возникнуть 
+                    в смысле науки. Сб. статей к 35-летию О. И. Беляева</i>. 
+                    М.: Буки Веди, 2024.
+            </p>
+            <p>
+                Птенцова&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/woT8NCL7cbrq7ZL">Из 
+                    истории «ультимативных» союзов <i>не то</i> и 
+                    <i>а не то</i> (по данным Национального корпуса 
+                    русского языка).</a> 
+                <i>Известия РАН. Серия литературы и языка</i>.
+                {{scopus()}}
+                {{rsci()}}
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=67861347')}}
+                {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/29696/')}}
+            </p>
+            <p>
+                Птенцова&nbsp;А.&nbsp;В.
+                <a href="https://nextcloud.cucurri.ru/s/RMzC9CKFYtbsmqS"><i>Оть 
+                идеть до конечняго свода</i>: семантика служебных слов 
+                <i>ати</i> (<i>ать</i>) и <i>оти</i> (<i>оть</i>) в 
+                оригинальных древнерусских памятниках (на материале 
+                Национального корпуса русского языка).</a> 
+                <i>Вестник Московского университета. Серия 9. Филология</i>, 
+                вып.&nbsp;2, 2023. С.&nbsp;30–43.
+                {{rsci()}}
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=80378176')}}
+                {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/29555/')}}
+            </p>
+            <p>
+                Сердобольская&nbsp;Н.&nbsp;В., Кобозева&nbsp;И.&nbsp;М. 
+                (Serdobolskaya Natalia, Kobozeva Irina). 
+                <a href="https://nextcloud.cucurri.ru/s/3C885qjA8Xf6fQC">Diachronic 
+                    evolution of the subordinator <i>kak</i> in Russian</a>
+                <i>Linguistics</i> 62 (3), 2024. P.&nbsp;691–728.
+                {{wos()}} 
+                {{scopus()}} 
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=67387330')}}
+                {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/14582/')}}
+            </p>
+            <p>
+                Халилова&nbsp;З.&nbsp;М. 
+                <a href="https://nextcloud.cucurri.ru/s/JCkBr52iFxjykqq">Сериальные 
+                    конструкции в бежтинском языке</a>.
+                <i>Рема. Rhema</i>, №&nbsp;3, 2022. С.&nbsp;88-113.
+                {{erih(url='https://kanalregister.hkdir.no/publiseringskanaler/erihplus/periodical/info.action?id=497787')}}
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=44581310')}}
+            </p>
+            <p>
+                Халилова&nbsp;З.&nbsp;М. 
+                (Khalilova Zaira). 
+                <a href="https://nextcloud.cucurri.ru/s/t5gtBp36XetSdd4">Reported 
+                    speech in Bezhta</a>. 
+                <i>Вопросы языкознания</i>, 2025. В печати. 
+                    {{wos()}} 
+                    {{scopus()}} 
+                    {{rsci()}} 
+                    {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/21458/')}}
+                    {{rinc(url='https://www.elibrary.ru/title_about_new.asp?id=7716')}}
+            </p>
+            <p>
+                Халилова&nbsp;З.&nbsp;М. 
+                (Khalilova Zaira). 
+                <a href="https://nextcloud.cucurri.ru/s/ypJ99ZbXo2ppPXg">Modal 
+                    expressions in Bezhta</a>. 
+                <i>Вестник Московского университета. Серия 9. Филология</i>, 
+                вып.&nbsp;5, 2024. С.&nbsp;129–143.
+                {{rsci()}}
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=74412376')}}
+                {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/29555/')}}
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/L2q38nrYk7ib9ek">Biased 
+                    questions and Hamblin semantics</a>. 
+                <i>Typology of Morphosyntactic Parameters</i> 6 (2), 2023. 
+                P.&nbsp;92–135.
+                {{erih(url='https://kanalregister.hkdir.no/publiseringskanaler/erihplus/periodical/info.action?id=501939')}}
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=62217564')}}
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/w7j6WtL8cympzkg">Грамматика. 
+                    Лингвистика. Язык (ответ дискуссантам)</a>.
+                <i>Слово.ру: Балтийский акцент</i>. Т.&nbsp;15, №&nbsp;1, 2024. 
+                С.&nbsp;187–194.
+                {{scopus()}}
+                {{rsci()}}
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=60052551')}}
+                {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/28540/')}}
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/xzsC2La3g56S7Fg">Имя собственное и языковой знак</a>. 
+                <i>Вестник Санкт-Петербургского университета. Язык и литература</i>, 2025. В печати.
+                {{wos()}} 
+                {{scopus()}} 
+                {{rsci()}}
+                {{rinc(url='https://www.elibrary.ru/title_about_new.asp?id=64704')}}
+                {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/21306/')}}
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/yJfKcdpMfos7yyr">От Божьей правды 
+                    к уступке</a>. 
+                Милованова&nbsp;М.&nbsp;С. (ред.). <i>Аксиология и когнитивная 
+                    лингвистика. Материалы III Международной научной конференции</i>. 
+                    М.: ГИРЯ им. А. С. Пушкина, 2024. 
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=80300814')}}
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/RwARo6KY7egdtJJ">События. Факты. Фактивность</a>. 
+                М.&nbsp;Л.&nbsp;Ковшова (ред.). <i>Логический анализ языка. Язык и мир. 
+                    К столетию со дня рождения Нины Давидовны Арутюновой</i>. 
+                    М.: «Канцлер», 2024. 
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=75725109&pff=1')}}
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                (Zimmerling Anton). 
+                <a href="https://nextcloud.cucurri.ru/s/QoBpCLiddBrj94y">Russian 
+                    predicatives and frequency metrics</a>. 
+                <i>Computational Linguistics and Intellectual Technologies: 
+                    Papers from the Annual International Conference “Dialogue” (2023)</i>. 
+                    Issue 22, 2023. P.&nbsp;579–589. 
+                {{scopus()}}
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                (Zimmerling Anton) 
+                <a href="https://nextcloud.cucurri.ru/s/bwnSKHaGLRyC8WA">Конкретно: 
+                    синтактика без семиотики?</a> 
+                <i>Слово.ру: Балтийский акцент</i>. Т.&nbsp;14, №&nbsp;3, 2023. 
+                С.&nbsp;125–153.
+                {{scopus()}}
+                {{rsci()}}
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=54349684')}}
+                {{whitelist(url='https://journalrank.rcsi.science/ru/record-sources/details/28540/')}}
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/HDHJNTf5Tq6LMxa">Не верь 
+                    глазам своим: русские предикативы и апелляции 
+                    к очевидному</a>. 
+                Еремин А.Н. (ред). <i>Проблемы лингвистической семантики и 
+                    прагматики языковых единиц разных уровней</i>. 
+                Калуга: КГУ им.&nbsp;К.&nbsp;Э.&nbsp;Циолковского, 2023. 
+                С.&nbsp;377–382.
+                {{rinc(url='https://www.elibrary.ru/item.asp?id=54940140')}}
+            </p>
+        </div>
+        <div class="flex-row p-3">
+            <h5>Научные доклады и тезисы</h5>
+            <p>
+                Беляев О. И., Хомченкова&nbsp;И.&nbsp;А.
+                <a href="https://nextcloud.cucurri.ru/s/GP4JrtoCJaYZMmY">Сочинительные 
+                    функции аблатива в осетинском языке</a>. 
+                <i>Малые языки в большой лингвистике</i> (МЯБЛ 2022), Москва, 22–23 апреля 2022&nbsp;г.
+            </p>
+            <p>
+                Беляев О. И. 
+                <a href="https://nextcloud.cucurri.ru/s/yS3ynqsBMBzympq">Осетинские сочинительные конструкции в типологии полипредикации</a>. 
+                <a href="https://nextcloud.cucurri.ru/s/FKoKatTMqKZXiSG">
+                    <i>Девятнадцатая конференция по типологии и грамматике 
+                    для молодых исследователей</i></a>, Санкт-Петербург, 
+                    24–26 ноября 2022&nbsp;г.
+            </p>
+            <p>
+                Беляев О. И. 
+                <a href="https://nextcloud.cucurri.ru/s/Bwan7axYK2DN5r7">Целевые конструкции образа действия в джалганском татском</a>. 
+                <a href="https://nextcloud.cucurri.ru/s/Kc8kd7Cm424E77q"><i>Двадцатая 
+                    Конференция по типологии и грамматике для молодых 
+                    исследователей</i></a>, Санкт-Петербург, 23–25 ноября 2023 г.
+            </p>
+            <p>
+                Беляев О. И. 
+                <a href="https://nextcloud.cucurri.ru/s/srPTzQjxxtmefm9">Бартангский: язык без клаузального сочинения</a>.
+                <i>Двадцать первая конференция по типологии и грамматике для 
+                    молодых исследователей</i>, Санкт-Петербург, 14–23 ноября 2024 г.
+            </p>
+            <p>
+                Беляев О. И. 
+                (Belyaev Oleg). 
+                <a href="https://nextcloud.cucurri.ru/s/EWCYWS2eqzLfrNP">Clause 
+                    structure and configurationality in Ossetic</a>.
+                <i>Lexical Functional Grammar Conference 2022</i>, 
+                Гронинген (Швеция), 12–14 июля 2022 г.
+            </p>
+            <p>
+                Беляев&nbsp;О.&nbsp;И. 
+                <a href="https://nextcloud.cucurri.ru/s/rwT8XAB3YrH4wS7">Позиция подчинительных союзов <i>ca</i> и <i>di</i> в бартангском 
+                языке</a>. 
+                <i>Языки и диалекты Горного Бадахшана</i>, Душанбе, 15 ноября 2023&nbsp;г.
+            </p>
+            <p>
+                Борисова&nbsp;Е.&nbsp;Г., Кобозева&nbsp;И.&nbsp;М. 
+                <a href="https://nextcloud.cucurri.ru/s/wtmBod6sfYwrkZK">Служебные слова и их 
+                    роль в управлении пониманием сообщения</a>. 
+                <i>Круглый стол «Управление пониманием сообщения: частицы, союзы, вводные слова, 
+                    междометия», Первый Евразийский конгресс лингвистов</i>, Москва, 
+                    9-13 декабря 2024&nbsp;г.
+            </p>
+            <p>
+                Бызова&nbsp;А.&nbsp;А. 
+                Маркер <i>фыр-</i> как специализированный показатель внутренней 
+                причины в осетинском языке. 
+                <i>Воркшоп по редким и малоизученным иранским языкам</i>, Санкт-Петербург, 
+                10–11 марта 2023&nbsp;г. 
+            </p>
+            <p>
+                Бызова&nbsp;А.&nbsp;А. 
+                Целевые подчинительные показатели <i>цæмæй</i> и <i>куыд</i> 
+                в осетинском языке: сфера употребления и особенности конструкций. 
+                <a href="https://nextcloud.cucurri.ru/s/Kc8kd7Cm424E77q"><i>Двадцатая 
+                    Конференция по типологии и грамматике для молодых 
+                    исследователей</i></a>, Санкт-Петербург, 23–25 ноября 2023 г.
+            </p>
+            <p>
+                Гончаров А. А., Кобозева И. М. 
+                Еще раз о существительном <i>причина</i>: конструкции 
+                    с сентенциальны актантом, вводимым союзом <i>что</i>. 
+                    <i>Компьютерная лингвистика и интеллектуальные 
+                        технологии (Диалог 2022)</i>, 
+                    Москва, 15–18 июня 2022 г.
+            </p>
+            <p>
+                Давидюк&nbsp;Т.&nbsp;И., Крюкова&nbsp;А.&nbsp;И. 
+                Семантические переходы «зад, спина» — «после» — «причина» 
+                и «говорить» – комплементайзер – «причина» на материале 
+                татышлинского удмуртского. 
+                <i>Международная конференция «Лингвистический форум 2024: 
+                    Семантические переходы в языках мира»</i>, Москва, 
+                    21–23 ноября 2024&nbsp;г.
+            </p>
+            <p>
+                Данилова&nbsp;А.&nbsp;А., 
+                Сердобольская&nbsp;Н.&nbsp;В., 
+                Кобозева&nbsp;И.&nbsp;М. 
+                <a href="https://nextcloud.cucurri.ru/s/b3XJ5JkiXpw4pt6">Позиция 
+                    главной и зависимой клаузы в зеркале базы данных коннекторов 
+                    русского языка Рускон</a>. 
+                <i>II Международный симпозиум «Лексикография цифровой эпохи»</i>, 
+                Москва, 26–31 августа 2024&nbsp;г.
+            </p>
+            <p>
+                Ивойлова&nbsp;А.&nbsp;М., 
+                Ларцина&nbsp;С.&nbsp;В., 
+                Никитин&nbsp;А.&nbsp;А., 
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/biHJZiMe2Fggqjx">Оценки 
+                    приемлемости: суждения экспертов и статистика</a>. 
+                <i>VII Международная конференция «Культура русской речи» 
+                    (Гротовские чтения)</i>, Москва, 5-7 марта 2024&nbsp;г.
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М. 
+                <a href="https://nextcloud.cucurri.ru/s/8B59NQWLyjKkczr">Коннекторы 
+                    — штатные сотрудники в Дискурсе и совместители в Прагматике</a>. 
+                <i>Конференция «Язык — дискурс — корпус: в поисках прагматики»</i>, 
+                Москва, 6-7 сентября 2024&nbsp;, пленарный доклад.
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М. 
+                <a href="https://nextcloud.cucurri.ru/s/FdPcNfRBd3AcHWK">Ладно 
+                    бы писали что-то умное, а то ведь всё больше… 
+                (об одном кластере конструкционных коннекторов русского языка)</a>. 
+                <i>VIII Международный научный симпозиум «Русская грамматика в динамике»</i>, 
+                Нижний Новгород, 9-13 октября 2024&nbsp;г., пленарный доклад.
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М. 
+                На пути от оценочного наречия к служебному слову: 
+                    хорошо, хорошенько, по-хорошему. 
+                <i>Международный научный симпозиум «Русская грамматика в диалоге 
+                научных школ, направлений, методов»</i>, Владивосток, о. Русский, 
+                10-14 октября 2022&nbsp;г.
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М. 
+                Оценка в семантике коннекторов. 
+                <i>Международная научная конференция "Язык и мир", 
+                посвященная 100-летию со дня рождения доктора 
+                филологических наук члена-корреспондента РАН Н.Д. Арутюновой</i>, Москва, 
+                11–13 мая 2023&nbsp;г., пленарный доклад.
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М. 
+                Оценочные сентенциальные адвербиалы в русском и французском 
+                тексте. 
+                <i>Architecture du texte. VIIIe colloque du Groupe d’études en 
+                    linguistique textuelle contrastive langues slaves – 
+                    langues romanes (GELiTeC)</i>, Неаполь (Италия), 
+                    18–20 мая 2023&nbsp;г.
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М., 
+                Сердобольская&nbsp;Н.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/gYBFadmTnnKpJ53">База 
+                    данных «Рускон» как многоаспектный инвентарь 
+                    коннекторов русского языка</a>. 
+                <i>Международная научная конференция XXV Филологические 
+                    чтения. Интерпретационный потенциал языковой системы 
+                    и творческая активность говорящего: фигура интерпретатора</i>, 
+                    Новосибирск, 17-18 октября 2024&nbsp;г., пленарный доклад.
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М., 
+                Сердобольская&nbsp;Н.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/GM933woY2XbgWTk">Источники 
+                    грамматикализации коннекторов русского языка 
+                    (по базе данных РусКон)</a>. 
+                <i>Шахматовские чтения в Карелии</i>, Петрозаводск, 23–26 мая 2024&nbsp;г., 
+                пленарный доклад.
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М., 
+                Сердобольская&nbsp;Н.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/H2jspzQodKtaoMz">База 
+                    данных как инструмент исследования служебных слов, 
+                    выражающих семантические связи в дискурсе</a>. 
+                <i>Международная конференция «Русская грамматика: константы, 
+                    контексты, перспективы»</i>, Тюмень, 10 октября 2023&nbsp;г., 
+                    пленарный доклад.
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М., Сердобольская&nbsp;Н.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/CkAcwB5G8j3Ekf2">Построение 
+                    базы данных как способ исследования служебных слов, выражающих 
+                    семантические связи в дискурсе</a>. 
+                <i>Международная конференция «Новые инструменты для преподавания 
+                    РЯ и словесности: ФиПЛ в педагогике»</i>, Москва, 
+                    10 ноября 2023&nbsp;г.
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М. 
+                Наречия общей и гедонистической оценки: корреляция синтаксических 
+                свойств с семантическими различиями. 
+                <i>Ломоносовские чтения 2022, секция «Филологические науки»</i>, 
+                Москва, 18–21 апреля 2022&nbsp;г.
+            </p>
+            <p>
+                Крюкова&nbsp;А.&nbsp;И. 
+                <a href="https://nextcloud.cucurri.ru/s/DkgYmMQjbGrrJtr">«По той причине чтобы» как способ совместного выражения 
+                причины и цели</a>. 
+                <i>VIII Международный научный симпозиум «Русская грамматика 
+                    в динамике»</i>, Нижний Новгород, 9–13 октября 2024&nbsp;г.
+            </p>
+            <p>
+                Крюкова&nbsp;А.&nbsp;И. 
+                <a href="https://nextcloud.cucurri.ru/s/rHokezx7L6ZSHe9">Между 
+                    метатекстом и метадискурсом: опыт создания базы данных 
+                    коннекторов русского языка</a>. 
+                <i>III Международная конференция «Литература, язык и 
+                    компьютерные технологии»</i>, Санкт-Петербург, 
+                    7–9 ноября 2024&nbsp;г.
+            </p>
+            <p>
+                Крюкова&nbsp;А.&nbsp;И. 
+                <a href="https://nextcloud.cucurri.ru/s/YKP9jzbNDZR9oTc">Метатекстовое 
+                    употребление таксисных коннекторов</a>. 
+                <i>XI (XXV) Международная научно-практическая конференция молодых 
+                    ученых «Актуальные проблемы лингвистики и литературоведения»</i>, 
+                    Томск, 18–20 апреля 2024&nbsp;г.
+            </p>
+            <p>
+                Крюкова&nbsp;А.&nbsp;И. 
+                <a href="https://nextcloud.cucurri.ru/s/XXsNDmmjAzgrPMQ">Прагматический 
+                    анализ коннекторов оговорки</a>. 
+                <i>Язык — дискурс — корпус: в поисках прагматики</i>, 
+                Москва, 6–7 сентября 2024&nbsp;г.
+            </p>
+            <p>
+                Крюкова&nbsp;А.&nbsp;И. 
+                Отсутствие метатекстового употребления у таксисных 
+                    коннекторов. 
+                <i>XI (XXV) Международная научно-практическая конференции молодых 
+                    ученых «Актуальные проблемы лингвистики и литературоведения»</i>, 
+                    Томск, 18–20 апреля 2024 г.
+            </p>
+            <p>
+                Крюкова&nbsp;А.&nbsp;И. 
+                <a href="https://nextcloud.cucurri.ru/s/cDeR3fdQCJBszbE">Использование данных словарей для составления 
+                    базы данных коннекторов русского языка</a>. 
+                <i>IX Студенческая конференция Института лингвистики РГГУ</i>, 
+                28–29 октября 2023&nbsp;г.
+            </p>
+            <p>
+                Крюкова&nbsp;А.&nbsp;И. 
+                Семантика коннектора и его употребление на метатекстовом уровне: 
+                материалы базы данных Рускон. 
+                <i>II Международный симпозиум «Лексикография цифровой эпохи»</i>, 
+                Москва, 20–22 ноября 2024&nbsp;г.
+            </p>
+            <p>
+                Крюкова&nbsp;А.&nbsp;И., 
+                Давидюк&nbsp;Т.&nbsp;И. 
+                Причинные конструкции в татышлинском удмуртском: 
+                финитные клаузы и единицы с основой <i>ber-</i>. 
+                <i>XX Международный симпозиум «Диалекты и история пермских языков 
+                    во взаимодействии с другими языками»</i>, Ижевск, 
+                    23-24 октября 2024&nbsp;г.
+            </p>
+            <p>
+                Осипова&nbsp;А.&nbsp;А. 
+                Семантический переход «симилятив → цель» в осетинском языке: 
+                типологическая и ареальная перспектива. 
+                <i>Международная конференция «Лингвистический форум 2024: 
+                    Семантические переходы в языках мира»</i>, Москва, 
+                    21–23 ноября 2024&nbsp;г.
+            </p>
+            <p>
+                Осипова&nbsp;А.&nbsp;А. 
+                Темпоральные конструкции с союзом <i>цалынмӕ</i> ‘пока’ 
+                в осетинском языке. 
+                <i>Первый Евразийский конгресс лингвистов</i>, Москва, 
+                9–13 декабря 2024&nbsp;г.
+            </p>
+            <p>
+                Осипова&nbsp;А.&nbsp;А. 
+                Коннекторы русского языка на уровне речевого акта: 
+                исследование на основе базы данных Рускон. 
+                <i>II Международный симпозиум «Лексикография цифровой эпохи»</i>, 
+                    Томск, 20–22 ноября 2024&nbsp;г.
+            </p>
+            <p>
+                Птенцова&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/TcBFZ22NC2jRyso">Служебное 
+                    слово <i>анъ</i>: пути и перепутья семантического развития</a>. 
+                <i>VIII Международный симпозиум «Русская грамматика в динамике»</i>, 
+                Нижний Новгород, 9–13 октября 2024&nbsp;г.
+            </p>
+            <p>
+                Птенцова&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/E7k2TkaB67efpcx">А не то 
+                    в момент узнаешь, как башка слетает с плеч: 
+                    из истории ультимативной конструкции <i>а не то</i></a>. 
+                <i>«Маргиналии – 2023»</i>, Арзамас, 22–24 сентября 2023&nbsp;г.
+            </p>
+            <p>
+                Птенцова&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/NpggbLmbnpyaA7r">Ати буде 
+                    война: служебные слова <i>ати</i> и <i>оти</i> в языке 
+                    берестяных грамот и других древнерусских памятников</a>. 
+                <i>Историко-филологические чтения</i>, Великий Новгород, 
+                3-4 августа 2023&nbsp;г.
+            </p>
+            <p>
+                Птенцова&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/y8t2QXBMLDeCGHk">Из истории 
+                    служебного слова <i>анъ</i></a>.
+                <i>Грамматические процессы и системы в синхронии и диахронии</i>, 
+                Москва, 4–6 июня 2024&nbsp;г.
+            </p>
+            <p>
+                Сердобольская&nbsp;Н.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/7wiw7edF6ZHHnjT">Полисемия 
+                    локативных и временных коннекторов: 
+                    предпосылки и ограничения</a>. 
+                <i>Лингвистический форум 2024. Семантические переходы 
+                    в языках мира</i>, Москва, 21–23 ноября 2024&nbsp;г.
+            </p>
+            <p>
+                Сердобольская&nbsp;Н.&nbsp;В. 
+                Применение современного инструментария в полевой лингвистике. 
+                <i>Междисциплинарный семинар, 
+                    Московский политехнический университет, 
+                    кафедра «Информатика и информационные технологии»</i>, 
+                Москва, 16 ноября 2023&nbsp;г.
+            </p>
+            <p>
+                Сердобольская&nbsp;Н.&nbsp;В., 
+                Егорова&nbsp;А.&nbsp;Д. 
+                (Serdobolskaya Natalia, 
+                Egorova Anastasia). 
+                <a href="https://nextcloud.cucurri.ru/s/ECdi6ntgeArgmye">From 
+                    relativization to complementation: 
+                    identifying steps of evolution</a>. 
+                <i>The 55th annual meeting of the Societas Linguistica Europaea</i>, 
+                Бухарест (Румыния), 24–27 августа 2022&nbsp;г.
+            </p>
+            <p>
+                Сердобольская&nbsp;Н.&nbsp;В., 
+                Егорова&nbsp;А.&nbsp;Д. 
+                (Serdobolskaya Natalia, 
+                Egorova Anastasia). 
+                <a href="https://nextcloud.cucurri.ru/s/Q5fs4HWgpnabWJD">Agreement 
+                    with clausal arguments in Moksha-Mordvin: factivity 
+                    or lexical constraints</a>. 
+                <i>14th conference of the Association for Linguistic Typology</i>, 
+                Остин, Техас (США), 15–17 декабря 2022&nbsp;г.
+            </p>
+            <p>
+                Сердобольская&nbsp;Н.&nbsp;В., 
+                Кобозева&nbsp;И.&nbsp;М. 
+                <a href="https://nextcloud.cucurri.ru/s/RamPst3RbRCN3MR">Рамочные 
+                    коннекторы русского языка: между гипотаксисом и паратаксисом</a>. 
+                <i>Грамматические процессы и системы в синхронии и диахронии</i>, 
+                Москва, 4–6 июня 2024&nbsp;г., пленарный доклад.
+            </p>
+            <p>
+                Сердобольская&nbsp;Н.&nbsp;В., 
+                Кобозева&nbsp;И.&nbsp;М. 
+                Функциональное распределение <i>аки</i> и <i>како</i> в истории 
+                русского языка. 
+                <i>Грамматические процессы и системы в синхронии и диахронии</i>, 
+                Москва, 13–15 июня 2022&nbsp;г.
+            </p>
+            <p>
+                Сердобольская&nbsp;Н.&nbsp;В., 
+                Кобозева&nbsp;И.&nbsp;М. 
+                Сравнение и смежные значения: история развития значений 
+                <i>аки</i> и <i>како</i>. 
+                <i>Семинар по истории русского языка и культуры</i>, 
+                Москва, 8 декабря 2022&nbsp;г.
+            </p>
+            <p>
+                Халилова&nbsp;З.&nbsp;М.
+                Инфинитивные конструкции в бежтинском языке. 
+                <i>Первый Евразийский конгресс лингвистов</i>, Москва, 
+                9–13 декабря 2024&nbsp;г.
+            </p>
+            <p>
+                Халилова&nbsp;З.&nbsp;М. 
+                (Khalilova Zaira). 
+                <a href="https://nextcloud.cucurri.ru/s/pPa7MtMTr9QyABp">Tsezic 
+                    narratives</a>. 
+                <i>The 55th annual meeting of the Societas Linguistica Europaea</i>, 
+                Бухарест (Румыния), 24–27 августа 2022&nbsp;г.
+            </p>
+            <p>
+                Халилова&nbsp;З.&nbsp;М. 
+                (Khalilova Zaira). 
+                The desiderative in Bezhta. 
+                <i>Семинар лаборатории языковой конвергенции НИУ ВШЭ</i>, 
+                Москва, 31 октября 2023&nbsp;г.
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В.
+                <a href="https://nextcloud.cucurri.ru/s/LrsRDZK5QjW4Mxn">Аффирмативная 
+                    модальность и верификация</a>.
+                <i>Прагматический потенциал глагольных категорий в русском языке</i>, 
+                Москва, 15-16 ноября 2024&nbsp;г.
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/4zRpBe4mx5ZLGJr">От Божьей 
+                    правды к уступке</a>. 
+                <i>Международная конференция «Современная российская аксиосфера: 
+                    семантика и прагматика идентичности»</i>, Москва, 
+                    14–15 ноября 2024&nbsp;г.
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/JJcA2kmXzZ8XiCH">Общие 
+                    факты. Несовершенный вид и верификация</a>. 
+                <i>Грамматические процессы и системы в синхронии и диахронии</i>, 
+                Москва, 13–15 июня 2022&nbsp;г.
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="#">Идиомы и синтаксис предложения</a>. 
+                <i>VII Международная конференция «Культура русской речи» 
+                    (Гротовские чтения)</i>, Москва, 5–7 марта 2024&nbsp;г., 
+                    пленарный доклад.
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/pMtNq32XdwKobT8">Значение 
+                    и форма.</a>
+                <i>Лекция для иностранных специалистов по русскому языку</i>, 
+                ГИРЯ им.&nbsp;А.&nbsp;С.&nbsp;Пушкина, Москва, 
+                27 апреля 2024&nbsp;г.
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/eNrSnqqCkBC8owH">Простота денотации. Об "общефактическом значении" 
+                    как части грамматической номенклатуры</a>. 
+                <i>Грамматические процессы и системы в синхронии и диахронии</i>, 
+                Москва, 4–6 июня 2024&nbsp;г.
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/JrAHdzssZrBPsoz">Славянская 
+                    связка: именное сказуемое и значение 
+                    состояния</a>. 
+                <i>Тенденции в славянском языкознании</i>, Москва, 
+                5 декабря 2024&nbsp;г., приглашенный доклад.
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/N7fTRPMfiQiWa2q">Не верь 
+                    глазам своим</a>. 
+                <i>Международная научная конференция «Проблемы лингвистической 
+                    семантики и прагматики языковых единиц разных уровней»</i>, 
+                    12–14 октября 2023&nbsp;г., Калуга, 12–14 октября 2023&nbsp;г.
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/nf2FxbCJEDQsxWk">Русские 
+                    предикативы в зеркале статистики</a>. 
+                <i>Компьютерная лингвистика и интеллектуальные 
+                    технологии (Диалог 2023)</i>, Москва, 
+                    14–17 июня 2023.
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                Русский язык: словарь и модели грамматики. 
+                <i>Программа InteRussia для зарубежных русистов</i>, 
+                Москва, 22 мая – 19 июня 2023&nbsp;г., приглашённый доклад.
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/E5YPzmNqL8LyMMq">События, 
+                    факты и общефактическое значение НСВ</a>. 
+                <i>Международная научная конференция «Язык и мир», 
+                    посвященная 100-летию со дня рождения доктора 
+                    филологических наук члена-корреспондента РАН 
+                    Н.&nbsp;Д.&nbsp;Арутюновой</i>, Москва, 11-13 мая 2023&nbsp;г. 
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/ZCzoCFSDXx839Zt">Фонологическая 
+                    метафора и параметрическая грамматика</a>. 
+                <i>Международная конференция, посвященная 120-летию 
+                    профессора Михаила Ивановича Стеблин-Каменского</i>, 
+                    Санкт-Петербург, 16–18 октября 2023&nbsp;г.
+            </p>
+        </div>
+        <div class="flex-row p-3">
+            <h5>Тезисы в материалах конференции «Связь пропозициональных единиц в 
+                предложении и в тексте», 27-28 сентября 2023. Под ред. 
+                И.М.Кобозевой, А.И.Крюковой и Н.В.Сердобольской. 
+                М.: Буки Веди, 2023.</h5>
+            <p>
+                Беляев&nbsp;О.&nbsp;И. 
+                <a href="https://nextcloud.cucurri.ru/s/Qf86ibJFWGZeNtY">Сложное 
+                    предложение в бартангском языке: разнообразие и единство</a>.
+            </p>
+            <p>
+                Бызова&nbsp;А.&nbsp;А. 
+                <a href="https://nextcloud.cucurri.ru/s/JRKPBt53ZQGBRLf">Осетинские 
+                    полипредикативные конструкции со значением причины в свете уровневого подхода</a>.
+            </p>
+            <p>
+                Кобозева&nbsp;И.&nbsp;М., 
+                Сердобольская&nbsp;Н.&nbsp;В., 
+                Крюкова&nbsp;А.&nbsp;И., 
+                Пилюгина&nbsp;Д.&nbsp;А. 
+                <a href="https://nextcloud.cucurri.ru/s/Ds3wBq5iMaAwc2d">Семантические 
+                    и синтаксические типы коннекторов русского языка: база данных</a>.
+            </p>
+            <p>
+                Крюкова&nbsp;А.&nbsp;И. 
+                <a href="https://nextcloud.cucurri.ru/s/iYSYJgrG76yoEM6">Метатекстовое 
+                    употребление коннекторов в русском языке</a>.
+            </p>
+            <p>
+                Птенцова&nbsp;А.&nbsp;В. 
+                <a href="https://nextcloud.cucurri.ru/s/E7k2TkaB67efpcx">Из истории «ультимативных» союзов <i>не то</i> и 
+                    <i>а не то</i> (по данным Национального корпуса русского языка)</a>.
+            </p>
+            <p>
+                Циммерлинг&nbsp;А.&nbsp;В., 
+                Янко&nbsp;Т.&nbsp;Е. 
+                <a href="https://nextcloud.cucurri.ru/s/HMFm6eFj4QN6rZ6"><i>Правда</i> 
+                    и <i>правда сказать</i>: от предиката к коннектору</a>.
+            </p>
+            <p>
+                <strong>Заметка о конференции:</strong><br>
+                Крюкова&nbsp;А.&nbsp;И. 
+                <a href="https://nextcloud.cucurri.ru/s/ECYkSefpsM9ASqo">Связь 
+                    пропозициональных единиц 
+                    в предложении и в тексте</a>. 
+                <i>Вестник Московского университета. Серия 9. Филология</i>, 
+                № 1, 2024. С.&nbsp;235–240.
+            </p>
+        </div>
+    </div>
+</main>
+{% endblock %}
