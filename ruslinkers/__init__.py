@@ -6,6 +6,10 @@ from flask import Flask, render_template, request, redirect, url_for, send_file
 
 from urllib.parse import quote_plus,unquote_plus
 
+import markdown
+# import jinja2
+from markupsafe import Markup
+
 # from ruslinkers.database import db_session, diachronic
 # from ruslinkers.models import *
 import ruslinkers.database as db
@@ -22,8 +26,11 @@ def create_app(test_config=None):
         SECRET_KEY='dev'
         # DATABASE=os.path.join(app.instance_path, 'ruslinkers-new4.db'),
     )
+
+    md = markdown.Markdown(extensions=['meta'])
     app.jinja_env.filters['quote_lnk'] = quote_lnk
     app.jinja_env.filters['unquote_lnk'] = unquote_lnk
+    app.jinja_env.filters['markdown'] = lambda text: Markup(md.convert(text))
 
     # if test_config is None:
     #     # load the instance config, if it exists, when not testing

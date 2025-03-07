@@ -23,9 +23,9 @@
             aria-expanded="false" aria-controls="{{collapse_id}}">
             <i class="bi bi-plus text-primary"></i>{{label}}</button>
     </p>
-    <p class="collapse m-0" id="{{collapse_id}}">
+    <div class="collapse m-0" id="{{collapse_id}}">
         {{ param }}
-    </p>
+    </div>
 {%- if with_row -%}
 </div>
 {%- endif -%}
@@ -110,7 +110,7 @@
                 </div>
                 {%- endif -%}
 
-                {{showparam('Стилистические ограничения',unit.style_constraints_ru)}}
+                {{showparam('Стилистические ограничения',unit.style_constraints_ru|markdown)}}
 
                 {%- if unit.phonvars|length > 1 -%}
                 <div class="row mb-3 g-0">
@@ -173,18 +173,18 @@
                 </div>
                 {%- endif -%}
 
-                {{showparam('Комментарий:',unit.sem_comment)}}
+                {{showparam('Комментарий:',unit.sem_comment|markdown)}}
 
                 <hr class="border border-black" />
-                {{showparam('Примеры употребления:',unit.example)}}
+                {{showparam('Примеры употребления:',unit.example|markdown)}}
                 {%- if unit.illoc_example != '' 
                 or unit.inferential_example != '' 
                 or unit.metatext_example != ''
                 or unit.dep_clause_type != '' -%}
                 <hr />
-                {{showparam('Иллокутивное употребление:',unit.illoc_example)}}
-                {{showparam('Инферентивное употребление:',unit.inferential_example)}}
-                {{showparam('Метатекстовое употребление:',unit.metatext_example)}}
+                {{showparam('Иллокутивное употребление:',unit.illoc_example|markdown)}}
+                {{showparam('Инферентивное употребление:',unit.inferential_example|markdown)}}
+                {{showparam('Метатекстовое употребление:',unit.metatext_example|markdown)}}
                 {%- if unit.dep_clause_type == 'финитная' -%}{{showparam('Употребляется с клаузами:','да')}}
                 {%- else -%}{{showparam('Употребляется с клаузами:',unit.dep_clause_type)}}{%- endif -%}
                 {%- endif -%}
@@ -206,22 +206,22 @@
                             </div>
                             {%- endif -%}
                             {{showparam_collapse('Пример',
-                                                unit.position_example,
+                                                unit.position_example|markdown,
                                                 'collapse-'+unit.id|string+'-position_example')}}
                             {{showparam('Порядок клауз:',
                                         unit.clause_order_ru,
                                         lw=6,pw=6,right=True)}}
                             {{showparam_collapse('Пример',
-                                                unit.clause_order_example,
+                                                unit.clause_order_example|markdown,
                                                 'collapse-'+unit.id|string+'-clause_order_example')}}
                             {{showparam('Допустимость в независимом предложении:',
                                         unit.indep_sentence_ru,
                                         lw=6,pw=6,right=True)}}
                             {{showparam_collapse('Пример',
-                                                unit.indep_sentence_example,
+                                                unit.indep_sentence_example|markdown,
                                                 'collapse-'+unit.id|string+'-indep_sentence_example')}}
                             {{showparam_collapse('Ветвление коннектора',
-                                                unit.expansion,
+                                                unit.expansion|markdown,
                                                 'collapse-'+unit.id|string+'-expansion',bold=True)}}                                         
                         </div>
                         <div class="col">
@@ -232,7 +232,7 @@
                                         unit.parts_order_ru,
                                         lw=6,pw=6,right=True)}}
                             {{showparam_collapse('Пример',
-                                                unit.parts_order_example,
+                                                unit.parts_order_example|markdown,
                                                 'collapse-'+unit.id|string+'-parts_order_example')}}
                             {{showparam_collapse('Обязательность частей составного коннектора:',
                                         unit.comp_oblig,
@@ -247,19 +247,19 @@
                                                 unit.correl_oblig_comment,
                                                 'collapse-'+unit.id|string+'-correl_oblig_comment')}}                                                                                                
                             {{showparam_collapse('Пример на наличие/отсутствие коррелята',
-                                                unit.correl_oblig_example,
+                                                unit.correl_oblig_example|markdown,
                                                 'collapse-'+unit.id|string+'-correl_oblig_example')}}
                             {{showparam('Позиция квази-коррелята:',
                                         unit.correl_position_ru,
                                         lw=6,pw=6,right=True)}}
                             {{showparam_collapse('Пример',
-                                                unit.correl_position_example,
+                                                unit.correl_position_example|markdown,
                                                 'collapse-'+unit.id|string+'-correl_position_example')}}
                         </div>
                     </div>
                     <div class="row">
                         {{showparam_collapse('Комментарий',
-                        unit.public_comments,
+                        unit.public_comments|markdown,
                         'collapse-'+unit.id|string+'-public_comments',bold=True)}}
                     </div>
                 {%- endif -%}
