@@ -52,26 +52,6 @@ $(document).ready(function () {
         }
     });
 
-    // When clicking search, send the URL parameters
-    $("#searchButton").on("click", function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        let params = "?";
-        j = 0;
-        if (urlParams.has('linker')) {
-            params += `linker=${encodeURI(urlParams.get('linker'))}`;
-            j++;
-        }
-        $(".searchData").each(function (i, obj) {
-            if (!obj.hasAttribute('disabled')) {
-                if (j > 0) params += '&';
-                params += obj.id + '=' + encodeURI($(this).val());
-                j++;
-            }
-        });
-        // window.location.href = window.location.href.split(/[?#]/)[0] + params;
-        window.location.href = '/units' + params;
-    });
-
     // Remove filter when the red button is clicked, keeping only linker
     $("#clearFilter").on("click", function () {
         const urlParams = new URLSearchParams(window.location.search);
