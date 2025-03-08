@@ -31,7 +31,16 @@ $(document).ready(function () {
     // Toggle enabled/disabled for search fields
     $(".toggleSearch").on("change", function () {
         target = $('#' + $(this).attr('data-toggle'));
-        console.log(target);
+        if (this.checked) {
+            target.removeAttr('disabled');
+        }
+        else {
+            target.attr('disabled', 'true');
+        }
+    });
+
+    $(".toggleSearch-select").on("change", function () {
+        target = $(`button[data-id="${$(this).attr('data-toggle')}"]`);
         if (this.checked) {
             target.removeAttr('disabled');
         }
@@ -45,11 +54,27 @@ $(document).ready(function () {
         const urlParams = new URLSearchParams(window.location.search);
         for (key of urlParams.keys()) {
             if(key.startsWith('search-')) {
-                $("#"+key).val(urlParams.getAll(key));
-                $(`.toggleSearch[data-toggle="${key}"]`)[0].checked = true;
-                $(`.toggleSearch[data-toggle="${key}"]`).first().trigger('change');
+                if($(`.toggleSearch[data-toggle="${key}"]`).length > 0) {
+                    $("#"+key).val(urlParams.getAll(key));
+                    $(`.toggleSearch[data-toggle="${key}"]`)[0].checked = true;
+                    // $(`.toggleSearch[data-toggle="${key}"]`).first().trigger('change');
+                }
+                else if($(`.toggleSearch-select[data-toggle="${key}"]`).length > 0) {
+                    $("#"+key).selectpicker('val',urlParams.getAll(key));
+                    $("#"+key).selectpicker('refresh');
+                    $(`.toggleSearch-select[data-toggle="${key}"]`)[0].checked = true;
+                    // $(`.toggleSearch-select[data-toggle="${key}"]`).first().trigger('change');
+                }
             }
         }
+        $('.toggleSearch').each(function (i, obj) {
+            console.log('blah');
+            $(this).trigger('change');
+        });
+        $('.toggleSearch-select').each(function (i, obj) {
+            console.log('bluh');
+            $(this).trigger('change');
+        });
     });
 
     // Remove filter when the red button is clicked, keeping only linker
