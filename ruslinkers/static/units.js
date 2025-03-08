@@ -14,9 +14,10 @@ $(document).ready(function () {
     var $container = $('#sidebar'),
         $scrollTo = $('a.lnkr.active');
     // $container.scrollTop($scrollTo.position().top + $container.scrollTop());
+    if($scrollTo.length > 0) {
     $container.scrollTop(
         $scrollTo.offset().top - $container.offset().top + $container.scrollTop()
-    );
+    );}
 
     $('#filter-linkers').on("keyup", function () {
         var value = $(this).val().toLowerCase();
@@ -45,7 +46,6 @@ $(document).ready(function () {
         for (const [key, value] of urlParams) {
             if (key.startsWith('search-')) {
                 $("#"+key).val(value);
-                console.log($(`.toggleSearch[data-toggle="${key}"]`).first())
                 $(`.toggleSearch[data-toggle="${key}"]`)[0].checked = true;
                 $(`.toggleSearch[data-toggle="${key}"]`).first().trigger('change');
             }
@@ -54,6 +54,7 @@ $(document).ready(function () {
 
     // Remove filter when the red button is clicked, keeping only linker
     $("#clearFilter").on("click", function () {
+        console.log('CLICK')
         const urlParams = new URLSearchParams(window.location.search);
         let params = '';
         if(urlParams.has('linker')) {
