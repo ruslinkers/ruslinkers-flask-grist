@@ -27,6 +27,9 @@ param_values = {
     'indep_sentence': make_param('Indep_sentence_values')
 }
 
+semfields = api.fetch_table('Semfields')
+subfields = api.fetch_table('Subfields')
+
 # Dictionary stuff
 meanings = api.fetch_table('Meanings')
 sources = api.fetch_table('Sources')
