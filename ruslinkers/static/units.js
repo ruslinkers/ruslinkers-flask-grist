@@ -54,8 +54,13 @@ $(document).ready(function () {
 
     // When clicking search, send the URL parameters
     $("#searchButton").on("click", function () {
+        const urlParams = new URLSearchParams(window.location.search);
         let params = "?";
         j = 0;
+        if (urlParams.has('linker')) {
+            params += `linker=${encodeURI(urlParams.get('linker'))}`;
+            j++;
+        }
         $(".searchData").each(function (i, obj) {
             if (!obj.hasAttribute('disabled')) {
                 if (j > 0) params += '&';
