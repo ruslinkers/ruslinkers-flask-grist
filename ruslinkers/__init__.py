@@ -144,6 +144,11 @@ def create_app(test_config=None):
         units_f = process_filter(units_f, 'search-semfield',
                         lambda f, k : any((int(f) == x.semfield1 or int(f) == x.semfield2) for x in units_gr[k]))
 
+        # Search by subfield
+        units_f = process_filter(units_f, 'search-subfield',
+                        lambda f, k : any(int(f) in x.subfield1 for x in units_gr[k] if x.subfield1 is not None) 
+                        or any(int(f) in x.subfield2 for x in units_gr[k] if x.subfield2 is not None))
+
         if request.args.get('linker') is not None:
             linker = unquote_lnk(request.args.get('linker'))
         else: 
