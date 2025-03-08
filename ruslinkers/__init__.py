@@ -95,7 +95,7 @@ def create_app(test_config=None):
         for u in db.linkers:
             units_gr[u.form].append(u)
 
-        units_f = sorted(list(units_gr.keys()), key=lambda s: s[0] if s[0].isalnum() else 'ع' + s[1:])
+        units_f = list(units_gr.keys())
         filters = dict()
 
         # Helper function to avoid writing too much code
@@ -140,12 +140,18 @@ def create_app(test_config=None):
                         lambda f, k : any(f in x 
                                 for x in [z for y in [get_examples(u) for u in units_gr[k]] for z in y]))
 
+        # Search by semfield
+        units_f = process_filter(units_f, 'search-semfield',
+                        lambda f, k : any((int(f) == x.semfield1 or int(f) == x.semfield2) for x in units_gr[k]))
+
         if request.args.get('linker') is not None:
             linker = unquote_lnk(request.args.get('linker'))
         else: 
             linker = unquote_lnk(units_f[0])
 
         pos_uniq = sorted(list(dict.fromkeys([x.pos for x in db.meanings if x.pos != ''])))
+
+        units_f = sorted(units_f, key=lambda s: s[0] if s[0].isalnum() else 'ع' + s[1:])
         
         return render_template('units.html',
                             #    sources=db.sources,
