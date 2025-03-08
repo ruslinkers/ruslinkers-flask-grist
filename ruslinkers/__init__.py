@@ -117,15 +117,24 @@ def create_app(test_config=None):
         # Search by meaning text (in dict.)
         units_f = process_filter(units_f, 'search-meaning',
                         lambda f, k : any(f in str(x or '') 
-                              for x in list(map(get_meanings,units_gr[k]))))
+                              for x in [z for y in [get_meanings(u) for u in units_gr[k]] for z in y]))
         # Search by linker text
         units_f = process_filter(units_f, 'search-conn',
                         lambda f, k : any(f in x 
-                              for x in [x.form for x in units_gr[k]]))
+                              for x in [y.form for y in units_gr[k]] + [z for y in [u.phonvars[1:] for u in units_gr[k]] for z in y]
+                              ))
         # Search by (quasi-)correlate
         units_f = process_filter(units_f, 'search-correl',
                         lambda f, k : any(f in x 
-                              for x in [x.correl for x in units_gr[k]]))
+                              for x in [y.correl for y in units_gr[k]]))
+        # Search by example
+
+        # Helper function to get all example values for a list of units
+        get_examples = lambda l : [v for k,v in l._asdict().items() if 'example' in k and v not in ['','не засвидетельствовано']]
+
+        units_f = process_filter(units_f, 'search-examples',
+                        lambda f, k : any(f in x 
+                                for x in [z for y in [get_examples(u) for u in units_gr[k]] for z in y]))
 
         if request.args.get('linker') is not None:
             linker = unquote_lnk(request.args.get('linker'))
