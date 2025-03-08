@@ -43,9 +43,9 @@ $(document).ready(function () {
     // When opening search modal, restore the search fields
     $("#advancedSearch").on("shown.bs.modal", function () {
         const urlParams = new URLSearchParams(window.location.search);
-        for (const [key, value] of urlParams) {
-            if (key.startsWith('search-')) {
-                $("#"+key).val(value);
+        for (key of urlParams.keys()) {
+            if(key.startsWith('search-')) {
+                $("#"+key).val(urlParams.getAll(key));
                 $(`.toggleSearch[data-toggle="${key}"]`)[0].checked = true;
                 $(`.toggleSearch[data-toggle="${key}"]`).first().trigger('change');
             }
