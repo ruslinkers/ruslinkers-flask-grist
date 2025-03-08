@@ -101,8 +101,12 @@ def create_app(test_config=None):
         # Helper function to avoid writing too much code
         def process_filter(us, filter, func):
             if request.args.get(filter) is not None:
-                filters[filter] = request.args.get(filter)
-                return [k for k in us if func(filters[filter],k)]
+                filters[filter] = []
+                filtered_values = []
+                for f in request.args.getlist(filter):
+                    filters[filter].append(f)
+                    filtered_values = filtered_values + [k for k in us if func(f,k)]
+                return list(dict.fromkeys(filtered_values))
             else: return us
 
         # Search by POS
@@ -141,7 +145,7 @@ def create_app(test_config=None):
         else: 
             linker = unquote_lnk(units_f[0])
 
-        pos_uniq = sorted(list(dict.fromkeys([x.pos for x in db.meanings])))
+        pos_uniq = sorted(list(dict.fromkeys([x.pos for x in db.meanings if x.pos != ''])))
         
         return render_template('units.html',
                             #    sources=db.sources,
@@ -154,6 +158,8 @@ def create_app(test_config=None):
                                meanings=db.meanings,
                                sources=db.sources,
                                params=db.param_values,
+                               semfields=db.semfields,
+                               subfields=db.subfields,
                                linker=linker,
                                olds=db.diachronic[linker] if linker in db.diachronic.keys() else None)
     
