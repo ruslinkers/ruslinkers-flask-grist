@@ -285,12 +285,12 @@
                 <input type="hidden" id="linkerField" name="linker" value="{{request.args.get('linker')}}">
                 {%- endif -%}
                 <div class="modal-body">
-                    <div class="row justify-content-center">
-                        <div class="col-10">
-                            <div class="card bg-light">
+                    <div class="row justify-content-center pb-3">
+                        <!-- <div class="col-11"> -->
+                            <div class="card bg-light w-75">
                                 <div class="row justify-content-center">
                                     <div class="col-4 gap-1">
-                                        <div class="row g-3 p-1 align-items-center">
+                                        <div class="row g-3 pb-1 align-items-center">
                                             <div class="col-4">
                                                 <input class="form-check-input toggleSearch" data-toggle="search-pos"
                                                     type="checkbox">
@@ -305,7 +305,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="row g-3 p-1 align-items-center">
+                                        <div class="row g-3 pb-1 align-items-center">
                                             <div class="col-4">
                                                 <input class="form-check-input toggleSearch" data-toggle="search-dict"
                                                     type="checkbox">
@@ -320,7 +320,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="row g-3 p-1 align-items-center">
+                                        <div class="row g-3 pb-1 align-items-center">
                                             <div class="col-4">
                                                 <input class="form-check-input toggleSearch" data-toggle="search-meaning"
                                                     type="checkbox">
@@ -333,7 +333,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-3 gap-1 align-self-center">
+                                    <div class="col-4 gap-1 align-self-center">
                                         <div class="row g-3 p-1 align-items-center">
                                             <div class="col-1"><input class="form-check-input toggleSearch"
                                                     data-toggle="search-conn" type="checkbox"></div>
@@ -353,7 +353,26 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                    </div>
+                    <div class="row justify-content-center pb-3">
+                            <div class="card bg-light w-75">
+                                <div class="row pt-3 justify-content-center">
+                                    <div class="col-4 gap-1">
+                                        <h5>Поиск по примерам</h5>
+                                    </div>
+                                    <div class="col-7 gap-1">
+
+                                    </div>
+                                </div>
+                                <div class="row pb-3 justify-content-center">
+                                    <div class="col-1 gap-1"><input class="form-check-input toggleSearch"
+                                        data-toggle="search-examples" type="checkbox"></div>
+                                    <div class="col-10 gap-1"><input id="search-examples" name="search-examples" type="text" class="form-control searchData" 
+                                                    placeholder="Введите слово или фразу"
+                                                    disabled></div>
+                                </div>
+                            </div>
+                        <!-- </div> -->
                     </div>
                 </div>
                 <div class="modal-footer">
