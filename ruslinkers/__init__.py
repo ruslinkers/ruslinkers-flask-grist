@@ -98,12 +98,35 @@ def create_app(test_config=None):
         units_f = sorted(list(units_gr.keys()), key=lambda s: s[0] if s[0].isalnum() else 'ع' + s[1:])
         filters = dict()
 
-        if request.args.get('search-pos') is not None:
-            filters['search-pos'] = request.args.get('search-pos')
-            units_f = [k for k in units_f if any(filters['search-pos'] in x.pos_txt[1:] for x in units_gr[k])]
-        if request.args.get('search-dict') is not None:
-            filters['search-dict'] = request.args.get('search-dict')
-            units_f = [k for k in units_f if any(int(filters['search-dict']) in x.dicts[1:] for x in units_gr[k])]
+        # Helper function to avoid writing too much code
+        def process_filter(us, filter, func):
+            if request.args.get(filter) is not None:
+                filters[filter] = request.args.get(filter)
+                return [k for k in us if func(filters[filter],k)]
+            else: return us
+
+        # Search by POS
+        units_f = process_filter(units_f, 'search-pos', 
+                        lambda f, k : any(f in x.pos_txt[1:] for x in units_gr[k]))
+        # Search by dictionary
+        units_f = process_filter(units_f, 'search-dict',
+                        lambda f, k : any(int(f) in x.dicts[1:] for x in units_gr[k]))
+        # Helper function to fetch meanings
+        def get_meanings(l): 
+                return [x.meaning for x in db.meanings if x.id in l.meanings[1:]]
+        # Search by meaning text (in dict.)
+        units_f = process_filter(units_f, 'search-meaning',
+                        lambda f, k : any(f in str(x or '') 
+                              for x in list(map(get_meanings,units_gr[k]))))
+        # Search by linker text
+        units_f = process_filter(units_f, 'search-conn',
+                        lambda f, k : any(f in x 
+                              for x in [x.form for x in units_gr[k]]))
+        # Search by (quasi-)correlate
+        units_f = process_filter(units_f, 'search-correl',
+                        lambda f, k : any(f in x 
+                              for x in [x.correl for x in units_gr[k]]))
+
         if request.args.get('linker') is not None:
             linker = unquote_lnk(request.args.get('linker'))
         else: 
