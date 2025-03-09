@@ -41,8 +41,30 @@
 
 <script>
     $(document).ready(function () {
+        // Initialize multiselect
         $("#advancedSearch").on("shown.bs.modal", function () {
             $('select[multiple]').selectpicker();
+        });
+
+        const subfields = {
+            {%- for sf in subfields -%}
+            {{sf.id}}: {{sf.semfield}}{%- if not loop.last -%}, {% endif -%}
+            {%- endfor -%}
+        };
+
+        // Get subfields
+        $("#search-semfield").on("change", function () {
+            const semfields = $(this).val();
+            $("#search-subfield").children('option').each(function(i, obj) {
+                console.log(subfields[$(this).val()]);
+                if (semfields.includes(String(subfields[$(this).val()]))) {
+                    $(this).show();
+                }
+                else {
+                    $(this).hide();
+                }
+            });
+            $("#search-subfield").selectpicker('refresh');
         });
     });
 </script>
@@ -409,7 +431,7 @@
                             </div>
                             <div class="row pb-3 justify-content-center">
                                 <div class="col-5 gap-1">
-                                    <label for="search-semfield1">Семантическое поле</label>
+                                    <label for="search-semfield">Семантическое поле</label>
                                     <div class="input-group">
                                         <input class="btn-check toggleSearch-select" id="toggle-semfield"
                                         data-toggle="search-semfield" type="checkbox">
