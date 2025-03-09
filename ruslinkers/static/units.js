@@ -46,11 +46,13 @@ $(document).ready(function () {
             target.removeAttr('disabled');
             target.selectpicker('setStyle','btn-outline-primary');
             target.selectpicker('refresh');
+            target.trigger('change');
         }
         else {
             target.attr('disabled', 'true');
             target.selectpicker('setStyle','btn-outline-primary','remove');
             target.selectpicker('refresh');
+            target.trigger('change');
         }
     });
 
