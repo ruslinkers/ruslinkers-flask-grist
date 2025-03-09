@@ -169,8 +169,8 @@ def create_app(test_config=None):
                                meanings=db.meanings,
                                sources=db.sources,
                                params=db.param_values,
-                               semfields=db.semfields,
-                               subfields=db.subfields,
+                               semfields=sorted(db.semfields, key = lambda x : x.display_ru),
+                               subfields=sorted(db.subfields, key = lambda x : x.display_ru),
                                linker=linker,
                                olds=db.diachronic[linker] if linker in db.diachronic.keys() else None)
     
