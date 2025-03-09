@@ -56,7 +56,6 @@
         $("#search-semfield").on("change", function () {
             const semfields = $(this).val();
             $("#search-subfield").children('option').each(function(i, obj) {
-                console.log(subfields[$(this).val()]);
                 if (semfields.includes(String(subfields[$(this).val()]))) {
                     $(this).show();
                 }
