@@ -43,7 +43,7 @@
     $(document).ready(function () {
         // Initialize multiselect
         $("#advancedSearch").on("shown.bs.modal", function () {
-            $('select[multiple]').selectpicker({noneSelectedText: 'Не выбрано', width: 'auto', style: 'btn', size: 10});
+            $('select[multiple]').selectpicker({noneSelectedText: 'Не выбрано', style: 'btn', width: 'fit', size: 10, hideDisabled: true});
         });
 
         const subfields = {
@@ -57,10 +57,10 @@
             const semfields = $(this).val();
             $("#search-subfield").children('option').each(function(i, obj) {
                 if (semfields.includes(String(subfields[$(this).val()]))) {
-                    $(this).show();
+                    $(this).prop('disabled',false);
                 }
                 else {
-                    $(this).hide();
+                    $(this).prop('disabled',true);
                     $(this).prop('selected',false);
                 }
             });
