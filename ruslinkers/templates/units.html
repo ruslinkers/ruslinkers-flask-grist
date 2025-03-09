@@ -43,7 +43,7 @@
     $(document).ready(function () {
         // Initialize multiselect
         $("#advancedSearch").on("shown.bs.modal", function () {
-            $('select[multiple]').selectpicker();
+            $('select[multiple]').selectpicker({noneSelectedText: 'Не выбрано', width: '90%', style: 'btn', size: 10});
         });
 
         const subfields = {
@@ -323,79 +323,82 @@
                 {%- endif -%}
                 <div class="modal-body">
                     <div class="row justify-content-center pb-3">
-                        <!-- <div class="col-11"> -->
-                            <div class="card bg-light w-75">
-                                <div class="row justify-content-center pb-3">
-                                    <div class="col-4 gap-1">
-                                        <div class="row g-3 pt-3 pb-1 align-items-center">
-                                            <div class="col-4">
-                                                <input class="btn-check toggleSearch-select" data-toggle="search-pos" id="toggle-pos"
-                                                    type="checkbox">
-                                                <label class="btn btn-outline-primary" for="toggle-pos">Часть речи:</label>
-                                            </div>
-                                            <div class="col-8">
-                                                <select id="search-pos" name="search-pos" class="searchData"
-                                                    multiple size="3">
-                                                    {% for pos in pos_list %}
-                                                    <option value="{{pos}}">{{pos}}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row g-3 pb-1 align-items-center">
-                                            <div class="col-4">
-                                                <input class="btn-check toggleSearch-select" data-toggle="search-dict" id="toggle-dict"
-                                                    type="checkbox">
-                                                <label class="btn btn-outline-primary" for="toggle-dict">Словарь:</label>
-                                            </div>
-                                            <div class="col-8">
-                                                <select id="search-dict" name="search-dict" class="searchData"
-                                                    multiple size="3">
-                                                    {% for source in sources %}
-                                                    <option value="{{source.id}}">{{source.label}}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row g-3 align-items-center">
-                                            <div class="col-4">
-                                                <input class="btn-check toggleSearch" data-toggle="search-meaning" id="toggle-search"
-                                                    type="checkbox">
-                                                <label class="btn btn-outline-primary" for="toggle-search">Значение:</label>
-                                            </div>
-                                            <div class="col-8">
-                                                <input id="search-meaning" name="search-meaning" type="text" class="form-control searchData" 
-                                                    placeholder="Текст значения"
-                                                    disabled>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4 gap-1 align-self-center">
-                                        <div class="row g-3 p-1 align-items-center">
-                                            <div class="input-group">
-                                                <input class="btn-check toggleSearch" id="toggle-conn"
-                                                        data-toggle="search-conn" type="checkbox">
-                                                <label class="btn btn-outline-primary" for="toggle-conn"><i class="bi bi-check-lg"></i></label>
-                                                <input id="search-conn" name="search-conn" type="text"
-                                                        class="form-control searchData"
-                                                        placeholder="Коннектор или часть коннектора" disabled>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4 gap-1 align-self-center">
-                                        <div class="row g-3 p-1 align-items-center">
-                                            <div class="input-group">
-                                                <input class="btn-check toggleSearch" id="toggle-correl"
-                                                        data-toggle="search-correl" type="checkbox">
-                                                <label class="btn btn-outline-primary" for="toggle-correl"><i class="bi bi-check-lg"></i></label>
-                                                <input id="search-correl" name="search-correl" type="text"
-                                                        class="form-control searchData" placeholder="Квази-коррелят" disabled>
-                                            </div>
-                                        </div>
+                        <div class="card bg-light w-75 justify-content-center">
+                            <!-- ROW 1 -->
+                            <div class="row g-3 pt-3 pb-1 align-items-start">
+                                <!-- COL 1 -->
+                                <div class="col-4 gap-1">
+                                    <label for="search-pos">Часть речи</label>
+                                    <div class="input-group">                                        
+                                        <input class="btn-check toggleSearch-select" data-toggle="search-pos" id="toggle-pos"
+                                            type="checkbox">
+                                        <label class="btn btn-outline-primary" for="toggle-pos"><i class="bi bi-check-lg"></i></label>
+                                        <select id="search-pos" name="search-pos" class="searchData" 
+                                            multiple size="3">
+                                            {% for pos in pos_list %}
+                                            <option value="{{pos}}">{{pos}}</option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                 </div>
                             </div>
+                            <!-- ROW 2 -->
+                            <div class="row g-3 pb-1 align-items-start">
+                                <!-- COL 1 -->
+                                <div class="col-4 gap-1">
+                                    <label for="search-dict">Словарь</label>
+                                    <div class="input-group">
+                                        <input class="btn-check toggleSearch-select" data-toggle="search-dict" id="toggle-dict"
+                                            type="checkbox">
+                                        <label class="btn btn-outline-primary" for="toggle-dict"><i class="bi bi-check-lg"></i></label>
+                                        <select id="search-dict" name="search-dict" class="searchData"
+                                            multiple size="3">
+                                            {% for source in sources %}
+                                            <option value="{{source.id}}">{{source.label}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- COL 2 -->
+                                <div class="col-4 gap-1">
+                                    <div class="input-group">
+                                        <input class="btn-check toggleSearch" id="toggle-conn"
+                                                data-toggle="search-conn" type="checkbox">
+                                        <label class="btn btn-outline-primary" for="toggle-conn"><i class="bi bi-check-lg"></i></label>
+                                        <input id="search-conn" name="search-conn" type="text"
+                                                class="form-control searchData"
+                                                placeholder="Коннектор или часть коннектора" disabled>
+                                    </div>
+                                </div>
+                                <!-- COL 3 -->
+                                <div class="col-4 gap-1">
+                                    <div class="input-group">
+                                        <input class="btn-check toggleSearch" id="toggle-correl"
+                                                data-toggle="search-correl" type="checkbox">
+                                        <label class="btn btn-outline-primary" for="toggle-correl"><i class="bi bi-check-lg"></i></label>
+                                        <input id="search-correl" name="search-correl" type="text"
+                                                class="form-control searchData" placeholder="Квази-коррелят" disabled>
+                                    </div>
+                                </div>                                                                
+                            </div>
+                            <!-- ROW 3 -->
+                            <div class="row g-3 pb-3 align-items-start">
+                                <!-- COL 1 -->
+                                <div class="col-4 gap-1">
+                                    <label for="search-dict">Значение</label>
+                                    <div class="input-group">
+                                        <input class="btn-check toggleSearch" data-toggle="search-meaning" id="toggle-search"
+                                            type="checkbox">
+                                        <label class="btn btn-outline-primary" for="toggle-search"><i class="bi bi-check-lg"></i></label>
+                                        <input id="search-meaning" name="search-meaning" type="text" class="form-control searchData" 
+                                            placeholder="Текст значения"
+                                            disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="row justify-content-center pb-3">
                             <div class="card bg-light w-75">
                                 <div class="row pt-3 justify-content-center">
