@@ -68,11 +68,9 @@ $(document).ready(function () {
             }
         }
         $('.toggleSearch').each(function (i, obj) {
-            console.log('blah');
             $(this).trigger('change');
         });
         $('.toggleSearch-select').each(function (i, obj) {
-            console.log('bluh');
             $(this).trigger('change');
         });
     });
