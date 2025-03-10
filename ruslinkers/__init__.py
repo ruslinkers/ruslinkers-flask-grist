@@ -10,6 +10,8 @@ import markdown
 # import jinja2
 from markupsafe import Markup
 
+import operator
+
 # from ruslinkers.database import db_session, diachronic
 # from ruslinkers.models import *
 import ruslinkers.database as db
@@ -148,6 +150,16 @@ def create_app(test_config=None):
         units_f = process_filter(units_f, 'search-subfield',
                         lambda f, k : any(int(f) in x.subfield1 for x in units_gr[k] if x.subfield1 is not None) 
                         or any(int(f) in x.subfield2 for x in units_gr[k] if x.subfield2 is not None))
+        
+        # Convert values to operators
+        ops = {
+            1: operator.not_,
+            0: operator.truth
+        }
+
+        # Search inferential
+        units_f = process_filter(units_f, 'search-has-inferential',
+                                 lambda f, k: ops[int(f)](all(x.inferential_example in ['','не засвидетельствовано'] for x in units_gr[k])))
 
         if request.args.get('linker') is not None:
             linker = unquote_lnk(request.args.get('linker'))

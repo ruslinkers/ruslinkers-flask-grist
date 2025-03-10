@@ -33,28 +33,43 @@ $(document).ready(function () {
         target = $('#' + $(this).attr('data-toggle'));
         if (this.checked) {
             target.removeAttr('disabled');
+            target.trigger('change');
         }
         else {
             target.attr('disabled', 'true');
+            target.trigger('change');
         }
     });
 
+    // When toggles are pressed
     $(".toggleSearch-select").on("change", function () {
         // target = $(`button[data-id="${$(this).attr('data-toggle')}"]`);
         target = $('#' + $(this).attr('data-toggle'));
         if (this.checked) {
-            target.removeAttr('disabled');
+            target.prop('disabled', false);
             target.selectpicker('setStyle','btn-outline-primary');
             target.selectpicker('refresh');
             target.trigger('change');
         }
         else {
-            target.attr('disabled', 'true');
+            target.prop('disabled', true);
             target.selectpicker('setStyle','btn-outline-primary','remove');
             target.selectpicker('refresh');
             target.trigger('change');
         }
     });
+
+    // Button toggles with custom changing text. Note the use of invisible fields, otherwise toggles don't send info when unchecked
+    $(".btn-check[id^='search-']").on("change", function () {
+        if (this.checked) {
+            $(`label[for="${$(this).attr('id')}"]`).html($(this).attr('data-yes'));
+            $(`#${$(this).attr('id')}-un`).prop('disabled',true);
+        }
+        else {
+            $(`label[for="${$(this).attr('id')}"]`).html($(this).attr('data-no'));
+            $(`#${$(this).attr('id')}-un`).prop('disabled',false);
+        }
+    })
 
     // When opening search modal, restore the search fields
     $("#advancedSearch").on("shown.bs.modal", function () {

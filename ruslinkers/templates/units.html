@@ -432,7 +432,7 @@
 
                                 </div>
                             </div>
-                            <div class="row pb-3 justify-content-center">
+                            <div class="row pb-1 justify-content-center">
                                 <div class="col-5 gap-1">
                                     <label for="search-semfield">Семантическое поле</label>
                                     <div class="input-group">
@@ -461,6 +461,25 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row pb-1 justify-content-center">
+                                <div class="col-5 gap-1">
+                                    <label for="has-inferential-group">Наличие инферентивных употреблений</label>
+                                    <div class="input-group" id="has-inferential-group">
+                                        <input class="btn-check toggleSearch" id="toggle-has-inferential"
+                                        data-toggle="search-has-inferential" type="checkbox">
+                                        <label class="btn btn-outline-primary" for="toggle-has-inferential"><i class="bi bi-check-lg"></i></label>
+                                        <input type="hidden" id="search-has-inferential-un" name="search-has-inferential" value="0" disabled>
+                                        <input class="btn-check" id="search-has-inferential" name="search-has-inferential" type="checkbox" 
+                                        data-yes="засвидетельствованы"
+                                        data-no="не засвидетельствованы"
+                                        value="1"
+                                        disabled>
+                                        <label class="btn btn-outline-primary" for="search-has-inferential">не засвидетельствованы</label>
+                                    </div>
+                                </div>
+                                <div class="col-7 gap-1">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -473,7 +492,7 @@
     </div>
 </div>
 
-{% if olds is not none %}
+{%- if olds is not none -%}
 <div class="modal fade" id="diachrony" tabindex="-1" aria-labelledby="diachronyLabel" aria-hidden="true">
     <div class="modal-dialog modal-scrollable modal-lg">
         <div class="modal-content">
@@ -611,7 +630,7 @@
         </div>
     </div>
 </div>
-{% endif %}
+{%- endif -%}
 
 <div class="modal fade" id="moreDB" tabindex="-1" aria-labelledby="moreDBLabel" aria-labelledby="moreDBLabel"
     aria-hidden="false">
