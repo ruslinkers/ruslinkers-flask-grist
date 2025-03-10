@@ -160,6 +160,14 @@ def create_app(test_config=None):
         # Search inferential
         units_f = process_filter(units_f, 'search-has-inferential',
                                  lambda f, k: ops[int(f)](all(x.inferential_example in ['','не засвидетельствовано'] for x in units_gr[k])))
+        
+        # Search illocutionary
+        units_f = process_filter(units_f, 'search-has-illoc',
+                                 lambda f, k: ops[int(f)](all(x.illoc_example in ['','не засвидетельствовано'] for x in units_gr[k])))
+        
+        # Search metatext
+        units_f = process_filter(units_f, 'search-has-metatext',
+                                 lambda f, k: ops[int(f)](all(x.metatext_example in ['','не засвидетельствовано'] for x in units_gr[k])))        
 
         if request.args.get('linker') is not None:
             linker = unquote_lnk(request.args.get('linker'))
