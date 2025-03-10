@@ -93,7 +93,7 @@
         {%- if filters|length > 0 -%}
         <div><button id="clearFilter" class="btn btn-danger btn-sm">Снять фильтр</button></div>
         {%- endif -%}
-        <div id="sidebar" class="list-group list-group-flush overflow-scroll">
+        <div id="sidebar" class="list-group list-group-flush overflow-y-scroll overflow-x-hidden">
             {% for unit in units_f %}
             <a href="{{url_for('units', linker=unit|quote_lnk, **filters)}}"
                 class="lnkr btn list-group-item list-group-item-action py-3 lh-tight border border-0 {{'active' if unit == linker else 'bg-light'}}"
@@ -110,7 +110,7 @@
             {% endfor %}
         </div>
     </div>
-    <main class="d-flex col-10 flex-column overflow-scroll">
+    <main class="d-flex col-10 flex-column overflow-x-hidden overflow-y-scroll">
         <div class="row mx-2"><h4>{{linker}}</h4></div>
         <div class="d-flex flex-row mx-2 mb-2">{% if olds is not none %}<button class="btn btn-link" 
             data-bs-toggle="modal" 
