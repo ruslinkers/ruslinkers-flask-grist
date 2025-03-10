@@ -33,11 +33,15 @@ $(document).ready(function () {
         target = $('#' + $(this).attr('data-toggle'));
         if (this.checked) {
             target.removeAttr('disabled');
-            target.trigger('change');
+            if (target.is(".btn-check[id^='search-']")) {
+                target.trigger('change');
+            }
         }
         else {
             target.attr('disabled', 'true');
-            target.trigger('change');
+            if (target.is(".btn-check[id^='search-']")) {
+                $(`#${target.attr('id')}-un`).prop('disabled',true);
+            }
         }
     });
 
@@ -49,13 +53,13 @@ $(document).ready(function () {
             target.prop('disabled', false);
             target.selectpicker('setStyle','btn-outline-primary');
             target.selectpicker('refresh');
-            target.trigger('change');
+            // target.trigger('change');
         }
         else {
             target.prop('disabled', true);
             target.selectpicker('setStyle','btn-outline-primary','remove');
             target.selectpicker('refresh');
-            target.trigger('change');
+            // target.trigger('change');
         }
     });
 
@@ -78,12 +82,14 @@ $(document).ready(function () {
             if(key.startsWith('search-')) {
                 if($(`.toggleSearch[data-toggle="${key}"]`).length > 0) {
                     $("#"+key).val(urlParams.getAll(key));
+                    $("#"+key).trigger('change');
                     $(`.toggleSearch[data-toggle="${key}"]`)[0].checked = true;
                     // $(`.toggleSearch[data-toggle="${key}"]`).first().trigger('change');
                 }
                 else if($(`.toggleSearch-select[data-toggle="${key}"]`).length > 0) {
                     $("#"+key).selectpicker('val',urlParams.getAll(key));
                     $("#"+key).selectpicker('refresh');
+                    $("#"+key).trigger('change');
                     $(`.toggleSearch-select[data-toggle="${key}"]`)[0].checked = true;
                     // $(`.toggleSearch-select[data-toggle="${key}"]`).first().trigger('change');
                 }
