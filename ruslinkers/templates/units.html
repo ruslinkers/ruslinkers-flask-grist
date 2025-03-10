@@ -32,6 +32,22 @@
 {%- endif -%}
 {% endmacro %}
 
+{% macro search_toggle(name,label,yes,no) %}
+<label for="{{name}}-group">{{label}}</label>
+<div class="input-group" id="{{name}}-group">
+    <input class="btn-check toggleSearch" id="toggle-{{name}}"
+    data-toggle="search-{{name}}" type="checkbox">
+    <label class="btn btn-outline-primary" for="toggle-{{name}}"><i class="bi bi-check-lg"></i></label>
+    <input type="hidden" id="search-{{name}}-un" name="search-{{name}}" value="0" disabled>
+    <input class="btn-check" id="search-{{name}}" name="search-{{name}}" type="checkbox" 
+    data-yes="{{yes}}"
+    data-no="{{no}}"
+    value="1"
+    disabled>
+    <label class="btn btn-outline-primary" for="search-{{name}}">{{no}}</label>
+</div>
+{% endmacro %}
+
 {% block script %}
 <!-- <script type="text/javascript" src="{{url_for('static', filename='bootstrap-multiselect.min.js')}}"></script>
 <link rel="stylesheet" href="{{url_for('static', filename='bootstrap-multiselect.min.css')}}" type="text/css"/> -->
@@ -463,22 +479,11 @@
                             </div>
                             <div class="row pb-1 justify-content-center">
                                 <div class="col-5 gap-1">
-                                    <label for="has-inferential-group">Наличие инферентивных употреблений</label>
-                                    <div class="input-group" id="has-inferential-group">
-                                        <input class="btn-check toggleSearch" id="toggle-has-inferential"
-                                        data-toggle="search-has-inferential" type="checkbox">
-                                        <label class="btn btn-outline-primary" for="toggle-has-inferential"><i class="bi bi-check-lg"></i></label>
-                                        <input type="hidden" id="search-has-inferential-un" name="search-has-inferential" value="0" disabled>
-                                        <input class="btn-check" id="search-has-inferential" name="search-has-inferential" type="checkbox" 
-                                        data-yes="засвидетельствованы"
-                                        data-no="не засвидетельствованы"
-                                        value="1"
-                                        disabled>
-                                        <label class="btn btn-outline-primary" for="search-has-inferential">не засвидетельствованы</label>
-                                    </div>
+                                    {{search_toggle('has-inferential','Наличие инферентивных употреблений','засвидетельствованы','не засвидетельствованы')}}
                                 </div>
-                                <div class="col-7 gap-1">
-                                </div>
+                                <div class="col-7 gap-1"></div> 
+                            </div>
+                            <div class="row pb-1 justify-content-center">
                             </div>
                         </div>
                     </div>
