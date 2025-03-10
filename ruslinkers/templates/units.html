@@ -32,6 +32,16 @@
 {%- endif -%}
 {% endmacro %}
 
+{% macro search_string(name,placeholder) %}
+<div class="input-group">
+    <input class="btn-check toggleSearch" id="toggle-{{name}}"
+            data-toggle="search-{{name}}" type="checkbox">
+    <label class="btn btn-outline-primary" for="toggle-{{name}}"><i class="bi bi-check-lg"></i></label>
+    <input id="search-{{name}}" name="search-{{name}}" type="text"
+            class="form-control searchData" placeholder="{{placeholder}}" disabled>
+</div>
+{% endmacro %}
+
 {% macro search_toggle(name,label,yes,no) %}
 <label for="{{name}}-group">{{label}}</label>
 <div class="input-group" id="{{name}}-group">
@@ -42,9 +52,29 @@
     <input class="btn-check" id="search-{{name}}" name="search-{{name}}" type="checkbox" 
     data-yes="{{yes}}"
     data-no="{{no}}"
+    data-default="—"
     value="1"
     disabled>
-    <label class="btn btn-outline-primary" for="search-{{name}}">{{no}}</label>
+    <label class="btn btn-outline-primary" for="search-{{name}}">—</label>
+</div>
+{% endmacro %}
+
+{% macro search_list(name,label,collection,attr=true) %}
+<label for="search-{{name}}">{{label}}</label>
+<div class="input-group">                                        
+    <input class="btn-check toggleSearch-select" data-toggle="search-{{name}}" id="toggle-{{name}}"
+        type="checkbox">
+    <label class="btn btn-outline-primary" for="toggle-{{name}}"><i class="bi bi-check-lg"></i></label>
+    <select id="search-{{name}}" name="search-{{name}}" class="searchData" 
+        multiple size="3">
+        {%- for elem in collection -%}
+        {%- if attr -%}
+        <option value="{{elem.id}}">{{elem.display_ru}}</option>
+        {%- else -%}
+        <option value="{{elem}}">{{elem}}</option>
+        {%- endif -%}
+        {%- endfor -%}
+    </select>
 </div>
 {% endmacro %}
 
@@ -344,24 +374,14 @@
                             <div class="row g-3 pt-3 pb-1 align-items-start">
                                 <!-- COL 1 -->
                                 <div class="col-4 gap-1">
-                                    <label for="search-pos">Часть речи</label>
-                                    <div class="input-group">                                        
-                                        <input class="btn-check toggleSearch-select" data-toggle="search-pos" id="toggle-pos"
-                                            type="checkbox">
-                                        <label class="btn btn-outline-primary" for="toggle-pos"><i class="bi bi-check-lg"></i></label>
-                                        <select id="search-pos" name="search-pos" class="searchData" 
-                                            multiple size="3">
-                                            {% for pos in pos_list %}
-                                            <option value="{{pos}}">{{pos}}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
+                                    {{search_list('pos','Часть речи',pos_list,attr=false)}}
                                 </div>
                             </div>
                             <!-- ROW 2 -->
                             <div class="row g-3 pb-1 align-items-start">
                                 <!-- COL 1 -->
                                 <div class="col-4 gap-1">
+                                    {{search_list('dict','Словарь',sources)}}
                                     <label for="search-dict">Словарь</label>
                                     <div class="input-group">
                                         <input class="btn-check toggleSearch-select" data-toggle="search-dict" id="toggle-dict"
@@ -377,39 +397,19 @@
                                 </div>
                                 <!-- COL 2 -->
                                 <div class="col-4 gap-1">
-                                    <div class="input-group">
-                                        <input class="btn-check toggleSearch" id="toggle-conn"
-                                                data-toggle="search-conn" type="checkbox">
-                                        <label class="btn btn-outline-primary" for="toggle-conn"><i class="bi bi-check-lg"></i></label>
-                                        <input id="search-conn" name="search-conn" type="text"
-                                                class="form-control searchData"
-                                                placeholder="Коннектор или часть коннектора" disabled>
-                                    </div>
+                                    {{search_string('conn','Коннектор или часть коннектора')}}
                                 </div>
                                 <!-- COL 3 -->
                                 <div class="col-4 gap-1">
-                                    <div class="input-group">
-                                        <input class="btn-check toggleSearch" id="toggle-correl"
-                                                data-toggle="search-correl" type="checkbox">
-                                        <label class="btn btn-outline-primary" for="toggle-correl"><i class="bi bi-check-lg"></i></label>
-                                        <input id="search-correl" name="search-correl" type="text"
-                                                class="form-control searchData" placeholder="Квази-коррелят" disabled>
-                                    </div>
+                                    {{search_string('correl','Квази-коррелят')}}
                                 </div>                                                                
                             </div>
                             <!-- ROW 3 -->
                             <div class="row g-3 pb-3 align-items-start">
                                 <!-- COL 1 -->
                                 <div class="col-4 gap-1">
-                                    <label for="search-dict">Значение</label>
-                                    <div class="input-group">
-                                        <input class="btn-check toggleSearch" data-toggle="search-meaning" id="toggle-search"
-                                            type="checkbox">
-                                        <label class="btn btn-outline-primary" for="toggle-search"><i class="bi bi-check-lg"></i></label>
-                                        <input id="search-meaning" name="search-meaning" type="text" class="form-control searchData" 
-                                            placeholder="Текст значения"
-                                            disabled>
-                                    </div>
+                                    <label for="search-meaning">Значение</label>
+                                    {{search_string('meaning','Текст значения')}}
                                 </div>
                             </div>
                         </div>
@@ -426,14 +426,7 @@
                                     </div>
                                 </div>
                                 <div class="row pb-3 justify-content-center">
-                                    <div class="input-group">
-                                        <input class="btn-check toggleSearch" id="toggle-examples"
-                                            data-toggle="search-examples" type="checkbox">
-                                        <label class="btn btn-outline-primary" for="toggle-examples"><i class="bi bi-check-lg"></i></label>
-                                        <input id="search-examples" name="search-examples" type="text" class="form-control searchData" 
-                                                        placeholder="Введите слово или фразу"
-                                                        disabled>
-                                    </div>
+                                    {{search_string('examples','Введите слово или фразу')}}
                                 </div>
                             </div>
                         <!-- </div> -->
@@ -450,31 +443,11 @@
                             </div>
                             <div class="row pb-1 justify-content-center">
                                 <div class="col-5 gap-1">
-                                    <label for="search-semfield">Семантическое поле</label>
-                                    <div class="input-group">
-                                        <input class="btn-check toggleSearch-select" id="toggle-semfield"
-                                        data-toggle="search-semfield" type="checkbox">
-                                        <label class="btn btn-outline-primary" for="toggle-semfield"><i class="bi bi-check-lg"></i></label>
-                                        <select id="search-semfield" name="search-semfield" class="searchData" multiple>
-                                                {% for semfield in semfields %}
-                                                <option value="{{semfield.id}}">{{semfield.display_ru}}</option>
-                                                {% endfor %}
-                                        </select>
-                                    </div>
+                                    {{search_list('semfield','Семантическое поле',semfields)}}
                                 </div>
                                 <div class="col-1 gap-1"></div>
                                 <div class="col-6 gap-1">
-                                    <label for="search-subfield">Подзначение</label>
-                                    <div class="input-group">
-                                        <input class="btn-check toggleSearch-select" id="toggle-subfield"
-                                        data-toggle="search-subfield" type="checkbox">
-                                        <label class="btn btn-outline-primary" for="toggle-subfield"><i class="bi bi-check-lg"></i></label>
-                                        <select id="search-subfield" name="search-subfield" class="searchData" multiple>
-                                                {% for subfield in subfields %}
-                                                <option value="{{subfield.id}}">{{subfield.display_ru}}</option>
-                                                {% endfor %}
-                                        </select>
-                                    </div>
+                                    {{search_list('subfield','Подзначение',subfields)}}
                                 </div>
                             </div>
                             <div class="row pb-1 justify-content-center">
@@ -484,7 +457,19 @@
                                 <div class="col-7 gap-1"></div> 
                             </div>
                             <div class="row pb-1 justify-content-center">
+                                <div class="col-5 gap-1">
+                                    {{search_toggle('has-illoc','Наличие иллокутивных употреблений','засвидетельствованы','не засвидетельствованы')}}
+                                </div>
+                                <div class="col-7 gap-1">
+                                </div>
                             </div>
+                            <div class="row pb-1 justify-content-center">
+                                <div class="col-5 gap-1">
+                                    {{search_toggle('has-metatext','Наличие метатекстовых употреблений','засвидетельствованы','не засвидетельствованы')}}
+                                </div>
+                                <div class="col-7 gap-1">
+                                </div>
+                            </div>                            
                         </div>
                     </div>
                 </div>
