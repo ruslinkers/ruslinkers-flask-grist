@@ -228,7 +228,7 @@
                     <label class="col-3">Словарные значения:</label>
                     <div class="accordion accordion-preview accordion-flush" id="meanings{{unit.id}}">
                         {%- for m in unit.meanings[1:] -%}
-                        {%- set mng = meanings[m] -%}
+                        {%- set mng = meanings|selectattr('id','==',m)|first() -%}
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
