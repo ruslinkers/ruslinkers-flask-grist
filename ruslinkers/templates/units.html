@@ -129,11 +129,13 @@
                 Рускон</button></h5>
     </div>
 </div>
-<div class="d-flex flex-row justify-content-center">
+<div class="d-flex flex-row justify-content-center mb-3">
+<div class="d-flex flex-col border-bottom px-3">
 {%- set alpha = ['а', 'б', 'в', 'г', 'д', 'е', 'ж', 'з', 'и', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'э', 'ю', 'я'] -%}
 {%- for l in alpha -%}
 <a {{'href=#' ~ alphabetic[l]|quote_lnk if l in alphabetic.keys()}}>{{l}}</a>{{' · ' if not loop.last}}
 {% endfor -%}
+</div>
 </div>
 <div class="d-flex flex-row flex-nowrap h-100">
     <div class="d-flex col-2 flex-column">
@@ -148,7 +150,7 @@
         <div id="sidebar" class="list-group list-group-flush overflow-y-scroll overflow-x-hidden">
             {% for unit in units_f %}
             <a href="{{url_for('units', linker=unit|quote_lnk, **filters)}}"
-                class="lnkr btn list-group-item list-group-item-action py-3 lh-tight border border-0 {{'active' if unit == linker else 'bg-light'}}"
+                class="lnkr btn list-group-item list-group-item-action py-3 lh-tight border border-0 {{'active' if unit == linker else 'bg-dark'}}"
                 aria-current="true" id="{{unit|quote_lnk}}">
                 <div class="d-flex w-100 align-items-center justify-content-between linker-name">
                     <strong class="mb-1">{{unit}}</strong>
@@ -162,7 +164,7 @@
             {% endfor %}
         </div>
     </div>
-    <main class="d-flex col-10 flex-column overflow-x-hidden overflow-y-scroll">
+    <main class="d-flex col-10 flex-column overflow-x-hidden overflow-y-auto">
         <div class="row mx-2"><h4>{{linker}}</h4></div>
         <div class="d-flex flex-row mx-2 mb-2">{% if olds is not none %}<button class="btn btn-link" 
             data-bs-toggle="modal" 

@@ -2,14 +2,19 @@
 @import "../bootstrap/scss/variables";
 
 
-$primary: $green-700;
-$light: #f8f3e8;
+$primary: #126262;
+$secondary: #ADC355;
+$light: #FFFCF6;
+$dark: #f8f3e8;
 $border-color: $primary;
+$headings-color: #220F49;
 
 // merge with existing $theme-colors map
 $theme-colors: map-merge($theme-colors, (
   "primary": $primary,
-  "light": $light
+  "secondary": $secondary,
+  "light": $light,
+  "dark": $dark
 ));
 
 
