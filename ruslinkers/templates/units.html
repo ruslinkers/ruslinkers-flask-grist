@@ -239,15 +239,22 @@
                         {%- set mng = meanings|selectattr('id','==',m)|first() -%}
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                {%- if mng.pos != '' or mng.pos_type != '' or mng.pos_other != '' or mng.meaning_other != '' -%}
+                                <button class="accordion-button collapsed"
+                                type="button" data-bs-toggle="collapse"
                                     data-bs-target="#meaning{{m}}" aria-expanded="false"
                                     aria-controls="meaning{{m}}">
+                                {%- else -%}
+                                <button class="btn">
+                                {%- endif -%}
                                     <div><strong>{{mng.dict_label}}: </strong>
                                         {%- if mng.form != unit.form -%}<i>{{mng.form}}</i> {{'(' if mng.meaning != ''}}{% endif -%}
                                         {{mng.meaning}}{{')' if mng.form != unit.form and mng.meaning !=''}}
                                     </div>
                                 </button>
                             </h2>
+
+                            {%- if mng.pos != '' or mng.pos_type != '' or mng.pos_other != '' or mng.meaning_other != '' -%}
                             <div id="meaning{{m}}" class="accordion-collapse collapse shadow"
                                 data-bs-parent="#meanings{{unit.id}}">
                                 <div class="accordion-body">
@@ -261,6 +268,7 @@
                                     {{showparam('Другие значения:',mng.meaning_other)}}
                                 </div>
                             </div>
+                            {%- endif -%}
                         </div>
                         {% endfor %}
                     </div>
