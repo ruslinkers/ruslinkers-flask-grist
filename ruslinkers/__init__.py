@@ -195,6 +195,12 @@ def create_app(test_config=None):
 
         units_f = sorted(units_f, key=lambda s: s[0] if s[0].isalnum() else 'ع' + s[1:])
         
+        # Alphabetic order of filtered values
+        alphabetic = dict()
+        for k in units_f:
+            if k[0].isalpha() and k[0] not in alphabetic.keys():
+                alphabetic[k[0]] = k
+
         return render_template('units.html',
                             #    sources=db.sources,
                                pos_list=pos_uniq,
@@ -203,6 +209,7 @@ def create_app(test_config=None):
                             #    units=dict(sorted(units_gr.items(),key=lambda s: s[0] if s[0][0].isalnum() else 'Ω' + s[0][1:])),
                                units=units_gr, 
                                units_f=units_f,
+                               alphabetic=alphabetic,
                                meanings=db.meanings,
                                sources=db.sources,
                                params=db.param_values,
