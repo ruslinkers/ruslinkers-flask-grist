@@ -5,8 +5,8 @@
     {%- if with_row -%}
     <div class="row mb-1 g-0">
     {%- endif -%}
-        <label class="col-{{lw}}">{{label}}</label>
-        <div class="col-{{pw}} {{'text-end' if right}}">{{param}}</div>
+        <label class="col-12 col-md-{{lw}}">{{label}}</label>
+        <div class="col-12 col-md-{{pw}} {{'text-md-end' if right}}">{{param}}</div>
     {%- if with_row -%}
     </div>
     {%- endif -%}
@@ -220,9 +220,9 @@
                 {%- if unit.phonvars|length > 1 -%}
                 <div class="row mb-3 g-0">
                     <!-- <div class="input-group"> -->
-                    <label class="col-3">Фонетические варианты:</label>
+                    <label class="col-md-3 col-12">Фонетические варианты:</label>
                     {% for pv in unit.phonvars[1:] %}
-                    <div class="col-9">
+                    <div class="col-md-9 col-12">
                         {{pv}}
                         {%- if not loop.last %}, {% endif -%}
                     </div>
@@ -232,8 +232,8 @@
 
                 {%- if unit.pos|length > 1 -%}
                 <div class="row mb-3 align-items-center">
-                    <label class="col-3">Части речи:</label>
-                    <div class="col-9">
+                    <label class="col-md-3 col-12">Части речи:</label>
+                    <div class="col-md-9 col-12">
                         {%- for pos in unit.pos[1:] -%}
                         {{pos}}
                         {%- if not loop.last -%}, {% endif -%}
@@ -244,7 +244,7 @@
 
                 {%- if unit.meanings|length > 1 -%}
                 <div class="row mb-3">
-                    <label class="col-3">Словарные значения:</label>
+                    <label class="col-12">Словарные значения:</label>
                     <div class="accordion accordion-preview accordion-flush" id="meanings{{unit.id}}">
                         {%- for m in unit.meanings[1:] -%}
                         {%- set mng = meanings|selectattr('id','==',m)|first() -%}
@@ -309,8 +309,8 @@
                         <div class="col">
                             {%- if unit.linker_position_ru != '' -%}
                             <div class="row mb-1 g-0">
-                                <label class="col-6">Позиция коннектора в клаузе:</label>
-                                <div class="col-6 text-end">{{unit.linker_position_ru}}
+                                <label class="col-md-6 col-12">Позиция коннектора в клаузе:</label>
+                                <div class="col-md-6 col-12 text-md-end">{{unit.linker_position_ru}}
                                     {%- if unit.linker_position_exclusivity_ru != '' -%}
                                     <br>
                                     ({{unit.linker_position_exclusivity_ru}})
@@ -397,34 +397,34 @@
                     <input type="hidden" id="linkerField" name="linker" value="{{request.args.get('linker')}}">
                     {%- endif -%}                
                     {# Row for search by linker #}
-                    <div class="row justify-content-center pb-3">
-                        <div class="card bg-light w-75 justify-content-center">
+                    <div class="row justify-content-center px-md-5 pb-3">
+                        <div class="card bg-light justify-content-center">
                             <!-- ROW 1 -->
                             <div class="row g-3 pt-3 pb-1 align-items-start">
                                 <!-- COL 1 -->
-                                <div class="col-4 gap-1">
+                                <div class="col-md-4 col-12 gap-1">
                                     {{search_list('pos','Часть речи',pos_list,attr=false)}}
                                 </div>
                             </div>
                             <!-- ROW 2 -->
                             <div class="row g-3 pb-1 align-items-start">
                                 <!-- COL 1 -->
-                                <div class="col-4 gap-1">
+                                <div class="col-md-4 col-12 gap-1">
                                     {{search_list('dict','Словарь',sources)}}
                                 </div>
                                 <!-- COL 2 -->
-                                <div class="col-4 gap-1">
+                                <div class="col-md-4 col-12 gap-1">
                                     {{search_string('conn','Коннектор или часть коннектора')}}
                                 </div>
                                 <!-- COL 3 -->
-                                <div class="col-4 gap-1">
+                                <div class="col-md-4 col-12 gap-1">
                                     {{search_string('correl','Квази-коррелят')}}
                                 </div>                                                                
                             </div>
                             <!-- ROW 3 -->
                             <div class="row g-3 pb-3 align-items-start">
                                 <!-- COL 1 -->
-                                <div class="col-4 gap-1">
+                                <div class="col-md-4 col-12 gap-1">
                                     <label for="search-meaning">Значение</label>
                                     {{search_string('meaning','Текст значения')}}
                                 </div>
@@ -433,14 +433,11 @@
                     </div>
 
                     {# Search by example #}
-                    <div class="row justify-content-center pb-3">
-                            <div class="card bg-light w-75">
+                    <div class="row justify-content-center pb-3 px-md-5">
+                            <div class="card bg-light">
                                 <div class="row pt-3 justify-content-center">
-                                    <div class="col-4 gap-1">
+                                    <div class="col-12 gap-1">
                                         <h5>Поиск по примерам</h5>
-                                    </div>
-                                    <div class="col-8 gap-1">
-
                                     </div>
                                 </div>
                                 <div class="row pb-3 justify-content-center">
@@ -451,87 +448,77 @@
                     </div>
                     
                     {# Search by semantic params #}
-                    <div class="row justify-content-center pb-3">
-                        <div class="card bg-light w-75">
+                    <div class="row justify-content-center pb-3 px-md-5">
+                        <div class="card bg-light">
                             <div class="row pt-3 justify-content-center">
-                                <div class="col-4 gap-1">
+                                <div class="col-12 gap-1">
                                     <h5>Поиск по семантическим параметрам</h5>
-                                </div>
-                                <div class="col-8 gap-1">
-
                                 </div>
                             </div>
                             <div class="row pb-1 justify-content-center">
-                                <div class="col-5 gap-1">
+                                <div class="col-md-5 col-12 gap-1">
                                     {{search_list('semfield','Семантическое поле',semfields)}}
                                 </div>
-                                <div class="col-2 gap-1"></div>
-                                <div class="col-5 gap-1">
+                                <div class="d-none d-md-block col-md-2 gap-1"></div>
+                                <div class="col-md-5 col-12 gap-1">
                                     {{search_list('subfield','Подзначение',subfields)}}
                                 </div>
                             </div>
                             <div class="row pb-1 justify-content-center">
-                                <div class="col-5 gap-1">
+                                <div class="col-12 gap-1">
                                     {{search_toggle('has-inferential','Наличие инферентивных употреблений','засвидетельствованы','не засвидетельствованы')}}
                                 </div>
-                                <div class="col-7 gap-1"></div> 
                             </div>
                             <div class="row pb-1 justify-content-center">
-                                <div class="col-5 gap-1">
+                                <div class="col-12 gap-1">
                                     {{search_toggle('has-illoc','Наличие иллокутивных употреблений','засвидетельствованы','не засвидетельствованы')}}
-                                </div>
-                                <div class="col-7 gap-1">
                                 </div>
                             </div>
                             <div class="row pb-3 justify-content-center">
-                                <div class="col-5 gap-1">
+                                <div class="col-12 gap-1">
                                     {{search_toggle('has-metatext','Наличие метатекстовых употреблений','засвидетельствованы','не засвидетельствованы')}}
-                                </div>
-                                <div class="col-7 gap-1">
                                 </div>
                             </div>                            
                         </div>
                     </div>
 
                     {# Search by syntactic params #}
-                    <div class="row justify-content-center pb-3">
-                        <div class="card bg-light w-75">
+                    <div class="row justify-content-center pb-3 px-md-5">
+                        <div class="card bg-light">
                             <div class="row pt-3 justify-content-center">
-                                <div class="col-4 gap-1">
+                                <div class="col-12 gap-1">
                                     <h5>Поиск по синтаксическим параметрам</h5>
-                                </div>
-                                <div class="col-8 gap-1">
                                 </div>
                             </div>
                             <div class="row pb-1 justify-content-center">
-                                <div class="col-5 gap-1">
+                                <div class="col-md-5 col-12 gap-1">
                                     {{search_list('parts_num','Количество компонентов основной части коннектора',params['parts_num'])}}
                                 </div>
-                                <div class="col-2 gap-1"></div>
-                                <div class="col-5 gap-1">
+                                <div class="d-none d-md-block col-md-2 gap-1"></div>
+                                <div class="col-md-5 col-12 gap-1">
                                     {{search_toggle('has-correl','Наличие квази-коррелята','возможен','невозможен')}}
                                 </div>
                             </div>
                             <div class="row pb-1 justify-content-center">
-                                <div class="col-5 gap-1">
+                                <div class="col-md-5 col-12 gap-1">
                                     {{search_list('parts_order','Разрывность основной части коннектора',params['parts_order'])}}
                                 </div>
-                                <div class="col-2 gap-1"></div>
-                                <div class="col-5 gap-1">
+                                <div class="d-none d-md-block col-md-2 gap-1"></div>
+                                <div class="col-md-5 col-12 gap-1">
                                     {{search_list('correl_oblig','Обязательность квази-коррелята',params['correl_oblig'],max='1')}}
                                 </div>
                             </div>
                             <div class="row pb-1 justify-content-center">
-                                <div class="col-5 gap-1">
+                                <div class="d-none d-md-block col-md-5 gap-1">
                                     {# {{search_list('parts_order','',params['parts_order'])}} #}
                                 </div>
-                                <div class="col-2 gap-1"></div>
-                                <div class="col-5 gap-1">
+                                <div class="d-none d-md-block col-md-2 gap-1"></div>
+                                <div class="col-md-5 col-12 gap-1">
                                     {{search_list('correl_position','Позиция квази-коррелята',params['correl_position'])}}
                                 </div>
                             </div>
                             <div class="row pb-1 justify-content-center">
-                                <div class="col-5 gap-1">
+                                <div class="col-md-5 col-12 gap-1">
                                     <div class="row">
                                     <div class="col-6">
                                     {{search_list('linker_position','Позиция коннектора в клаузе',params['linker_position'])}}
@@ -541,8 +528,8 @@
                                     </div>
                                     </div>
                                 </div>
-                                <div class="col-2 gap-1"></div>
-                                <div class="col-5 gap-1">
+                                <div class="d-none d-md-block col-md-2 gap-1"></div>
+                                <div class="col-md-5 col-12 gap-1">
                                     {{search_list('clause_order','Порядок клауз',params['clause_order'])}}
                                 </div>
                             </div> 
