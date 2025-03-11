@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    document.querySelector("meta[name=viewport]").setAttribute('content', 'width=device-width, initial-scale='+(1/window.devicePixelRatio));
+
     // Add scrollspy
     const scrollSpy = new bootstrap.ScrollSpy("#text-moreDB", {
         target: '#navbar-moreDB'
