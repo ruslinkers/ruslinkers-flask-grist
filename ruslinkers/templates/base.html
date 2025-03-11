@@ -75,12 +75,18 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand bg-light fixed-top">
+    <nav class="navbar navbar-expand-lg bg-light fixed-top">
         <div class="container justify-content-center">
-            <!-- <div class="d-flex justify-content-center"> -->
             <a class="navbar-brand" href="{{url_for('home')}}"><img src="{{url_for('static', filename='logo.svg')}}" class="img-fluid"
                     alt="Логотип"></a>
-            <!-- <div class="collapse navbar-collapse flex-grow-0" id="navbarNavAltMarkup"> -->
+            <button class="navbar-toggler" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#topNav" aria-controls="topNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse flex-grow-0" id="topNav">
                 <div class="navbar-nav text-center border-bottom border-secondary border-2">
                     <a class="nav-link" href="{{url_for('home')}}">Главная</a>
                     <a class="nav-link" href="{{url_for('units', linker='%D0%B0')}}">База русских коннекторов</a>
@@ -88,8 +94,7 @@
                     <a class="nav-link" href="{{url_for('publications')}}">Публикации и доклады на конференциях</a>
                     <a class="nav-link" href="{{url_for('feedback')}}">Обратная связь</a>
                 </div>
-            <!-- </div> -->
-            <!-- </div> -->
+            </div>
         </div>
     </nav>
     <div class="container h-75">
