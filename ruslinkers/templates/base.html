@@ -27,6 +27,11 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script> -->
 
     <style>
+        @media (min-width: 1024px) {
+            #sideView.show {display:none!important}
+            #sideView:not(.show) {display:block!important}
+        }
+
         #sideView, #mainbar {
             height: 70vh;
             overflow-y: scroll;

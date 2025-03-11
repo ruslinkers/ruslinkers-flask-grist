@@ -13,13 +13,18 @@ $(document).ready(function () {
         scrollSpy.refresh();
     })
 
-    var $container = $('#sideView'),
+    function scrollView() {
+        var $container = $('#sideView'),
         $scrollTo = $('a.lnkr.active');
-    // $container.scrollTop($scrollTo.position().top + $container.scrollTop());
-    if($scrollTo.length > 0) {
-    $container.scrollTop(
-        $scrollTo.offset().top - $container.offset().top + $container.scrollTop()
+        // $container.scrollTop($scrollTo.position().top + $container.scrollTop());
+        if($scrollTo.length > 0) {
+        $container.scrollTop(
+            $scrollTo.offset().top - $container.offset().top + $container.scrollTop()
     );}
+    }
+
+    scrollView();
+    $('#sideView').on('shown.bs.collapse', scrollView);
 
     $('#filter-linkers').on("keyup", function () {
         var value = $(this).val().toLowerCase();

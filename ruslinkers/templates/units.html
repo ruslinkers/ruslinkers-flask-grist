@@ -128,10 +128,6 @@
         <h6 class="d-none d-md-flex d-lg-none display-5">Рускон</h6>
         <h5 class="d-none d-lg-flex"><button class="btn btn-link" data-bs-toggle="modal" data-bs-target="#moreDB">Подробнее о базе
                 Рускон</button></h5>
-        <p class="d-xs-flex d-sm-flex d-md-flex d-lg-none d-xl-none d-xxl-none">
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#sideView" aria-controls="sideView">
-            Список коннекторов</button>
-        </p>
         <div class="row">
             <div class="input-group">
                 <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#advancedSearch"><i
@@ -153,11 +149,10 @@
     </div>
 </div>
 <div id="ruscon-main" class="row">
-    <div id="sideView" class="col-3 offcanvas-lg offcanvas-start" tabindex="-1" aria-labelledby="sideViewLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="sideViewLabel">Коннекторы</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sideView" aria-label="Close"></button>
-        </div>
+    <button class="d-lg-none btn btn-primary my-1" type="button" data-bs-toggle="collapse" data-bs-target="#sideView" aria-expanded="false" aria-controls="sideView">
+    Список коннекторов
+    </button>
+    <div id="sideView" class="col-lg-3 collapse">
         <div id="sidebar" class="list-group list-group-flush">
             {% for unit in units_f %}
             <a href="{{url_for('units', linker=unit|quote_lnk, **filters)}}"
