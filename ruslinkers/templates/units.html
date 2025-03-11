@@ -59,14 +59,14 @@
 </div>
 {% endmacro %}
 
-{% macro search_list(name,label,collection,attr=true) %}
+{% macro search_list(name,label,collection,attr=true,max='false') %}
 <label for="search-{{name}}">{{label}}</label>
 <div class="input-group">                                        
     <input class="btn-check toggleSearch-select" data-toggle="search-{{name}}" id="toggle-{{name}}"
         type="checkbox">
     <label class="btn btn-outline-primary" for="toggle-{{name}}"><i class="bi bi-check-lg"></i></label>
     <select id="search-{{name}}" name="search-{{name}}" class="searchData" 
-        multiple size="3">
+        multiple size="3" data-max-options="{{max}}">
         {%- for elem in collection -%}
         {%- if attr -%}
         <option value="{{elem.id}}">{{elem.display_ru}}</option>
@@ -363,11 +363,13 @@
                 <h1 class="modal-title fs-5" id="advancedSearchLabel">Расширенный поиск</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
-            <form>
-                {%- if request.args.get('linker') is not none -%}
-                <input type="hidden" id="linkerField" name="linker" value="{{request.args.get('linker')}}">
-                {%- endif -%}
-                <div class="modal-body">
+            <div class="modal-body">
+                <form id="form-search">
+                    {# Hidden field to submit linker in case it was selected #}
+                    {%- if request.args.get('linker') is not none -%}
+                    <input type="hidden" id="linkerField" name="linker" value="{{request.args.get('linker')}}">
+                    {%- endif -%}                
+                    {# Row for search by linker #}
                     <div class="row justify-content-center pb-3">
                         <div class="card bg-light w-75 justify-content-center">
                             <!-- ROW 1 -->
@@ -382,18 +384,6 @@
                                 <!-- COL 1 -->
                                 <div class="col-4 gap-1">
                                     {{search_list('dict','Словарь',sources)}}
-                                    <label for="search-dict">Словарь</label>
-                                    <div class="input-group">
-                                        <input class="btn-check toggleSearch-select" data-toggle="search-dict" id="toggle-dict"
-                                            type="checkbox">
-                                        <label class="btn btn-outline-primary" for="toggle-dict"><i class="bi bi-check-lg"></i></label>
-                                        <select id="search-dict" name="search-dict" class="searchData"
-                                            multiple size="3">
-                                            {% for source in sources %}
-                                            <option value="{{source.id}}">{{source.label}}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
                                 </div>
                                 <!-- COL 2 -->
                                 <div class="col-4 gap-1">
@@ -415,6 +405,7 @@
                         </div>
                     </div>
 
+                    {# Search by example #}
                     <div class="row justify-content-center pb-3">
                             <div class="card bg-light w-75">
                                 <div class="row pt-3 justify-content-center">
@@ -431,6 +422,8 @@
                             </div>
                         <!-- </div> -->
                     </div>
+                    
+                    {# Search by semantic params #}
                     <div class="row justify-content-center pb-3">
                         <div class="card bg-light w-75">
                             <div class="row pt-3 justify-content-center">
@@ -463,7 +456,7 @@
                                 <div class="col-7 gap-1">
                                 </div>
                             </div>
-                            <div class="row pb-1 justify-content-center">
+                            <div class="row pb-3 justify-content-center">
                                 <div class="col-5 gap-1">
                                     {{search_toggle('has-metatext','Наличие метатекстовых употреблений','засвидетельствованы','не засвидетельствованы')}}
                                 </div>
@@ -472,12 +465,80 @@
                             </div>                            
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                    <button id="searchButton" type="submit" class="btn btn-primary">Искать</button>
-                </div>
-            </form>
+
+                    {# Search by syntactic params #}
+                    <div class="row justify-content-center pb-3">
+                        <div class="card bg-light w-75">
+                            <div class="row pt-3 justify-content-center">
+                                <div class="col-4 gap-1">
+                                    <h5>Поиск по синтаксическим параметрам</h5>
+                                </div>
+                                <div class="col-8 gap-1">
+                                </div>
+                            </div>
+                            <div class="row pb-1 justify-content-center">
+                                <div class="col-5 gap-1">
+                                    {{search_list('parts_num','Количество компонентов основной части коннектора',params['parts_num'])}}
+                                </div>
+                                <div class="col-1 gap-1"></div>
+                                <div class="col-6 gap-1">
+                                    {{search_toggle('has-correl','Наличие квази-коррелята','возможен','невозможен')}}
+                                </div>
+                            </div>
+                            <div class="row pb-1 justify-content-center">
+                                <div class="col-5 gap-1">
+                                    {{search_list('parts_order','Разрывность основной части коннектора',params['parts_order'])}}
+                                </div>
+                                <div class="col-1 gap-1"></div>
+                                <div class="col-6 gap-1">
+                                    {{search_list('correl_oblig','Обязательность квази-коррелята',params['correl_oblig'],max='1')}}
+                                </div>
+                            </div>
+                            <div class="row pb-1 justify-content-center">
+                                <div class="col-5 gap-1">
+                                    {# {{search_list('parts_order','',params['parts_order'])}} #}
+                                </div>
+                                <div class="col-1 gap-1"></div>
+                                <div class="col-6 gap-1">
+                                    {{search_list('correl_position','Позиция квази-коррелята',params['correl_position'])}}
+                                </div>
+                            </div>
+                            <div class="row pb-1 justify-content-center">
+                                <div class="col-5 gap-1">
+                                    <div class="row">
+                                    <div class="col-6">
+                                    {{search_list('linker_position','Позиция коннектора в клаузе',params['linker_position'])}}
+                                    </div>
+                                    <div class="col-6">
+                                    {{search_list('linker_position_exclusivity','(обязательно?)',params['linker_position_exclusivity'])}}
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-1 gap-1"></div>
+                                <div class="col-6 gap-1">
+                                    {{search_list('clause_order','Порядок клауз',params['clause_order'])}}
+                                </div>
+                            </div> 
+                            <div class="row pb-3 justify-content-center">
+                                <div class="col-12 gap-1">
+                                    {{search_list('indep_sentence','Возможность независимого употребления клаузы с коннектором',params['indep_sentence'],max='1')}}
+                                </div>
+                                {# <div class="col-7 gap-1"></div> #}
+                            </div>
+                            <div class="row pb-3 justify-content-center">
+                                <div class="col-12">
+                                    {{search_toggle('has-branching','Ветвление коннектора','ветвится','не ветвится')}}
+                                </div>
+                                {# <div class="col-5 gap-1"></div> #}
+                            </div>                                                      
+                        </div>                    
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button id="searchButton" type="submit" form="form-search" class="btn btn-primary">Искать</button>
+            </div>
         </div>
     </div>
 </div>

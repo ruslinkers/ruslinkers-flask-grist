@@ -167,7 +167,24 @@ def create_app(test_config=None):
         
         # Search metatext
         units_f = process_filter(units_f, 'search-has-metatext',
-                                 lambda f, k: ops[int(f)](all(x.metatext_example in ['','не засвидетельствовано'] for x in units_gr[k])))        
+                                 lambda f, k: ops[int(f)](all(x.metatext_example in ['','не засвидетельствовано'] for x in units_gr[k])))
+        
+        # Search correl
+        units_f = process_filter(units_f, 'search-has-correl',
+                                 lambda f, k: ops[int(f)](all(x.correl == '' for x in units_gr[k])))
+        
+        # Search branching
+        units_f = process_filter(units_f, 'search-has-branching',
+                                 lambda f, k: ops[int(f)](all(x.expansion == '' for x in units_gr[k])))        
+        
+        # Helper function for syntactic parameters
+        synt_test = lambda p: lambda f, k: any(int(f) in x._asdict()[p] if isinstance(x._asdict()[p],list) else int(f) == x._asdict()[p] for x in units_gr[k])
+
+        # Batch process the parameters
+        for filter in request.args.keys():
+            prm = filter.removeprefix('search-')
+            if prm in db.param_values.keys():
+                units_f = process_filter(units_f, filter, synt_test(prm))
 
         if request.args.get('linker') is not None:
             linker = unquote_lnk(request.args.get('linker'))
