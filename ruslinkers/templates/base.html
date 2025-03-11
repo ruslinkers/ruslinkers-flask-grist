@@ -27,13 +27,25 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script> -->
 
     <style>
+        #sideView, #mainbar {
+            height: 100%;
+            overflow-y: scroll;
+        }
         html,
         body {
             height: 100%;
             scrollbar-color: #ADC355 !important;
         }
 
-        @media (min-width: 576px) {
+        #content {
+            height: 80%;
+        }
+
+        #ruscon-main {
+            height: 90%;
+        }
+
+        /*@media (min-width: 576px) {
             #content {
                 height: 90%;
             }
@@ -57,7 +69,7 @@
 
         label {
             font-weight: bold;
-        }
+        }*/
 
         /*.accordion-preview {
                 --bs-accordion-btn-padding-x: 5px;
@@ -95,8 +107,8 @@
     {% endblock %}
 </head>
 
-<body class="pt-5 mt-3 overflow-y-hidden">
-    <nav class="navbar navbar-expand-lg bg-light fixed-top">
+<body>
+    <nav id="topnav" class="navbar navbar-expand-lg bg-light sticky-top">
         <div class="container justify-content-center">
             <a class="navbar-brand" href="{{url_for('home')}}"><img src="{{url_for('static', filename='logo.svg')}}" class="img-fluid"
                     alt="Логотип"></a>
@@ -118,7 +130,7 @@
             </div>
         </div>
     </nav>
-    <div id="content" class="container-lg">
+    <div id="content" class="container-lg d-flex flex-column">
         {% block content %}{% endblock %}
     </div>
 </body>

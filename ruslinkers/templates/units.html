@@ -122,7 +122,7 @@
 
 {% block content %}
 <!-- <div class="row h-100"> -->
-<div class="flex-row">
+<div id="ruscon-top" class="flex-row">
     <div class="d-flex col-12 flex-column">
         <h5 class="d-none d-lg-flex display-5 text-nowrap">Рускон — база коннекторов русского языка</h5>
         <h6 class="d-none d-md-flex d-lg-none display-5">Рускон</h6>
@@ -132,9 +132,19 @@
             <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#sideView" aria-controls="sideView">
             Список коннекторов</button>
         </p>
+        <div class="row">
+            <div class="input-group">
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#advancedSearch"><i
+                        class="bi bi-search"></i></button>
+                <input class="form-control" type="search" placeholder="Быстрый фильтр…" aria-label="Фильтр" id="filter-linkers">
+                {%- if filters|length > 0 -%}
+                    <button id="clearFilter" class="btn btn-danger btn-sm">Снять фильтр</button>
+                {%- endif -%}
+            </div>            
+        </div>
     </div>
 </div>
-<div class="d-none d-lg-flex flex-row justify-content-center mb-3">
+<div id="ruscon-alpha" class="d-none d-lg-flex flex-row justify-content-center mb-3">
     <div class="d-flex flex-col border-bottom px-3">
         {%- set alpha = ['а', 'б', 'в', 'г', 'д', 'е', 'ж', 'з', 'и', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'э', 'ю', 'я'] -%}
         {%- for l in alpha -%}
@@ -142,21 +152,13 @@
         {% endfor -%}
     </div>
 </div>
-<div class="d-flex flex-row flex-nowrap h-100">
-    <div id="sideView" class="offcanvas-lg offcanvas-start" tabindex="-1" aria-labelledby="sideViewLabel">
+<div id="ruscon-main" class="row">
+    <div id="sideView" class="col-3 offcanvas-lg offcanvas-start" tabindex="-1" aria-labelledby="sideViewLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="sideViewLabel">Коннекторы</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sideView" aria-label="Close"></button>
         </div>
-        <div class="d-flex input-group">
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#advancedSearch"><i
-                    class="bi bi-search"></i></button>
-            <input class="form-control" type="search" placeholder="Фильтр…" aria-label="Фильтр" id="filter-linkers">
-        </div>
-        {%- if filters|length > 0 -%}
-        <div><button id="clearFilter" class="btn btn-danger btn-sm">Снять фильтр</button></div>
-        {%- endif -%}
-        <div id="sidebar" class="list-group list-group-flush overflow-y-scroll overflow-x-hidden">
+        <div id="sidebar" class="list-group list-group-flush">
             {% for unit in units_f %}
             <a href="{{url_for('units', linker=unit|quote_lnk, **filters)}}"
                 class="lnkr btn list-group-item list-group-item-action py-3 lh-tight border border-0 {{'active' if unit == linker else 'bg-dark'}}"
@@ -173,7 +175,7 @@
             {% endfor %}
         </div>
     </div>
-    <main class="d-flex col-12 col-lg-10 flex-column overflow-x-hidden overflow-y-auto">
+    <main id="mainbar" class="d-flex col-9 flex-column overflow-x-hidden">
         <div class="row mx-2"><h4>{{linker}}</h4></div>
         <div class="d-flex flex-row mx-2 mb-2">{% if olds is not none %}<button class="btn btn-link" 
             data-bs-toggle="modal" 
