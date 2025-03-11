@@ -11,7 +11,7 @@ $(document).ready(function () {
         scrollSpy.refresh();
     })
 
-    var $container = $('#sidebar'),
+    var $container = $('#sideView'),
         $scrollTo = $('a.lnkr.active');
     // $container.scrollTop($scrollTo.position().top + $container.scrollTop());
     if($scrollTo.length > 0) {
