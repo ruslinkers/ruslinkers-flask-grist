@@ -158,8 +158,9 @@
             <a href="{{url_for('units', linker=unit|quote_lnk, **filters)}}"
                 class="lnkr btn list-group-item list-group-item-action py-3 lh-tight border border-0 {{'active' if unit == linker else 'bg-dark'}}"
                 aria-current="true" id="{{unit|quote_lnk}}">
-                <div class="d-flex w-100 align-items-center justify-content-between linker-name">
-                    <strong class="mb-1">{{unit}}</strong>
+                <div class="d-flex w-100 align-items-center justify-content-between linker-name 
+                {{'text-black-50' if units[unit]|rejectattr('Non_connector','in',['констр','инф'])|list()|length() == 0 else 'fw-bold'}}">
+                    {{unit}}
                 </div>
                 <div class="col-10 mb-1 small">
                     {% for conn in units[unit] %}
